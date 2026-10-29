@@ -7,6 +7,11 @@ import {
   Grip,
   Clock,
   CloudSun,
+  CloudRain,
+  CloudSnow,
+  CloudLightning,
+  Cloud,
+  Sun,
   Battery,
   Download,
   Upload,
@@ -56,21 +61,23 @@ const widgetApp = {
   photo: "photos",
 };
 function BeijingWeatherFace() {
-  const [weather, setWeather] = useState<{ temp: number; code: number } | null>(null);
+  const [weather, setWeather] = useState<{ temp: number; code: number; high: number; low: number } | null>(null);
   const [error, setError] = useState(false);
   useEffect(() => {
     const controller = new AbortController();
     let active = true;
     const load = async () => {
       try {
-        const url = "https://api.open-meteo.com/v1/forecast?latitude=39.9042&longitude=116.4074&current=temperature_2m,weather_code&timezone=Asia%2FShanghai";
+        const url = "https://api.open-meteo.com/v1/forecast?latitude=39.9042&longitude=116.4074&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min&forecast_days=1&timezone=Asia%2FShanghai";
         const response = await fetch(url, { signal: controller.signal });
         if (!response.ok) throw Error("Weather request failed");
         const data = await response.json();
         const temp = data?.current?.temperature_2m;
         const code = data?.current?.weather_code;
-        if (!Number.isFinite(temp) || !Number.isFinite(code)) throw Error("Invalid weather data");
-        if (active) { setWeather({ temp, code }); setError(false); }
+        const high = data?.daily?.temperature_2m_max?.[0];
+        const low = data?.daily?.temperature_2m_min?.[0];
+        if (![temp, code, high, low].every(Number.isFinite)) throw Error("Invalid weather data");
+        if (active) { setWeather({ temp, code, high, low }); setError(false); }
       } catch { if (active && !controller.signal.aborted) setError(true); }
     };
     void load();
@@ -78,13 +85,22 @@ function BeijingWeatherFace() {
     return () => { active = false; controller.abort(); clearInterval(timer); };
   }, []);
   const code = weather?.code ?? -1;
-  const condition = code === 0 ? "晴" : code <= 2 && code >= 1 ? "晴间多云" : code === 3 ? "阴" : [45,48].includes(code) ? "雾" : code >= 51 && code <= 57 ? "毛毛雨" : code >= 61 && code <= 67 ? "雨" : code >= 71 && code <= 77 ? "雪" : code >= 80 && code <= 82 ? "阵雨" : code >= 85 && code <= 86 ? "阵雪" : code >= 95 ? "雷雨" : "多云";
-  const symbol = code === 0 ? "sun" : code >= 95 ? "storm" : code >= 71 && code <= 86 ? "snow" : code >= 51 && code <= 82 ? "rain" : "cloud";
-  return <div className="phone-a-weather-widget-content">
-    <div className="phone-a-weather-widget-top"><span className="phone-a-weather-widget-city">北京</span><span className="phone-a-weather-widget-symbol" aria-hidden="true">{symbol === "sun" ? "☀" : symbol === "storm" ? "⛈" : symbol === "snow" ? "❄" : symbol === "rain" ? "☂" : "☁"}</span></div>
-    <div className="phone-a-weather-widget-temperature">{weather ? Math.round(weather.temp) + "°" : "—°"}</div>
-    <div className="phone-a-weather-widget-bottom"><span>{weather ? condition : error ? "天气暂不可用" : "正在更新…"}</span><span className="phone-a-weather-widget-live">实时</span></div>
-  </div>;
+  const condition = code === 0 ? "晴" : code >= 1 && code <= 2 ? "局部多云" : code === 3 ? "阴" : [45, 48].includes(code) ? "雾" : code >= 51 && code <= 57 ? "毛毛雨" : code >= 61 && code <= 67 ? "雨" : code >= 71 && code <= 77 ? "雪" : code >= 80 && code <= 82 ? "阵雨" : code >= 85 && code <= 86 ? "阵雪" : code >= 95 ? "雷雨" : "多云";
+  const icon = code === 0 ? <Sun /> : code >= 95 ? <CloudLightning /> : (code >= 71 && code <= 77) || (code >= 85 && code <= 86) ? <CloudSnow /> : (code >= 51 && code <= 67) || (code >= 80 && code <= 82) ? <CloudRain /> : code === 3 || code === 45 || code === 48 ? <Cloud /> : <CloudSun />;
+  return (
+    <div className="phone-a-weather-widget-content" aria-label="北京实时天气">
+      <div className="phone-a-weather-widget-city">北京</div>
+      <div className="phone-a-weather-widget-temperature">{weather ? Math.round(weather.temp) + "°" : "—°"}</div>
+      <div className="phone-a-weather-widget-condition">
+        <span className="phone-a-weather-widget-icon" aria-hidden="true">{icon}</span>
+        <span>{weather ? condition : error ? "暂无数据" : "加载中"}</span>
+      </div>
+      <div className="phone-a-weather-widget-range">
+        <span><small>最<br/>高</small><b>{weather ? Math.round(weather.high) + "°" : "—°"}</b></span>
+        <span><small>最<br/>低</small><b>{weather ? Math.round(weather.low) + "°" : "—°"}</b></span>
+      </div>
+    </div>
+  );
 }
 function WidgetFace({
   widget,
