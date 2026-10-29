@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AlarmClock, Clock3, Globe2 } from "lucide-react";
+import { AlarmClock, Globe2 } from "lucide-react";
 import "./beijing-clock.css";
 
 const ZONE = "Asia/Shanghai";
@@ -17,7 +17,9 @@ export function BeijingClockApp() {
     const tick = () => setNow(new Date());
     tick();
     const timer = window.setInterval(tick, 1000);
-    const alarms = [{ id: "wake", time: "08:30", label: "起床" }, { id: "class", time: "09:30", label: "上课" }];
+    return () => window.clearInterval(timer);
+  }, []);
+  const alarms = [{ id: "wake", time: "08:30", label: "起床" }, { id: "class", time: "09:30", label: "上课" }];
   return (
     <section className="phone-a-clock" aria-label="时钟">
       {tab === "world" ? <>
