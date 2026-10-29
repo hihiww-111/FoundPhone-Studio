@@ -26,7 +26,7 @@ type Row = [ComponentType<{ size?: number }>, string, string];
 const groups: Row[][] = [
   [
     [Plane, "飞行模式", "#ff9500"],
-    [Wifi, "无线局域网", "#007aff"],
+    [Wifi, "Wi-Fi", "#007aff"],
     [Bluetooth, "蓝牙", "#007aff"],
     [Signal, "蜂窝网络", "#34c759"],
     [Link, "个人热点", "#65ce88"],
@@ -115,7 +115,7 @@ export function NativeSettings({
                 <div className="settings-group">
                   <div className="settings-native-row">
                     <Check size={18} color="#007aff" />
-                    <span>{work.phone.network}</span>
+                    <span>{work.id === "phone-a-story" ? "纠缠到世界毁灭" : work.phone.network}</span>
                     <Wifi size={18} />
                   </div>
                 </div>
@@ -249,9 +249,9 @@ export function NativeSettings({
                       ) : (
                         <>
                           <small>
-                            {name === "无线局域网"
+                            {name === "Wi-Fi"
                               ? wifi
-                                ? "未连接"
+                                ? (work.id === "phone-a-story" ? "纠缠到世界毁灭" : "未连接")
                                 : "关闭"
                               : name === "蓝牙"
                                 ? bluetooth
