@@ -11,3 +11,14 @@
 .ios18 .phone-a-clock-time { font-size:29px; font-weight:300; letter-spacing:-1px; white-space:nowrap; font-variant-numeric:tabular-nums; }
 .ios18 .phone-a-clock-note { margin:16px 0; color:#888b95; font-size:11px; }
 .ios18 .phone-a-clock-tab { display:flex; align-items:center; justify-content:center; gap:7px; margin-top:36px; color:#ff9f0a; font-size:12px; }
+
+.ios18 .phone-a-clock-alarms { border-top:1px solid #41424a; }
+.ios18 .phone-a-clock-alarm { display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #41424a; padding:18px 2px; }
+.ios18 .phone-a-clock-alarm-time { font-size:49px; font-weight:300; font-variant-numeric:tabular-nums; }
+.ios18 .phone-a-clock-alarm-label { font-size:14px; color:#bbb; }
+.ios18 .phone-a-clock-alarm-off { opacity:.45; }
+.ios18 .phone-a-clock-switch input { width:44px; height:26px; accent-color:#30d158; cursor:pointer; }
+.ios18 .phone-a-clock-switch span { display:none; }
+.ios18 .phone-a-clock-tabs { display:flex; justify-content:space-around; margin-top:30px; padding:13px 0; border-top:1px solid #41424a; }
+.ios18 .phone-a-clock-tabs button { display:flex; flex-direction:column; align-items:center; gap:5px; border:0; background:none; color:#8e8e93; font-size:12px; }
+.ios18 .phone-a-clock-tabs button.active { color:#ff9f0a; }
