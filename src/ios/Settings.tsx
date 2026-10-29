@@ -208,7 +208,7 @@ export function NativeSettings({
                 className="settings-account"
                 onClick={() => nav.push(work.phone.owner)}
               >
-                <span>{work.phone.owner.slice(0, 1)}</span>
+                <span className="phone-a-settings-avatar">{work.id === "phone-a-story" ? <img src="/settings-avatar.jpg" alt="张极头像" onError={e => { e.currentTarget.style.display = "none"; }} /> : null}{work.phone.owner.slice(0, 1)}</span>
                 <div>
                   <strong>{work.phone.owner}</strong>
                   <small>Apple 账户、iCloud 与更多</small>
