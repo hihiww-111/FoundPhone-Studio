@@ -45,6 +45,7 @@ const widgetLabels = {
   weather: "天气",
   notes: "备忘录",
   battery: "电池",
+  photo: "照片",
 };
 const widgetApp = {
   calendar: "calendar",
@@ -52,6 +53,7 @@ const widgetApp = {
   weather: "weather",
   notes: "notes",
   battery: "settings",
+  photo: "photos",
 };
 function WidgetFace({
   widget,
@@ -66,7 +68,9 @@ function WidgetFace({
   const weather = work.data.weather?.[0];
   return (
     <div className={"widget-face widget-" + widget.type}>
-      {widget.type === "calendar" ? (
+      {widget.type === "photo" ? (
+        <img className="widget-photo-image" src="/widgets/photo.jpg" alt="桌面固定照片" draggable={false} />
+      ) : widget.type === "calendar" ? (
         <>
           <span className="widget-red">
             {new Intl.DateTimeFormat("zh-CN", {
