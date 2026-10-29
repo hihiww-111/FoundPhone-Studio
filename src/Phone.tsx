@@ -919,6 +919,11 @@ function AppContent({
       onEdit(i);
       return;
     }
+    if (app.id === "files" && i.id === "fengqing-wanzhong-video") {
+      window.open("https://b23.tv/OiKr6Fe", "_blank", "noopener,noreferrer");
+      onRead(i.id);
+      return;
+    }
     if (app.id === "files" && i.id === "love-unsaid-video") {
       window.open("https://b23.tv/Ed8VDQD", "_blank", "noopener,noreferrer");
       onRead(i.id);
