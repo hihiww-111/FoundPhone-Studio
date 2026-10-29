@@ -65,3 +65,78 @@
 .ios18 .paw-metrics .paw-panel-label { border:0; }
 .ios18 .paw-metrics strong { display:block; font-size:26px; padding:8px 13px; }
 .ios18 .paw-updated,.ios18 .paw-loading { font-size:11px; text-align:center; color:#d5deeb; padding:16px 4px; }
+
+/* Layout refinement: fixed search/footer, independently scrolling city cards. */
+.ios18 .phone-a-weather-list {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 17px 15px 9px;
+  min-height: 0;
+}
+.ios18 .paw-list-heading { flex: none; margin: 9px 5px 16px; }
+.ios18 .paw-city-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  padding: 0 2px 12px;
+}
+.ios18 .paw-city-list::-webkit-scrollbar { display: none; }
+.ios18 .paw-city-card {
+  flex: none;
+  box-sizing: border-box;
+  align-items: stretch;
+  text-align: left;
+  padding: 16px 18px 15px;
+}
+.ios18 .paw-city-top, .ios18 .paw-city-bottom {
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: space-between;
+  text-align: left;
+}
+.ios18 .paw-city-top > div {
+  align-items: flex-start;
+  flex: 1 1 auto;
+  text-align: left;
+}
+.ios18 .paw-city-top strong,
+.ios18 .paw-city-top small,
+.ios18 .paw-city-bottom > span:first-child {
+  display: block;
+  text-align: left;
+}
+.ios18 .paw-city-temp {
+  display: block;
+  flex: none;
+  text-align: right;
+  margin-left: auto;
+}
+.ios18 .paw-city-bottom > span:last-child {
+  display: block;
+  text-align: right;
+  margin-left: auto;
+}
+.ios18 .paw-search-wrap {
+  position: relative;
+  bottom: auto;
+  flex: none;
+  margin: 7px 2px 0;
+  padding: 10px 13px;
+  border-radius: 20px;
+  z-index: 2;
+}
+.ios18 .paw-list-footer {
+  flex: none;
+  padding: 9px 9px 2px;
+}
+.ios18 .phone-a-weather-detail {
+  padding: 14px 15px 36px;
+}
+.ios18 .paw-hero { padding: 23px 0 34px; }
+.ios18 .paw-hero-temp { font-size: 100px; }
+.ios18 .paw-hourly-scroll { scroll-snap-type: x proximity; }
+.ios18 .paw-hour { scroll-snap-align: start; }
+.ios18 .paw-day { grid-template-columns: 41px 38px 32px minmax(0,1fr) 33px; gap: 5px; }
