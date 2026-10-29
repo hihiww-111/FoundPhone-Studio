@@ -1,11 +1,11 @@
 {
   "scriptVersion": 1,
   "id": "phone-a-story",
-  "title": "人A的手机",
+  "title": "张极的手机",
   "description": "人A的互动手机故事，第一阶段：锁屏与桌面配置。",
   "revision": 3,
   "phone": {
-    "owner": "人A",
+    "owner": "张极",
     "date": "2026-10-25",
     "time": "09:41",
     "battery": 94,
