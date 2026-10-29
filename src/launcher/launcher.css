@@ -612,3 +612,79 @@
   font-size: 9px;
   opacity: .8;
 }
+
+/* Phone A weather widget: match supplied dark iOS reference */
+.ios18 .interactive-home .widget-weather:has(.phone-a-weather-widget-content) {
+  background: linear-gradient(155deg, #303a49 0%, #252e3e 100%);
+  border-radius: 25px;
+  padding: 13px 14px 12px;
+  box-shadow: inset 0 0 0 1px #ffffff14, 0 5px 18px #00000025;
+}
+.ios18 .phone-a-weather-widget-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  min-width: 0;
+}
+.ios18 .phone-a-weather-widget-city {
+  font-size: 17px;
+  line-height: 1.1;
+  font-weight: 750;
+  letter-spacing: -.35px;
+}
+.ios18 .phone-a-weather-widget-temperature {
+  font-size: 53px;
+  line-height: 1.08;
+  font-weight: 250;
+  letter-spacing: -2.5px;
+  margin-top: 3px;
+}
+.ios18 .phone-a-weather-widget-condition {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  font-size: 16px;
+  font-weight: 650;
+  line-height: 1.1;
+  margin-top: 1px;
+}
+.ios18 .phone-a-weather-widget-icon {
+  height: 29px;
+  display: flex;
+  align-items: center;
+  color: #f6f8ff;
+}
+.ios18 .phone-a-weather-widget-icon svg {
+  width: 30px;
+  height: 30px;
+  stroke-width: 2.5;
+}
+.ios18 .phone-a-weather-widget-range {
+  display: flex;
+  justify-content: flex-start;
+  gap: 11px;
+  align-items: flex-end;
+  margin-top: auto;
+  white-space: nowrap;
+}
+.ios18 .phone-a-weather-widget-range > span {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.ios18 .phone-a-weather-widget-range small {
+  font-size: 10px;
+  line-height: .95;
+  font-weight: 650;
+}
+.ios18 .phone-a-weather-widget-range b {
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 400;
+  letter-spacing: -1px;
+}
