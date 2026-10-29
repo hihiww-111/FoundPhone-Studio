@@ -1,6 +1,7 @@
 import { StatusGlyph } from "./ios/StatusGlyph";
 import { SocialDetail, socialDetailApps } from "./skins/SocialDetails";
 import { NativeCalculator } from "./ios/Calculator";
+import { WeatherApp } from "./ios/WeatherApp";
 import { HomeLauncher } from "./launcher/HomeLauncher";
 import { useDeviceLayout } from "./launcher/layout";
 import "./launcher/launcher.css";
@@ -1067,7 +1068,9 @@ function AppContent({
           {creator ? <Plus size={22} /> : <Search size={20} />}
         </button>
       </div>
-      {app.id === "settings" && !detail ? (
+      {app.id === "weather" && work.id === "phone-a-story" && !creator && !detail ? (
+        <WeatherApp />
+      ) : app.id === "settings" && !detail ? (
         <NativeSettings
           work={work}
           items={items}
