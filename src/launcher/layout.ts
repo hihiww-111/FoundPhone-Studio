@@ -6,7 +6,7 @@ export const widgetSchema = z.object({
     .string()
     .regex(/^widget-[a-zA-Z0-9-]+$/)
     .max(80),
-  type: z.enum(["calendar", "clock", "weather", "notes", "battery"]),
+  type: z.enum(["calendar", "clock", "weather", "notes", "battery", "photo"]),
   size: z.enum(["small", "medium", "large"]),
 });
 export const layoutSchema = z
@@ -52,23 +52,38 @@ export function ensureAppStore(work: Work): Work {
         ],
       };
 }
+const isPhoneA = (work: Work) => work.id === "phone-a-story";
+const phoneAWidgets: Widget[] = [
+  { id: "widget-photo-a", type: "photo", size: "small" },
+  { id: "widget-weather-a", type: "weather", size: "small" },
+];
+function phoneAApps(apps: AppConfig[], work: Work) {
+  return isPhoneA(work)
+    ? apps.map((a) => a.id === "appstore" || a.id === "contacts"
+      ? { ...a, visible: false, dock: false, folder: "" }
+      : a)
+    : apps;
+}
 export function defaultLayout(input: Work): DeviceLayout {
   const w = ensureAppStore(input);
   return {
     version: 1,
     workId: w.id,
     previewLayoutRevision: w.id === "ui-test-phone-v2" ? 1 : 0,
-    apps: structuredClone(w.apps)
+    apps: phoneAApps(structuredClone(w.apps)
       .sort((a, b) => (a.id === "appstore" ? -1 : b.id === "appstore" ? 1 : 0))
       .map((a) =>
         a.id === "appstore"
           ? { ...a, installed: true, visible: true, folder: "", dock: false }
           : a,
-      ),
-    widgets: [],
-    order: [],
+      ), w),
+    widgets: isPhoneA(w) ? structuredClone(phoneAWidgets) : [],
+    order: isPhoneA(w) ? phoneAWidgets.map((a) => a.id) : [],
     cleared: [],
-    positions: {},
+    positions: isPhoneA(w) ? {
+      "widget-photo-a": { page: 0, x: 0, y: 0 },
+      "widget-weather-a": { page: 0, x: 2, y: 0 },
+    } : {},
   };
 }
 export function validateLayout(raw: unknown, input: Work) {
@@ -91,8 +106,21 @@ export function validateLayout(raw: unknown, input: Work) {
   const store = layout.apps.find((a) => a.id === "appstore");
   if (store) {
     store.installed = true;
-    store.visible = true;
+    store.visible = !isPhoneA(w);
     store.folder = "";
+  }
+  if (isPhoneA(w)) {
+    layout.apps = phoneAApps(layout.apps, w);
+    for (const widget of phoneAWidgets) {
+      if (!layout.widgets.some((item) => item.id === widget.id)) layout.widgets.push({ ...widget });
+    }
+    layout.order = [
+      ...phoneAWidgets.map((item) => item.id),
+      ...layout.order.filter((id) => !phoneAWidgets.some((item) => item.id === id)),
+    ];
+    layout.positions["widget-photo-a"] = { page: 0, x: 0, y: 0 };
+    layout.positions["widget-weather-a"] = { page: 0, x: 2, y: 0 };
+    for (const id of ["appstore", "contacts"]) delete layout.positions[id];
   }
   if (w.id === "ui-test-phone-v2" && layout.previewLayoutRevision < 1) {
     const visibleApps = ["wechat", "douyin"];
