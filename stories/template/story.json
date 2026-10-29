@@ -134,12 +134,18 @@
     ],
     "files": [
       {
-        "id": "test-item-files",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
+        "id": "lover-not-yet-video",
+        "title": "恋人未满",
+        "body": "【极地航行】恋人未满·12机位4k直拍「这次将爱你说出口」20260412丨TOP登陆少年浪漫主义澳门演唱会\nhttps://b23.tv/0u5ZL0f",
+        "kind": "video",
+        "media": "",
+        "meta": {
+          "url": "https://b23.tv/0u5ZL0f",
+          "externalUrl": "https://b23.tv/0u5ZL0f",
+          "type": "video",
+          "filename": "恋人未满"
+        },
+        "sender": "张极"
       }
     ],
     "music": [
