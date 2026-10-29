@@ -79,7 +79,12 @@ function BeijingWeatherFace() {
   }, []);
   const code = weather?.code ?? -1;
   const condition = code === 0 ? "晴" : code <= 2 && code >= 1 ? "晴间多云" : code === 3 ? "阴" : [45,48].includes(code) ? "雾" : code >= 51 && code <= 57 ? "毛毛雨" : code >= 61 && code <= 67 ? "雨" : code >= 71 && code <= 77 ? "雪" : code >= 80 && code <= 82 ? "阵雨" : code >= 85 && code <= 86 ? "阵雪" : code >= 95 ? "雷雨" : "多云";
-  return <><small>北京</small><b>{weather ? Math.round(weather.temp) + "°" : "—°"}</b><CloudSun size={27} /><small>{weather ? condition : error ? "天气暂不可用" : "正在更新天气…"}</small><small style={{ fontSize: 9 }}>Open-Meteo · 15分钟更新</small></>;
+  const symbol = code === 0 ? "sun" : code >= 95 ? "storm" : code >= 71 && code <= 86 ? "snow" : code >= 51 && code <= 82 ? "rain" : "cloud";
+  return <div className="phone-a-weather-widget-content">
+    <div className="phone-a-weather-widget-top"><span className="phone-a-weather-widget-city">北京</span><span className="phone-a-weather-widget-symbol" aria-hidden="true">{symbol === "sun" ? "☀" : symbol === "storm" ? "⛈" : symbol === "snow" ? "❄" : symbol === "rain" ? "☂" : "☁"}</span></div>
+    <div className="phone-a-weather-widget-temperature">{weather ? Math.round(weather.temp) + "°" : "—°"}</div>
+    <div className="phone-a-weather-widget-bottom"><span>{weather ? condition : error ? "天气暂不可用" : "正在更新…"}</span><span className="phone-a-weather-widget-live">实时</span></div>
+  </div>;
 }
 function WidgetFace({
   widget,
