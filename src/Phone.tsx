@@ -919,6 +919,11 @@ function AppContent({
       onEdit(i);
       return;
     }
+    if (app.id === "files" && i.id === "lover-not-yet-video") {
+      window.open("https://b23.tv/0u5ZL0f", "_blank", "noopener,noreferrer");
+      onRead(i.id);
+      return;
+    }
     setDetail(i);
     if (!i.password || unlocks.includes(i.id)) onRead(i.id);
   };
