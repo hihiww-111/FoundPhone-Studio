@@ -56,3 +56,17 @@
 .ios18 .signals .ios-battery.low-battery > span {
   background: #ffd60a;
 }
+
+/* Keep system indicators readable over Phone A's dark Weather screens. */
+.ios18 .phone-screen[data-app="weather"] .status-bar,
+.ios18 .phone-screen[data-app="weather"] .status-bar .status-time,
+.ios18 .phone-screen[data-app="weather"] .status-bar .signals {
+  color: #fff !important;
+}
+.ios18 .phone-screen[data-app="weather"] .status-bar svg {
+  color: #fff;
+  stroke: currentColor;
+}
+.ios18 .phone-screen[data-app="weather"] .status-bar .ios-battery > b {
+  color: #fff;
+}
