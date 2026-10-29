@@ -993,6 +993,8 @@ function AppContent({
       )}
     </div>
   ) : null;
+  if (app.id === "weather" && work.id === "phone-a-story" && !creator)
+    return <WeatherApp />;
   if (Skin)
     return (
       <>
