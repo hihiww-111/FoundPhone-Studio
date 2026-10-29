@@ -89,7 +89,7 @@ function WidgetFace({
         </>
       ) : widget.type === "weather" ? (
         <>
-          <small>{weather?.title || "未添加城市"}</small>
+          <small>{work.id === "phone-a-story" ? "北京" : weather?.title || "未添加城市"}</small>
           <b>{weather?.meta.temperature || "—"}°</b>
           <CloudSun size={27} />
           <small>{weather?.meta.condition || "暂无天气数据"}</small>
