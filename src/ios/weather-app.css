@@ -16,3 +16,23 @@
 .ios18 .phone-a-weather-detail p { margin: 8px 0; }
 .ios18 .phone-a-weather-detail small,.ios18 .phone-a-weather-footer { color: #d4e4ff; font-size: 11px; }
 .ios18 .phone-a-weather-footer { text-align: center; margin-top: 17px; }
+
+/* iOS Weather-inspired refinements */
+.ios18 .phone-a-weather { padding: 20px 16px 34px; background: linear-gradient(180deg,#101c37,#172d59 55%,#111d38); scrollbar-width: none; }
+.ios18 .phone-a-weather::-webkit-scrollbar { display:none; }
+.ios18 .phone-a-weather-header { margin: 2px 3px 18px; }
+.ios18 .phone-a-weather-header small { display:none; }
+.ios18 .phone-a-weather-header h2 { font-size: 33px; font-weight: 700; letter-spacing: -1px; }
+.ios18 .phone-a-weather-cities { gap: 12px; }
+.ios18 .phone-a-weather-city { min-height: 114px; padding: 18px 19px 15px; border: none; border-radius: 18px; background: radial-gradient(ellipse at 78% -10%,#ffffff36,transparent 49%),linear-gradient(120deg,#315e9c,#578ac6 58%,#8ab0d8); box-shadow: inset 0 1px #ffffff30,0 3px 14px #07132b30; overflow:hidden; position:relative; }
+.ios18 .phone-a-weather-city:nth-child(3n+1) { background: radial-gradient(ellipse at 75% 4%,#c0c4ef55,transparent 45%),linear-gradient(115deg,#243c76,#5169a3 60%,#7a85bd); }
+.ios18 .phone-a-weather-city:nth-child(3n+2) { background: radial-gradient(ellipse at 85% 10%,#ffe6a455,transparent 48%),linear-gradient(115deg,#2a5897,#6189c5 65%,#b4a2b9); }
+.ios18 .phone-a-weather-city-top { align-items:flex-start; }
+.ios18 .phone-a-weather-city-top strong { font-size:24px; font-weight:600; letter-spacing:-.5px; }
+.ios18 .phone-a-weather-city-top small { font-size:11px; opacity:.9; }
+.ios18 .phone-a-weather-temp { font-size:49px; font-weight:200; line-height:1; letter-spacing:-2px; }
+.ios18 .phone-a-weather-city-bottom { font-size:12px; }
+.ios18 .phone-a-weather-detail { border:none; background:transparent; min-height:330px; }
+.ios18 .phone-a-weather-detail-city { font-size:26px; font-weight:500; }
+.ios18 .phone-a-weather-big-temp { font-size:105px; font-weight:200; }
+.ios18 .phone-a-weather-footer { margin:22px 0 8px; opacity:.7; }
