@@ -303,7 +303,7 @@ function PhoneRuntime({
     : wallClock.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false });
   const displayDate = creator
     ? work.phone.date
-    : wallClock.toLocaleDateString("zh-CN", { month: "long", day: "numeric", weekday: "long" });
+    : `${wallClock.getFullYear()}-${String(wallClock.getMonth() + 1).padStart(2, "0")}-${String(wallClock.getDate()).padStart(2, "0")}`;
   const plugin = getApp(app);
   useEffect(() => {
     const count = s.notifications.length;
