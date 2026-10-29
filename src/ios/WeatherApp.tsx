@@ -114,7 +114,7 @@ export function WeatherApp() {
   const minTemp = w ? Math.min(...w.daily.lows) : 0;
   const maxTemp = w ? Math.max(...w.daily.highs) : 1;
   return (
-    <section className={"phone-a-weather phone-a-weather-" + (city ? "detail " + scene(w) : "list")} aria-label="实时天气">
+    <section className={"phone-a-weather " + (city ? "phone-a-weather-detail phone-a-weather-detail-" + scene(w) : "phone-a-weather-list")} aria-label="实时天气">
       {city ? <>
         <div className="paw-detail-top"><button type="button" onClick={() => setSelected(null)} aria-label="返回城市列表"><ChevronLeft size={23} /> <span>天气</span></button><span className="paw-detail-region">{city.region}</span><button type="button" onClick={() => setRefresh(n => n + 1)} aria-label="刷新天气"><MoreHorizontal size={23} /></button></div>
         <div className="paw-hero">
