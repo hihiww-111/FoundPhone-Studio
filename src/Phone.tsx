@@ -290,7 +290,20 @@ function PhoneRuntime({
   useEffect(() => {
     if (app && !work.apps.some((a) => a.id === app && a.installed)) setApp("");
   }, [app, work.apps]);
-  const displayTime = creator ? work.phone.time : s.time || work.phone.time;
+  const [wallClock, setWallClock] = useState(() => new Date());
+  useEffect(() => {
+    if (creator) return;
+    const tick = () => setWallClock(new Date());
+    tick();
+    const timer = setInterval(tick, 1000);
+    return () => clearInterval(timer);
+  }, [creator]);
+  const displayTime = creator
+    ? work.phone.time
+    : wallClock.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", hour12: false });
+  const displayDate = creator
+    ? work.phone.date
+    : wallClock.toLocaleDateString("zh-CN", { month: "long", day: "numeric", weekday: "long" });
   const plugin = getApp(app);
   useEffect(() => {
     const count = s.notifications.length;
@@ -418,9 +431,7 @@ function PhoneRuntime({
             {locked && !(quickCamera && app === "camera") ? (
               <DeviceLock
                 work={
-                  s.date
-                    ? { ...work, phone: { ...work.phone, date: s.date } }
-                    : work
+                  { ...work, phone: { ...work.phone, date: displayDate } }
                 }
                 time={displayTime}
                 notices={s.notifications}
