@@ -2,6 +2,7 @@ import { StatusGlyph } from "./ios/StatusGlyph";
 import { SocialDetail, socialDetailApps } from "./skins/SocialDetails";
 import { NativeCalculator } from "./ios/Calculator";
 import { WeatherApp } from "./ios/WeatherApp";
+import { BeijingClockApp } from "./ios/BeijingClockApp";
 import { HomeLauncher } from "./launcher/HomeLauncher";
 import { useDeviceLayout } from "./launcher/layout";
 import "./launcher/launcher.css";
@@ -995,6 +996,8 @@ function AppContent({
   ) : null;
   if (app.id === "weather" && work.id === "phone-a-story" && !creator)
     return <WeatherApp />;
+  if (app.id === "clock" && work.id === "phone-a-story" && !creator)
+    return <BeijingClockApp />;
   if (Skin)
     return (
       <>
