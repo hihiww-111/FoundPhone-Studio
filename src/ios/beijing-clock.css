@@ -1,0 +1,13 @@
+.ios18 .phone-a-clock { height:100%; box-sizing:border-box; overflow-y:auto; padding:26px 19px 28px; background:#08090e; color:#fff; font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif; }
+.ios18 .phone-a-clock-header { display:flex; align-items:center; justify-content:space-between; margin:0 0 32px; }
+.ios18 .phone-a-clock-header h2 { font-size:34px; letter-spacing:-1px; font-weight:750; margin:0; color:#fff; }
+.ios18 .phone-a-clock-header svg { color:#ff9f0a; }
+.ios18 .phone-a-clock-caption { color:#a7a8b1; font-size:12px; margin-bottom:10px; }
+.ios18 .phone-a-clock-city { display:flex; align-items:center; justify-content:space-between; gap:10px; border-top:1px solid #41424a; border-bottom:1px solid #41424a; padding:17px 0; }
+.ios18 .phone-a-clock-city-info { display:flex; flex-direction:column; gap:5px; min-width:0; }
+.ios18 .phone-a-clock-offset { font-size:12px; color:#aeb0ba; }
+.ios18 .phone-a-clock-city-info strong { font-size:31px; line-height:1.15; font-weight:500; }
+.ios18 .phone-a-clock-date { color:#aeb0ba; font-size:11px; white-space:nowrap; }
+.ios18 .phone-a-clock-time { font-size:29px; font-weight:300; letter-spacing:-1px; white-space:nowrap; font-variant-numeric:tabular-nums; }
+.ios18 .phone-a-clock-note { margin:16px 0; color:#888b95; font-size:11px; }
+.ios18 .phone-a-clock-tab { display:flex; align-items:center; justify-content:center; gap:7px; margin-top:36px; color:#ff9f0a; font-size:12px; }
