@@ -1,4 +1,4 @@
-import { useRef, useState, type ReactNode, type PointerEvent } from "react";
+import { useEffect, useRef, useState, type ReactNode, type PointerEvent } from "react";
 import {
   Search,
   Plus,
@@ -55,6 +55,32 @@ const widgetApp = {
   battery: "settings",
   photo: "photos",
 };
+function BeijingWeatherFace() {
+  const [weather, setWeather] = useState<{ temp: number; code: number } | null>(null);
+  const [error, setError] = useState(false);
+  useEffect(() => {
+    const controller = new AbortController();
+    let active = true;
+    const load = async () => {
+      try {
+        const url = "https://api.open-meteo.com/v1/forecast?latitude=39.9042&longitude=116.4074&current=temperature_2m,weather_code&timezone=Asia%2FShanghai";
+        const response = await fetch(url, { signal: controller.signal });
+        if (!response.ok) throw Error("Weather request failed");
+        const data = await response.json();
+        const temp = data?.current?.temperature_2m;
+        const code = data?.current?.weather_code;
+        if (!Number.isFinite(temp) || !Number.isFinite(code)) throw Error("Invalid weather data");
+        if (active) { setWeather({ temp, code }); setError(false); }
+      } catch { if (active && !controller.signal.aborted) setError(true); }
+    };
+    void load();
+    const timer = setInterval(() => void load(), 15 * 60 * 1000);
+    return () => { active = false; controller.abort(); clearInterval(timer); };
+  }, []);
+  const code = weather?.code ?? -1;
+  const condition = code === 0 ? "晴" : code <= 2 && code >= 1 ? "晴间多云" : code === 3 ? "阴" : [45,48].includes(code) ? "雾" : code >= 51 && code <= 57 ? "毛毛雨" : code >= 61 && code <= 67 ? "雨" : code >= 71 && code <= 77 ? "雪" : code >= 80 && code <= 82 ? "阵雨" : code >= 85 && code <= 86 ? "阵雪" : code >= 95 ? "雷雨" : "多云";
+  return <><small>北京</small><b>{weather ? Math.round(weather.temp) + "°" : "—°"}</b><CloudSun size={27} /><small>{weather ? condition : error ? "天气暂不可用" : "正在更新天气…"}</small><small style={{ fontSize: 9 }}>Open-Meteo · 15分钟更新</small></>;
+}
 function WidgetFace({
   widget,
   work,
@@ -89,10 +115,10 @@ function WidgetFace({
         </>
       ) : widget.type === "weather" ? (
         <>
-          <small>{work.id === "phone-a-story" ? "北京" : weather?.title || "未添加城市"}</small>
+          {work.id === "phone-a-story" ? <BeijingWeatherFace /> : <><small>{weather?.title || "未添加城市"}</small>
           <b>{weather?.meta.temperature || "—"}°</b>
           <CloudSun size={27} />
-          <small>{weather?.meta.condition || "暂无天气数据"}</small>
+          <small>{weather?.meta.condition || "暂无天气数据"}</small></>}
         </>
       ) : widget.type === "notes" ? (
         <>
