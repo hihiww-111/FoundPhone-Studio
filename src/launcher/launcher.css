@@ -539,3 +539,76 @@
   opacity: 0.4;
   cursor: default;
 }
+
+/* Phone A: matched 2×2 widgets, edge-to-edge imagery, native iOS spacing. */
+.ios18 .interactive-home .launcher-slot:has(.widget-photo),
+.ios18 .interactive-home .launcher-slot:has(.widget-weather) {
+  min-width: 0;
+}
+.ios18 .interactive-home .launcher-widget:has(.widget-photo),
+.ios18 .interactive-home .launcher-widget:has(.widget-weather) {
+  padding: 5px 5px 9px;
+}
+.ios18 .interactive-home .widget-photo,
+.ios18 .interactive-home .widget-weather {
+  border-radius: 25px;
+  box-shadow: 0 5px 18px #00000025;
+  overflow: hidden;
+}
+.ios18 .interactive-home .widget-photo {
+  padding: 0;
+  background: #333;
+}
+.ios18 .interactive-home .widget-photo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.ios18 .interactive-home .widget-weather:has(.phone-a-weather-widget-content) {
+  padding: 14px 13px 12px;
+  background: linear-gradient(150deg,#4c9edb 0%,#2879bf 48%,#1651a3 100%);
+  color: white;
+}
+.ios18 .phone-a-weather-widget-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0;
+  min-width: 0;
+}
+.ios18 .phone-a-weather-widget-top,
+.ios18 .phone-a-weather-widget-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px;
+}
+.ios18 .phone-a-weather-widget-city {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -.2px;
+}
+.ios18 .phone-a-weather-widget-symbol {
+  font-size: 20px;
+  line-height: 1;
+  color: #fff3b3;
+}
+.ios18 .phone-a-weather-widget-temperature {
+  font-size: 47px;
+  line-height: 1;
+  font-weight: 250;
+  letter-spacing: -2px;
+  font-variant-numeric: tabular-nums;
+}
+.ios18 .phone-a-weather-widget-bottom {
+  font-size: 11px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.ios18 .phone-a-weather-widget-live {
+  font-size: 9px;
+  opacity: .8;
+}
