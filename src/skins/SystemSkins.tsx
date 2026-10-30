@@ -745,6 +745,7 @@ export function MusicSkin(p: Props) {
   const [expanded, setExpanded] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [menuId, setMenuId] = useState("");
+  const [playRequest, setPlayRequest] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
   const playlists = ["最近常听", "🎧"];
   const visibleSongs = playlist ? items.filter((i) => i.folder === playlist) : items;
@@ -760,6 +761,7 @@ export function MusicSkin(p: Props) {
     setPlaying(false);
     setMenuId("");
     setExpanded(false);
+    setPlayRequest((count) => count + 1);
   };
   const nextSong = () => {
     if (!song || items.length === 0) return;
@@ -769,10 +771,10 @@ export function MusicSkin(p: Props) {
     chooseSong(queue[(index + 1) % queue.length]);
   };
   useEffect(() => {
-    if (!song || !localAudio || !audioRef.current) return;
+    if (playRequest === 0 || !song || !localAudio || !audioRef.current) return;
     const audio = audioRef.current;
     audio.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
-  }, [song?.id, localAudio]);
+  }, [playRequest, song?.id, localAudio]);
   const togglePlayback = () => {
     if (!localAudio || !audioRef.current) { setExpanded(true); return; }
     if (audioRef.current.paused) {
