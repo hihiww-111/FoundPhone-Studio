@@ -185,7 +185,7 @@ export function ContactsSkin(p: Props) {
 export function PhotosSkin(p: Props) {
   const { tab, setTab, q, setQ, items } = useContent(p, "图库");
   const [album, setAlbum] = useState("");
-  const albums = ["最近项目", "个人收藏", "啵啵", "⊆(꒪¯ ꒳ ¯꒪）⊇ ੭ﾞ", "自拍", "截屏"];
+  const albums = ["最近项目", "个人收藏", "啵啵", "⊆(꒪¯ ꒳ ¯꒪）⊇ ੭ﾞ"];
   const list =
     album === "最近项目" ? items : album === "已隐藏" ? items.filter((i) => i.hidden) : album === "最近删除" ? [] : album ? items.filter((i) => i.folder === album && !i.hidden) : items.filter((i) => !i.hidden);
   return (
