@@ -779,13 +779,12 @@ export function MusicSkin(p: Props) {
   };
   return (
     <div className="catalog-skin native-music music-apple-style">
-      <Header p={p} />
       <div className="music-apple-nav">
-        <button type="button" onClick={() => { setExpanded(false); if (playlist) setPlaylist(""); else setTab("资料库"); }}>
-          <ChevronLeft size={20} />资料库
+        <button type="button" onClick={() => { setExpanded(false); if (playlist) setPlaylist(""); else if (tab !== "资料库") setTab("资料库"); else p.onBack(); }}>
+          <ChevronLeft size={20} />{playlist || tab !== "资料库" ? "资料库" : "返回"}
         </button>
         <strong>{playlist ? "播放列表" : tab === "歌单" ? "播放列表" : "资料库"}</strong>
-        <span />
+        <button type="button" className="music-apple-home" onClick={p.onBack}><ChevronLeft size={15} />主屏幕</button>
       </div>
       <div className="catalog-scroll music-apple-scroll">
         {tab === "歌单" && !playlist ? (
