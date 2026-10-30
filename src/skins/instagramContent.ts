@@ -48,27 +48,6 @@ export function instagramImages(item: Item): string[] {
       : [];
 }
 
-export function orderedInstagramReels(reels: Item[], order: string[]): Item[] {
-  const byId = new Map(reels.map((item) => [item.id, item]));
-  const ids = [...new Set([...order, ...reels.map((item) => item.id)])];
-  return ids.flatMap((id) => {
-    const item = byId.get(id);
-    return item ? [item] : [];
-  });
-}
-export function moveInstagramReel(
-  ids: string[],
-  id: string,
-  target: number,
-): string[] {
-  const from = ids.indexOf(id);
-  if (from < 0) return ids;
-  const next = [...ids];
-  next.splice(from, 1);
-  next.splice(Math.max(0, Math.min(next.length, target)), 0, id);
-  return next;
-}
-
 export function reelSwipeTarget(
   index: number,
   count: number,

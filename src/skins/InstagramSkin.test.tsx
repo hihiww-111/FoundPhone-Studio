@@ -73,3 +73,35 @@ describe("Instagram screens", () => {
     expect(html).not.toContain("430");
   });
 });
+
+it("ignores old saved ordering and exposes fixed read-only counts without removed controls", () => {
+  const order = [2, 1, 4, 3, 6, 5];
+  const items = order.map((n) =>
+    makeItem({
+      id: `instagram-reel-${n}`,
+      title: `Reel ${n}`,
+      kind: "video",
+      folder: "Reels",
+      media: `/instagram/reels/reel-0${n}.mp4`,
+    }),
+  );
+  const html = renderToStaticMarkup(
+    <InstagramSkin
+      {...props}
+      items={items}
+      ui={{
+        mymyTab: "Reels",
+        insReelOrder: [...items].reverse().map((i) => i.id),
+      }}
+    />,
+  );
+  const positions = order.map((n) =>
+    html.indexOf(`/instagram/reels/reel-0${n}.mp4`),
+  );
+  expect([...positions].sort((a, b) => a - b)).toEqual(positions);
+  expect(html.match(/<small>999\+<\/small>/g)).toHaveLength(6);
+  expect(html.match(/<small>99\+<\/small>/g)).toHaveLength(6);
+  expect(html).not.toMatch(/<button[^>]*aria-label="评论/);
+  for (const label of ["调整视频顺序", "复制视频", "视频选项", "帖子选项"])
+    expect(html).not.toContain(label);
+});

@@ -2,8 +2,6 @@ import { describe, expect, it } from "vitest";
 import { makeItem, safeMedia } from "../schema";
 import {
   instagramContent,
-  orderedInstagramReels,
-  moveInstagramReel,
   reelSwipeTarget,
   instagramImages,
   instagramTab,
@@ -91,22 +89,6 @@ describe("Instagram content and navigation", () => {
         }),
       ),
     ).toEqual([image]);
-  });
-});
-
-describe("Reels custom order", () => {
-  it("keeps a saved order, drops removed IDs and appends new videos once", () => {
-    const items = ["a", "b", "c"].map((id) => makeItem({ id }));
-    expect(
-      orderedInstagramReels(items, ["b", "missing", "b", "a"]).map((i) => i.id),
-    ).toEqual(["b", "a", "c"]);
-  });
-  it("moves a reel in either direction without losing or mutating items", () => {
-    const ids = ["a", "b", "c", "d"];
-    expect(moveInstagramReel(ids, "c", 0)).toEqual(["c", "a", "b", "d"]);
-    expect(moveInstagramReel(ids, "a", 3)).toEqual(["b", "c", "d", "a"]);
-    expect(moveInstagramReel(ids, "missing", 2)).toEqual(ids);
-    expect(ids).toEqual(["a", "b", "c", "d"]);
   });
 });
 

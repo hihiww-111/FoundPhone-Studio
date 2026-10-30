@@ -7,19 +7,15 @@ import {
   ChevronDown,
   Clapperboard,
   Grid3X3,
-  GripVertical,
-  ChevronUp,
   Heart,
   Home,
   Image as ImageIcon,
   LockKeyhole,
   Menu,
   MessageCircle,
-  MoreHorizontal,
   Music2,
   Play,
   Plus,
-  Send,
   UserRound,
   UserRoundPlus,
   Volume2,
@@ -31,8 +27,6 @@ import { safeMedia, type Item } from "../schema";
 import { useSkinState } from "../skinState";
 import {
   instagramContent,
-  orderedInstagramReels,
-  moveInstagramReel,
   reelSwipeTarget,
   instagramImages,
   instagramTab,
@@ -195,19 +189,12 @@ export function InstagramSkin(p: SkinProps) {
   const tab = instagramTab(storedTab);
   const [liked, setLiked] = useSkinState<string[]>(p, "mymyLiked", []);
   const [saved, setSaved] = useSkinState<string[]>(p, "mymySaved", []);
-  const [replies, setReplies] = useSkinState<string[]>(p, "mymyReplies", []);
   const [seen, setSeen] = useSkinState<string[]>(p, "mymySeen", []);
   const [following, setFollowing] = useSkinState<string[]>(
     p,
     "insFollowing",
     [],
   );
-  const [reelOrder, setReelOrder] = useSkinState<string[]>(
-    p,
-    "insReelOrder",
-    [],
-  );
-  const draggingReel = useRef<string | null>(null);
   const [storedReel, setStoredReel] = useSkinState<number>(p, "insReel", 0);
   const [profileName, setProfileName] = useSkinState<string>(
     p,
@@ -217,9 +204,7 @@ export function InstagramSkin(p: SkinProps) {
   const [bio, setBio] = useSkinState<string>(p, "insBio", "");
   const [profileView, setProfileView] = useState("帖子");
   const [selected, setSelected] = useState<Item | null>(null);
-  const [comments, setComments] = useState<Item | null>(null);
   const [sheet, setSheet] = useState("");
-  const [draft, setDraft] = useState("");
   const [story, setStory] = useState<Item | null>(null);
   const [muted, setMuted] = useState(true);
   const [notice, setNotice] = useState("");
@@ -235,7 +220,7 @@ export function InstagramSkin(p: SkinProps) {
     ownPosts,
     ownReels,
   } = instagramContent(p.items, p.owner || "机主");
-  const reels = orderedInstagramReels(authoredReels, reelOrder);
+  const reels = authoredReels;
   const reelOrderKey = reels.map((i) => i.id).join("|");
   const profile = p.items.find((i) => i.meta.profile === "true");
   const username = profile?.meta.username || p.owner || "机主";
@@ -244,16 +229,6 @@ export function InstagramSkin(p: SkinProps) {
     0,
     Math.min(reels.length - 1, Math.floor(storedReel) || 0),
   );
-  const moveReel = (id: string, target: number) => {
-    const activeId = reels[activeReel]?.id;
-    const next = moveInstagramReel(
-      reels.map((i) => i.id),
-      id,
-      target,
-    );
-    setReelOrder(next);
-    setStoredReel(Math.max(0, next.indexOf(activeId)));
-  };
   const authorPosts = posts.filter((i) => i.sender && i.sender !== p.owner);
   const people = authorPosts.filter(
     (i, n) => authorPosts.findIndex((other) => other.sender === i.sender) === n,
@@ -276,7 +251,6 @@ export function InstagramSkin(p: SkinProps) {
   };
   const changeTab = (next: InstagramTab) => {
     setSelected(null);
-    setComments(null);
     setSheet("");
     setStory(null);
     setStoredTab(next);
@@ -312,13 +286,6 @@ export function InstagramSkin(p: SkinProps) {
     if (tab === "Reels" && reels[activeReel] && !p.creator)
       p.onRead(reels[activeReel].id);
   }, [tab, reels[activeReel]?.id]);
-  const commentCount = (i: Item) =>
-    i.comments.length + replies.filter((r) => r.startsWith(i.id + "\t")).length;
-  const openComments = (i: Item) => {
-    read(i);
-    setDraft("");
-    setComments(i);
-  };
   const post = (i: Item) => (
     <article className="ins-post" key={i.id}>
       <header className="ins-post-header">
@@ -335,15 +302,6 @@ export function InstagramSkin(p: SkinProps) {
             )}
           </small>
         </div>
-        <button
-          aria-label={`帖子详情${i.title}`}
-          onClick={() => {
-            read(i);
-            setSheet("帖子选项");
-          }}
-        >
-          <MoreHorizontal size={22} />
-        </button>
       </header>
       <div
         className="ins-post-media"
@@ -364,15 +322,11 @@ export function InstagramSkin(p: SkinProps) {
             color={liked.includes(i.id) ? "#ff3040" : "currentColor"}
           />
         </button>
-        <button aria-label={`评论${i.title}`} onClick={() => openComments(i)}>
+        <span className="ins-comment-count" aria-label="评论99+">
           <MessageCircle />
-        </button>
-        <button
-          aria-label={`复制帖子${i.title}`}
-          onClick={() => void share(`${i.sender}\n${i.body}`)}
-        >
-          <Send />
-        </button>
+          <small>99+</small>
+        </span>
+
         <button
           className="ins-save"
           aria-label={`收藏${i.title}`}
@@ -383,13 +337,11 @@ export function InstagramSkin(p: SkinProps) {
         </button>
       </div>
       <div className="ins-caption">
-        <strong>{i.likes + (liked.includes(i.id) ? 1 : 0)} 次赞</strong>
+        <strong>999+ 次赞</strong>
         <p>
           <b>{i.sender}</b> {i.body}
         </p>
-        <button onClick={() => openComments(i)}>
-          查看全部 {commentCount(i)} 条评论
-        </button>
+        <span className="ins-comments-label">99+ 条评论</span>
         <time>{i.time}</time>
       </div>
     </article>
@@ -654,12 +606,6 @@ export function InstagramSkin(p: SkinProps) {
         <>
           <header className="ins-reels-header">
             <h1>Reels</h1>
-            <button
-              aria-label="调整视频顺序"
-              onClick={() => setSheet("视频顺序")}
-            >
-              <Menu size={22} />
-            </button>
           </header>
           <div
             className="ins-reels-scroll"
@@ -758,7 +704,7 @@ export function InstagramSkin(p: SkinProps) {
               >
                 <ReelVideo
                   item={i}
-                  active={n === activeReel && !comments && !sheet && present}
+                  active={n === activeReel && !sheet && present}
                   muted={muted}
                   onMute={() => setMuted(!muted)}
                 />
@@ -770,33 +716,18 @@ export function InstagramSkin(p: SkinProps) {
                     onClick={() => toggle(i.id, liked, setLiked)}
                   >
                     <Heart fill={liked.includes(i.id) ? "#ff3040" : "none"} />
-                    <small>{i.likes + (liked.includes(i.id) ? 1 : 0)}</small>
+                    <small>999+</small>
                   </button>
-                  <button
-                    aria-label={`评论${i.title}`}
-                    onClick={() => openComments(i)}
-                  >
+                  <span className="ins-reel-count" aria-label="评论99+">
                     <MessageCircle />
-                    <small>{commentCount(i)}</small>
-                  </button>
+                    <small>99+</small>
+                  </span>
                   <button
                     aria-label={`收藏${i.title}`}
                     aria-pressed={saved.includes(i.id)}
                     onClick={() => toggle(i.id, saved, setSaved)}
                   >
                     <Bookmark fill={saved.includes(i.id) ? "white" : "none"} />
-                  </button>
-                  <button
-                    aria-label={`复制视频${i.title}`}
-                    onClick={() => void share(`${i.sender}\n${i.body}`)}
-                  >
-                    <Send />
-                  </button>
-                  <button
-                    aria-label={`视频选项${i.title}`}
-                    onClick={() => setSheet("帖子选项")}
-                  >
-                    <MoreHorizontal />
                   </button>
                 </div>
                 <div className="ins-reel-caption">
@@ -843,62 +774,6 @@ export function InstagramSkin(p: SkinProps) {
           </button>
         ))}
       </nav>
-      {comments && (
-        <div className="ins-overlay">
-          <button
-            className="ins-backdrop"
-            aria-label="关闭评论"
-            onClick={() => setComments(null)}
-          />
-          <section
-            className="ins-sheet"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Instagram评论"
-          >
-            <header>
-              <b>评论</b>
-              <button
-                aria-label="关闭评论面板"
-                onClick={() => setComments(null)}
-              >
-                <X />
-              </button>
-            </header>
-            <div className="ins-comments mymy-comments">
-              {[
-                ...comments.comments,
-                ...replies
-                  .filter((r) => r.startsWith(comments.id + "\t"))
-                  .map((r) => r.slice(comments.id.length + 1)),
-              ].map((text, n) => (
-                <p key={n}>
-                  <Avatar name={text.split(":")[0]} />
-                  <span>{text}</span>
-                </p>
-              ))}
-              {!commentCount(comments) && <p>还没有评论</p>}
-            </div>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (!draft.trim()) return;
-                setReplies([...replies, comments.id + "\t" + draft.trim()]);
-                setDraft("");
-              }}
-            >
-              <input
-                aria-label="添加评论"
-                placeholder="添加评论…"
-                maxLength={500}
-                value={draft}
-                onChange={(e) => setDraft(e.target.value)}
-              />
-              <button disabled={!draft.trim()}>发布</button>
-            </form>
-          </section>
-        </div>
-      )}
       {sheet && (
         <div className="ins-overlay">
           <button
@@ -918,94 +793,7 @@ export function InstagramSkin(p: SkinProps) {
                 <X />
               </button>
             </header>
-            {sheet === "视频顺序" ? (
-              <div className="ins-reorder-list">
-                <p>拖动左侧图标，或用上下箭头调整播放顺序。</p>
-                {reels.map((item, n) => (
-                  <div
-                    className="ins-reorder-row"
-                    key={item.id}
-                    data-reel-sort-id={item.id}
-                  >
-                    <button
-                      className="ins-drag-handle"
-                      aria-label={`拖动${item.title}调整顺序`}
-                      onPointerDown={(e) => {
-                        e.preventDefault();
-                        draggingReel.current = item.id;
-                        e.currentTarget.setPointerCapture(e.pointerId);
-                      }}
-                      onPointerMove={(e) => {
-                        if (!draggingReel.current) return;
-                        const row = document
-                          .elementFromPoint(e.clientX, e.clientY)
-                          ?.closest<HTMLElement>("[data-reel-sort-id]");
-                        const index = reels.findIndex(
-                          (i) => i.id === row?.dataset.reelSortId,
-                        );
-                        if (
-                          index >= 0 &&
-                          row?.dataset.reelSortId !== draggingReel.current
-                        )
-                          moveReel(draggingReel.current, index);
-                      }}
-                      onPointerUp={() => {
-                        draggingReel.current = null;
-                      }}
-                      onPointerCancel={() => {
-                        draggingReel.current = null;
-                      }}
-                      onLostPointerCapture={() => {
-                        draggingReel.current = null;
-                      }}
-                    >
-                      <GripVertical size={20} />
-                    </button>
-                    <span className="ins-reorder-number">{n + 1}</span>
-                    {safeMedia(item.meta.cover) && (
-                      <img
-                        className="ins-reorder-thumb"
-                        src={safeMedia(item.meta.cover)}
-                        alt=""
-                      />
-                    )}
-                    <strong>{item.title}</strong>
-                    <button
-                      aria-label={`上移${item.title}`}
-                      disabled={n === 0}
-                      onClick={() => moveReel(item.id, n - 1)}
-                    >
-                      <ChevronUp size={19} />
-                    </button>
-                    <button
-                      aria-label={`下移${item.title}`}
-                      disabled={n === reels.length - 1}
-                      onClick={() => moveReel(item.id, n + 1)}
-                    >
-                      <ChevronDown size={19} />
-                    </button>
-                  </div>
-                ))}
-                <button
-                  className="ins-order-reset"
-                  onClick={() => {
-                    const activeId = reels[activeReel]?.id;
-                    setReelOrder([]);
-                    setStoredReel(
-                      Math.max(
-                        0,
-                        authoredReels.findIndex((i) => i.id === activeId),
-                      ),
-                    );
-                  }}
-                >
-                  恢复默认顺序
-                </button>
-                <button className="ins-order-done" onClick={() => setSheet("")}>
-                  完成
-                </button>
-              </div>
-            ) : sheet === "编辑个人资料" ? (
+            {sheet === "编辑个人资料" ? (
               <form
                 className="ins-edit-profile"
                 onSubmit={(e) => {
@@ -1079,9 +867,7 @@ export function InstagramSkin(p: SkinProps) {
               </div>
             ) : (
               <p className="ins-sheet-note">
-                {sheet === "动态通知"
-                  ? "还没有新通知"
-                  : "长按或点击下方图标可收藏、点赞和评论"}
+                {sheet === "动态通知" ? "还没有新通知" : "暂无内容"}
               </p>
             )}
           </section>

@@ -3,7 +3,7 @@
   "id": "phone-a-story",
   "title": "张极的手机",
   "description": "人A的互动手机故事，第一阶段：锁屏与桌面配置。",
-  "revision": 11,
+  "revision": 12,
   "phone": {
     "owner": "张极",
     "date": "2026-10-25",
@@ -585,15 +585,15 @@
         }
       },
       {
-        "id": "instagram-reel-05",
-        "title": "Reel 5",
+        "id": "instagram-reel-04",
+        "title": "Reel 4",
         "body": "",
         "sender": "",
         "kind": "video",
         "folder": "Reels",
-        "media": "/instagram/reels/reel-05.mp4",
+        "media": "/instagram/reels/reel-04.mp4",
         "meta": {
-          "cover": "/instagram/reels/reel-05.jpg"
+          "cover": "/instagram/reels/reel-04.jpg"
         }
       },
       {
@@ -609,18 +609,6 @@
         }
       },
       {
-        "id": "instagram-reel-04",
-        "title": "Reel 4",
-        "body": "",
-        "sender": "",
-        "kind": "video",
-        "folder": "Reels",
-        "media": "/instagram/reels/reel-04.mp4",
-        "meta": {
-          "cover": "/instagram/reels/reel-04.jpg"
-        }
-      },
-      {
         "id": "instagram-reel-06",
         "title": "Reel 6",
         "body": "",
@@ -630,6 +618,18 @@
         "media": "/instagram/reels/reel-06.mp4",
         "meta": {
           "cover": "/instagram/reels/reel-06.jpg"
+        }
+      },
+      {
+        "id": "instagram-reel-05",
+        "title": "Reel 5",
+        "body": "",
+        "sender": "",
+        "kind": "video",
+        "folder": "Reels",
+        "media": "/instagram/reels/reel-05.mp4",
+        "meta": {
+          "cover": "/instagram/reels/reel-05.jpg"
         }
       }
     ]

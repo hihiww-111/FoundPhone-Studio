@@ -16,7 +16,9 @@ async function start(page: Page) {
   await page.getByRole("button", { name: "轻触解锁" }).click();
 }
 async function open(page: Page, name: string) {
-  await page.getByRole("button", { name: "打开App Store", exact: true }).click();
+  await page
+    .getByRole("button", { name: "打开App Store", exact: true })
+    .click();
   await page.getByPlaceholder("搜索全部App").fill(name);
   await page
     .locator(".runtime-library-row")
@@ -54,7 +56,7 @@ test("Mymy KKT read triggers call and cross-app authored Instagram unlock", asyn
     page.getByText("挂断后出现的测试动态。", { exact: false }),
   ).toBeVisible();
 });
-test("Mymy Instagram comments, likes, profile, stories and X interaction persistence", async ({
+test("Instagram read-only counts, likes, profile, stories and X interaction persistence", async ({
   page,
 }) => {
   const errors: string[] = [];
@@ -65,16 +67,15 @@ test("Mymy Instagram comments, likes, profile, stories and X interaction persist
   await expect(
     page.getByRole("button", { name: "点赞测试帖子", exact: true }),
   ).toHaveAttribute("aria-pressed", "true");
-  await page.getByRole("button", { name: "评论测试帖子", exact: true }).click();
-  await page.getByRole("textbox", { name: "添加评论" }).fill("本地测试回复");
-  await page.getByRole("button", { name: "发布", exact: true }).click();
   await expect(
-    page.locator(".mymy-comments p").filter({ hasText: "本地测试回复" }),
-  ).toBeVisible();
-  await page
-    .locator(".phone-screen")
-    .screenshot({ path: "outputs/mymy/instagram-comments.png" });
-  await page.getByRole("button", { name: "关闭评论面板" }).click();
+    page.getByRole("button", { name: "评论测试帖子", exact: true }),
+  ).toHaveCount(0);
+  await expect(page.locator(".ins-comments-label").first()).toHaveText(
+    "99+ 条评论",
+  );
+  await expect(page.locator(".ins-caption > strong").first()).toHaveText(
+    "999+ 次赞",
+  );
   await page
     .locator(".phone-screen")
     .screenshot({ path: "outputs/mymy/instagram-feed.png" });

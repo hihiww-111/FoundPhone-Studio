@@ -834,69 +834,6 @@
     scroll-behavior: auto;
   }
 }
-.ios18 .instagram-app .ins-reels-header > button {
-  pointer-events: auto;
-  margin-left: auto;
-  display: grid;
-  place-items: center;
-  width: 34px;
-  height: 38px;
-  color: #fff;
-}
-.ios18 .instagram-app .ins-reorder-list {
-  overflow-y: auto;
-}
-.ios18 .instagram-app .ins-reorder-list > p {
-  color: #7c838d;
-  font-size: 12px;
-  margin: 14px 0;
-}
-.ios18 .instagram-app .ins-reorder-row {
-  display: flex;
-  align-items: center;
-  min-height: 48px;
-  gap: 7px;
-  border-bottom: 1px solid #eee;
-}
-.ios18 .instagram-app .ins-reorder-row > button {
-  display: grid;
-  place-items: center;
-  width: 32px;
-  min-height: 44px;
-  flex: none;
-}
-.ios18 .instagram-app .ins-reorder-row > strong {
-  flex: 1;
-  font-size: 13px;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.ios18 .instagram-app .ins-reorder-row .ins-drag-handle {
-  touch-action: none;
-  cursor: grab;
-  color: #777e87;
-}
-.ios18 .instagram-app .ins-reorder-number {
-  color: #777e87;
-  font-size: 12px;
-}
-.ios18 .instagram-app .ins-order-reset,
-.ios18 .instagram-app .ins-order-done {
-  width: 100%;
-  min-height: 42px;
-  color: #4b55ff;
-  font-weight: 650;
-}
-.ios18 .instagram-app .ins-reorder-thumb {
-  width: 32px;
-  height: 40px;
-  object-fit: cover;
-  border-radius: 4px;
-  flex: none;
-}
-
 /* Safari/WebKit needs its own scrollbar rule as well as scrollbar-width. */
 .ios18 .instagram-app .ins-reels-scroll::-webkit-scrollbar {
   display: none;
@@ -905,4 +842,33 @@
 }
 .ios18 .instagram-app .ins-reels-scroll {
   -ms-overflow-style: none;
+}
+
+.ios18 .instagram-app .ins-reel-count {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  color: #fff;
+  min-width: 32px;
+  pointer-events: none;
+}
+.ios18 .instagram-app .ins-reel-count svg {
+  width: 28px;
+  height: 28px;
+}
+.ios18 .instagram-app .ins-reel-count small {
+  font-size: 11px;
+  font-weight: 600;
+}
+.ios18 .instagram-app .ins-comment-count {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.ios18 .instagram-app .ins-comments-label {
+  display: block;
+  color: #7f8288;
+  font-size: 11px;
+  margin-top: 4px;
 }
