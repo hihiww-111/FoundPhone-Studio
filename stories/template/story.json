@@ -3,7 +3,7 @@
   "id": "phone-a-story",
   "title": "张极的手机",
   "description": "人A的互动手机故事，第一阶段：锁屏与桌面配置。",
-  "revision": 3,
+  "revision": 4,
   "phone": {
     "owner": "张极",
     "date": "2026-10-25",
@@ -440,6 +440,78 @@
         "meta": {
           "album": "🎧",
           "cover": "/music/shape-of-you.jpg"
+        }
+      },
+      {
+        "id": "recent-track-01",
+        "title": "竞速游戏",
+        "body": "",
+        "sender": "TOP登陆少年组合",
+        "kind": "audio",
+        "folder": "最近常听",
+        "media": "",
+        "meta": {
+          "album": "最近常听"
+        }
+      },
+      {
+        "id": "recent-track-02",
+        "title": "Beauty and a Beat (feat. Nicki Minaj)",
+        "body": "",
+        "sender": "Justin Bieber",
+        "kind": "audio",
+        "folder": "最近常听",
+        "media": "",
+        "meta": {
+          "album": "最近常听"
+        }
+      },
+      {
+        "id": "recent-track-03",
+        "title": "Young and Beautiful",
+        "body": "",
+        "sender": "Lana Del Rey",
+        "kind": "audio",
+        "folder": "最近常听",
+        "media": "",
+        "meta": {
+          "album": "最近常听"
+        }
+      },
+      {
+        "id": "recent-track-04",
+        "title": "Imagination",
+        "body": "",
+        "sender": "Shawn Mendes",
+        "kind": "audio",
+        "folder": "最近常听",
+        "media": "",
+        "meta": {
+          "album": "最近常听"
+        }
+      },
+      {
+        "id": "recent-track-05",
+        "title": "Love Yourself",
+        "body": "",
+        "sender": "Justin Bieber",
+        "kind": "audio",
+        "folder": "最近常听",
+        "media": "",
+        "meta": {
+          "album": "最近常听"
+        }
+      },
+      {
+        "id": "recent-track-06",
+        "title": "紧急联系人",
+        "body": "",
+        "sender": "Gareth.T",
+        "kind": "audio",
+        "folder": "最近常听",
+        "media": "",
+        "meta": {
+          "album": "最近常听"
         }
       }
     ],
