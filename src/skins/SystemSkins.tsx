@@ -759,7 +759,7 @@ export function MusicSkin(p: Props) {
     setSong(item);
     setPlaying(false);
     setMenuId("");
-    setExpanded(true);
+    setExpanded(false);
   };
   const nextSong = () => {
     if (!song || items.length === 0) return;
