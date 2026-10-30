@@ -774,3 +774,8 @@
 .ios18 .native-photos .album-grid .photo-album-cover img,
 .ios18 .native-photos .album-grid .photo-album-cover video { display:block; width:100%; height:100%; object-fit:cover; border-radius:inherit; }
 .ios18 .native-photos .album-grid .photo-album-cover > * { width:100%; height:100%; }
+
+/* Music playlist cover art */
+.ios18 .native-music .music-playlist-art { display:grid;place-items:center;width:100%;aspect-ratio:1 / 1;border-radius:14px;background:linear-gradient(145deg,#eab4d0,#b94f85);color:#fff;overflow:hidden; }
+.ios18 .native-music .music-albums button:nth-child(2) .music-playlist-art { background:linear-gradient(145deg,#b7b8f2,#6d70c9); }
+.ios18 .native-music .music-albums button .music-playlist-art svg {width:45px;height:45px;}
