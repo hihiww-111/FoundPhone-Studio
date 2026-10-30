@@ -780,7 +780,7 @@ export function MusicSkin(p: Props) {
           {song.kind === "audio" && safeMedia(song.media) ? (
             <AudioPlayer p={p} item={song} />
           ) : (
-            <button onClick={() => p.onItem(song)}>查看歌曲内容</button>
+            <span className="music-audio-pending">音频待添加，上传音频文件后即可播放</span>
           )}
           <button
             aria-label="下一首"
