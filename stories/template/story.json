@@ -3,7 +3,7 @@
   "id": "phone-a-story",
   "title": "张极的手机",
   "description": "人A的互动手机故事，第一阶段：锁屏与桌面配置。",
-  "revision": 10,
+  "revision": 11,
   "phone": {
     "owner": "张极",
     "date": "2026-10-25",
@@ -559,6 +559,78 @@
         "sender": "测试用户",
         "kind": "text",
         "meta": {}
+      },
+      {
+        "id": "instagram-reel-02",
+        "title": "Reel 2",
+        "body": "",
+        "sender": "",
+        "kind": "video",
+        "folder": "Reels",
+        "media": "/instagram/reels/reel-02.mp4",
+        "meta": {
+          "cover": "/instagram/reels/reel-02.jpg"
+        }
+      },
+      {
+        "id": "instagram-reel-01",
+        "title": "Reel 1",
+        "body": "",
+        "sender": "",
+        "kind": "video",
+        "folder": "Reels",
+        "media": "/instagram/reels/reel-01.mp4",
+        "meta": {
+          "cover": "/instagram/reels/reel-01.jpg"
+        }
+      },
+      {
+        "id": "instagram-reel-05",
+        "title": "Reel 5",
+        "body": "",
+        "sender": "",
+        "kind": "video",
+        "folder": "Reels",
+        "media": "/instagram/reels/reel-05.mp4",
+        "meta": {
+          "cover": "/instagram/reels/reel-05.jpg"
+        }
+      },
+      {
+        "id": "instagram-reel-03",
+        "title": "Reel 3",
+        "body": "",
+        "sender": "",
+        "kind": "video",
+        "folder": "Reels",
+        "media": "/instagram/reels/reel-03.mp4",
+        "meta": {
+          "cover": "/instagram/reels/reel-03.jpg"
+        }
+      },
+      {
+        "id": "instagram-reel-04",
+        "title": "Reel 4",
+        "body": "",
+        "sender": "",
+        "kind": "video",
+        "folder": "Reels",
+        "media": "/instagram/reels/reel-04.mp4",
+        "meta": {
+          "cover": "/instagram/reels/reel-04.jpg"
+        }
+      },
+      {
+        "id": "instagram-reel-06",
+        "title": "Reel 6",
+        "body": "",
+        "sender": "",
+        "kind": "video",
+        "folder": "Reels",
+        "media": "/instagram/reels/reel-06.mp4",
+        "meta": {
+          "cover": "/instagram/reels/reel-06.jpg"
+        }
       }
     ]
   },

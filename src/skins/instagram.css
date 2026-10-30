@@ -1,0 +1,898 @@
+/* Instagram layouts share only the phone shell; content stays in story data. */
+.ios18 .instagram-app {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  background: #fff;
+  color: #101318;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+}
+.ios18 .instagram-app button {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+}
+.ios18 .instagram-app button:focus-visible {
+  outline: 2px solid #4b55ff;
+  outline-offset: -2px;
+}
+.ios18 .instagram-app button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.ios18 .instagram-app svg {
+  flex-shrink: 0;
+  stroke-width: 1.9;
+}
+.ios18 .instagram-app .ins-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: none;
+  height: 50px;
+  padding: 0 96px 0 14px;
+  background: #fff;
+}
+.ios18 .instagram-app .ins-header > button {
+  width: 32px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+}
+.ios18 .instagram-app .ins-header h1 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 44%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 750;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+.ios18 .instagram-app .ins-header .ins-wordmark {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 25px;
+  font-style: italic;
+  letter-spacing: -1.3px;
+  font-weight: 750;
+}
+.ios18 .instagram-app .ins-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  padding-bottom: 96px;
+  scrollbar-width: none;
+}
+.ios18 .instagram-app .ins-scroll::-webkit-scrollbar {
+  display: none;
+}
+.ios18 .instagram-app .ins-avatar {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #eee;
+  color: #444;
+  font-size: 15px;
+}
+.ios18 .instagram-app .ins-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ios18 .instagram-app .ins-stories {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding: 9px 12px 15px;
+  border-bottom: 1px solid #eee;
+  scrollbar-width: none;
+}
+.ios18 .instagram-app .ins-stories > button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 70px;
+  flex: none;
+}
+.ios18 .instagram-app .ins-stories small {
+  width: 74px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11px;
+}
+.ios18 .instagram-app .ins-stories .ins-avatar {
+  width: 62px;
+  height: 62px;
+  border: 3px solid #fff;
+}
+.ios18 .instagram-app .ins-story-ring > span {
+  display: flex;
+  padding: 2px;
+  border-radius: 50%;
+  background: linear-gradient(30deg, #ffca51, #ff3040 50%, #ca00bb);
+}
+.ios18 .instagram-app .ins-story-ring > .seen {
+  background: #d8d8dc;
+}
+.ios18 .instagram-app .ins-own-story > span {
+  position: relative;
+  padding: 2px;
+}
+.ios18 .instagram-app .ins-own-story i {
+  position: absolute;
+  right: 0;
+  bottom: 2px;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: #15181c;
+}
+.ios18 .instagram-app .ins-post-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+}
+.ios18 .instagram-app .ins-post-header > div {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.ios18 .instagram-app .ins-post-header strong {
+  font-size: 13px;
+}
+.ios18 .instagram-app .ins-post-header small {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+}
+.ios18 .instagram-app .ins-post-header > button {
+  min-width: 30px;
+  min-height: 36px;
+}
+.ios18 .instagram-app .ins-carousel {
+  display: flex;
+  width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.ios18 .instagram-app .ins-carousel > img {
+  width: 100%;
+  flex: 0 0 100%;
+  object-fit: cover;
+  aspect-ratio: 4/5;
+  scroll-snap-align: center;
+}
+.ios18 .instagram-app .ins-feed-video {
+  display: block;
+  width: 100%;
+  max-height: 520px;
+  aspect-ratio: 4/5;
+  background: #111;
+  object-fit: contain;
+}
+.ios18 .instagram-app .ins-media-empty {
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  background: linear-gradient(135deg, #f4f0f0, #e9eaee);
+  color: #85858d;
+}
+.ios18 .instagram-app .ins-dots {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  padding: 9px 0 2px;
+}
+.ios18 .instagram-app .ins-dots i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #d5d8df;
+}
+.ios18 .instagram-app .ins-dots i.active {
+  background: #515cff;
+}
+.ios18 .instagram-app .ins-post-actions {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 7px 12px 3px;
+}
+.ios18 .instagram-app .ins-post-actions button {
+  min-height: 36px;
+  display: grid;
+  place-items: center;
+}
+.ios18 .instagram-app .ins-post-actions svg {
+  width: 25px;
+  height: 25px;
+}
+.ios18 .instagram-app .ins-post-actions .ins-save {
+  margin-left: auto;
+}
+.ios18 .instagram-app .ins-caption {
+  padding: 0 12px 16px;
+  font-size: 12px;
+  line-height: 1.55;
+}
+.ios18 .instagram-app .ins-caption p {
+  margin: 3px 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.ios18 .instagram-app .ins-caption > button,
+.ios18 .instagram-app .ins-caption time {
+  display: block;
+  color: #7f8288;
+  font-size: 11px;
+  margin-top: 4px;
+}
+.ios18 .instagram-app .ins-bottom-nav {
+  position: absolute;
+  z-index: 20;
+  bottom: 9px;
+  left: 12px;
+  right: 12px;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 6px;
+  padding: 4px 7px;
+  border-radius: 34px;
+  border: 1px solid #eeeeef;
+  background: #fffffff0;
+  box-shadow: 0 3px 20px #0000000b;
+  backdrop-filter: blur(22px);
+}
+.ios18 .instagram-app .ins-bottom-nav > button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  flex: 1;
+  border-radius: 28px;
+}
+.ios18 .instagram-app .ins-bottom-nav > button[aria-pressed="true"] {
+  background: #eceeef;
+}
+.ios18 .instagram-app .ins-bottom-nav svg {
+  width: 27px;
+  height: 27px;
+}
+.ios18 .instagram-app .ins-bottom-nav .ins-avatar {
+  width: 28px;
+  height: 28px;
+}
+.ios18 .instagram-app .ins-profile {
+  padding: 14px 14px 8px;
+}
+.ios18 .instagram-app .ins-profile-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.ios18 .instagram-app .ins-profile-row > .ins-avatar {
+  width: 80px;
+  height: 80px;
+}
+.ios18 .instagram-app .ins-profile-summary {
+  flex: 1;
+  min-width: 0;
+}
+.ios18 .instagram-app .ins-profile-summary > strong {
+  font-size: 14px;
+}
+.ios18 .instagram-app .ins-profile-stats {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 9px;
+}
+.ios18 .instagram-app .ins-profile-stats > span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+}
+.ios18 .instagram-app .ins-profile-stats b {
+  font-size: 18px;
+  font-weight: 650;
+}
+.ios18 .instagram-app .ins-bio {
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  margin: 12px 0;
+}
+.ios18 .instagram-app .ins-profile-actions {
+  display: flex;
+  gap: 5px;
+  margin-top: 16px;
+}
+.ios18 .instagram-app .ins-profile-actions > button {
+  flex: 1;
+  min-height: 32px;
+  padding: 4px 6px;
+  border-radius: 8px;
+  background: #eff0f3;
+  font-weight: 650;
+  font-size: 12px;
+}
+.ios18 .instagram-app .ins-profile-actions > button:last-child {
+  flex: 0 0 32px;
+  display: grid;
+  place-items: center;
+}
+.ios18 .instagram-app .ins-discover {
+  padding: 12px 12px 4px;
+}
+.ios18 .instagram-app .ins-discover > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+.ios18 .instagram-app .ins-discover button {
+  color: #4b55ff;
+  font-weight: 650;
+}
+.ios18 .instagram-app .ins-people {
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+  scrollbar-width: none;
+}
+.ios18 .instagram-app .ins-people article {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  flex: 0 0 140px;
+  padding: 14px 10px 10px;
+  border: 1px solid #e1e4ea;
+  border-radius: 13px;
+}
+.ios18 .instagram-app .ins-people .ins-avatar {
+  width: 67px;
+  height: 67px;
+}
+.ios18 .instagram-app .ins-people b {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+}
+.ios18 .instagram-app .ins-people button {
+  width: 100%;
+  border-radius: 6px;
+  padding: 7px;
+  background: #4b55ff;
+  color: #fff;
+  font-size: 12px;
+}
+.ios18 .instagram-app .ins-highlights {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 17px 13px;
+}
+.ios18 .instagram-app .ins-highlights button {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  min-width: 52px;
+}
+.ios18 .instagram-app .ins-highlights button > span {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 2px solid #e1e4e9;
+}
+.ios18 .instagram-app .ins-highlights small {
+  font-size: 11px;
+}
+.ios18 .instagram-app .ins-profile-tabs {
+  display: flex;
+  height: 45px;
+}
+.ios18 .instagram-app .ins-profile-tabs button {
+  flex: 1;
+  color: #7c838e;
+}
+.ios18 .instagram-app .ins-profile-tabs button[aria-selected="true"] {
+  color: #101318;
+  border-bottom: 2px solid #101318;
+}
+.ios18 .instagram-app .ins-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  min-height: 1px;
+}
+.ios18 .instagram-app .ins-grid > button {
+  position: relative;
+  aspect-ratio: 3/4;
+  min-width: 0;
+  overflow: hidden;
+  background: #f1f1f3;
+}
+.ios18 .instagram-app .ins-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ios18 .instagram-app .ins-grid > button > span {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: #a5a9b0;
+}
+.ios18 .instagram-app .ins-grid-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  color: #fff;
+  filter: drop-shadow(0 1px 2px #0008);
+}
+.ios18 .instagram-app .ins-empty {
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  padding: 35px 22px;
+  text-align: center;
+  color: #7c838d;
+}
+.ios18 .instagram-app .ins-empty h2 {
+  color: inherit;
+  font-size: 20px;
+  margin: 0;
+}
+.ios18 .instagram-app .ins-empty p {
+  font-size: 13px;
+  margin: 0;
+}
+/* Reels occupies the existing phone screen, including under the system bars. */
+.ios18 .skin-instagram:has([data-ins-tab="Reels"]) {
+  padding-top: 0;
+  padding-bottom: 0;
+  background: #000;
+}
+.ios18 .phone-screen:has([data-ins-tab="Reels"]) .status-bar {
+  color: #fff;
+}
+.ios18 .skin-instagram:has([data-ins-tab="Reels"]) > .app-home-button {
+  color: #fff;
+}
+.ios18 .phone-screen:has([data-ins-tab="Reels"]) .home-indicator:after {
+  background: #fff;
+}
+.ios18 .instagram-app[data-ins-tab="Reels"] {
+  background: #090909;
+  color: #fff;
+}
+.ios18 .instagram-app .ins-reels-header {
+  position: absolute;
+  top: 60px;
+  left: 15px;
+  right: 95px;
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  height: 42px;
+  pointer-events: none;
+}
+.ios18 .instagram-app .ins-reels-header h1 {
+  font-size: 23px;
+  margin: 0;
+}
+.ios18 .instagram-app .ins-reels-header > span {
+  color: #ffffff90;
+  font-size: 20px;
+  font-weight: 650;
+}
+.ios18 .instagram-app .ins-reels-scroll {
+  height: 100%;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  overscroll-behavior-y: contain;
+  touch-action: pan-y;
+  scrollbar-width: none;
+}
+.ios18 .instagram-app .ins-reel {
+  position: relative;
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  background: #121212;
+}
+.ios18 .instagram-app .ins-reel > video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ios18 .instagram-app .ins-reel-tap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  z-index: 1;
+  color: #fff;
+}
+.ios18 .instagram-app .ins-reel-volume {
+  position: absolute;
+  top: 112px;
+  left: 15px;
+  z-index: 5;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #0005;
+  color: #fff;
+}
+.ios18 .instagram-app .ins-reel-gradient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(#0005, transparent 25%, transparent 50%, #0009);
+}
+.ios18 .instagram-app .ins-reel-unavailable {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #bfc2ca;
+}
+.ios18 .instagram-app .ins-reel-actions {
+  position: absolute;
+  z-index: 4;
+  right: 12px;
+  bottom: 170px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.ios18 .instagram-app .ins-reel-actions button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  color: #fff;
+  min-width: 32px;
+}
+.ios18 .instagram-app .ins-reel-actions svg {
+  width: 28px;
+  height: 28px;
+}
+.ios18 .instagram-app .ins-reel-actions small {
+  font-size: 11px;
+  font-weight: 600;
+}
+.ios18 .instagram-app .ins-reel-caption {
+  position: absolute;
+  z-index: 4;
+  bottom: 112px;
+  left: 14px;
+  right: 62px;
+  color: #fff;
+}
+.ios18 .instagram-app .ins-reel-caption > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ios18 .instagram-app .ins-reel-caption strong {
+  font-size: 14px;
+}
+.ios18 .instagram-app .ins-reel-caption button {
+  border: 1px solid #ffffff90;
+  border-radius: 7px;
+  padding: 4px 9px;
+  font-size: 12px;
+}
+.ios18 .instagram-app .ins-reel-caption p {
+  font-size: 13px;
+  line-height: 1.5;
+  max-height: 58px;
+  overflow: hidden;
+  margin: 10px 0 5px;
+}
+.ios18 .instagram-app .ins-reel-caption small {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+}
+.ios18 .instagram-app[data-ins-tab="Reels"] .ins-bottom-nav {
+  bottom: 32px;
+  background: #202124d9;
+  border-color: #53555b;
+}
+.ios18
+  .instagram-app[data-ins-tab="Reels"]
+  .ins-bottom-nav
+  button[aria-pressed="true"] {
+  background: #ffffff25;
+}
+.ios18 .instagram-app .ins-reels-empty {
+  height: 100%;
+  color: #e0e0e5;
+  padding-bottom: 110px;
+}
+.ios18 .instagram-app .ins-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: flex-end;
+}
+.ios18 .instagram-app .ins-backdrop {
+  position: absolute;
+  inset: 0;
+  background: #0005;
+}
+.ios18 .instagram-app .ins-sheet {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 80%;
+  min-height: 220px;
+  background: #fff;
+  color: #14171c;
+  border-radius: 22px 22px 0 0;
+  padding: 8px 16px 30px;
+  box-shadow: 0 -8px 35px #0002;
+}
+.ios18 .instagram-app .ins-sheet > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 45px;
+  border-bottom: 1px solid #eee;
+}
+.ios18 .instagram-app .ins-sheet > header button {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+}
+.ios18 .instagram-app .ins-comments {
+  flex: 1;
+  min-height: 80px;
+  overflow-y: auto;
+  padding: 10px 0;
+}
+.ios18 .instagram-app .ins-comments p {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+.ios18 .instagram-app .ins-sheet > form {
+  display: flex;
+  gap: 8px;
+  padding-top: 10px;
+}
+.ios18 .instagram-app .ins-sheet input,
+.ios18 .instagram-app .ins-sheet textarea {
+  font: inherit;
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #e1e3e6;
+  border-radius: 8px;
+  padding: 10px;
+  background: #fafafa;
+  color: #15171a;
+}
+.ios18 .instagram-app .ins-sheet form > button {
+  color: #4b55ff;
+  font-weight: 650;
+  padding: 8px;
+}
+.ios18 .instagram-app .ins-edit-profile {
+  flex-direction: column;
+}
+.ios18 .instagram-app .ins-edit-profile label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 13px;
+}
+.ios18 .instagram-app .ins-edit-profile > button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+.ios18 .instagram-app .ins-menu-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 0;
+}
+.ios18 .instagram-app .ins-saved {
+  overflow-y: auto;
+}
+.ios18 .instagram-app .ins-saved > button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+  width: 100%;
+  text-align: left;
+}
+.ios18 .instagram-app .ins-saved > button > span:last-child {
+  margin-left: auto;
+  color: #4b55ff;
+}
+.ios18 .instagram-app .ins-sheet-note {
+  padding: 20px 0;
+  color: #777e87;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.ios18 .instagram-app .ins-story-view {
+  position: absolute;
+  inset: 0;
+  z-index: 42;
+  display: flex;
+  flex-direction: column;
+  background: #111;
+  color: #fff;
+}
+.ios18 .instagram-app .ins-story-view > header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px;
+}
+.ios18 .instagram-app .ins-story-view > header > strong {
+  flex: 1;
+}
+.ios18 .instagram-app .ins-story-view > .ins-carousel {
+  flex: 1;
+  min-height: 0;
+}
+.ios18 .instagram-app .ins-story-view > video {
+  width: 100%;
+  min-height: 0;
+  flex: 1;
+  object-fit: contain;
+}
+.ios18 .instagram-app .ins-story-view > p {
+  padding: 14px;
+}
+.ios18 .instagram-app .ins-toast {
+  position: absolute;
+  z-index: 60;
+  bottom: 90px;
+  left: 28px;
+  right: 28px;
+  text-align: center;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: #202124ed;
+  color: #fff;
+  font-size: 13px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ios18 .instagram-app .ins-reels-scroll {
+    scroll-behavior: auto;
+  }
+}
+.ios18 .instagram-app .ins-reels-header > button {
+  pointer-events: auto;
+  margin-left: auto;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 38px;
+  color: #fff;
+}
+.ios18 .instagram-app .ins-reorder-list {
+  overflow-y: auto;
+}
+.ios18 .instagram-app .ins-reorder-list > p {
+  color: #7c838d;
+  font-size: 12px;
+  margin: 14px 0;
+}
+.ios18 .instagram-app .ins-reorder-row {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  gap: 7px;
+  border-bottom: 1px solid #eee;
+}
+.ios18 .instagram-app .ins-reorder-row > button {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  min-height: 44px;
+  flex: none;
+}
+.ios18 .instagram-app .ins-reorder-row > strong {
+  flex: 1;
+  font-size: 13px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ios18 .instagram-app .ins-reorder-row .ins-drag-handle {
+  touch-action: none;
+  cursor: grab;
+  color: #777e87;
+}
+.ios18 .instagram-app .ins-reorder-number {
+  color: #777e87;
+  font-size: 12px;
+}
+.ios18 .instagram-app .ins-order-reset,
+.ios18 .instagram-app .ins-order-done {
+  width: 100%;
+  min-height: 42px;
+  color: #4b55ff;
+  font-weight: 650;
+}
+.ios18 .instagram-app .ins-reorder-thumb {
+  width: 32px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+  flex: none;
+}

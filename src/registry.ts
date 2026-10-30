@@ -132,7 +132,7 @@ const definitions: [
     "social",
     "#ae7d8e",
     Camera,
-    ["首页", "Story", "Reels", "私信", "个人主页"],
+    ["主页", "Reels", "个人主页"],
   ],
   ["tiktok", "TikTok", "media", "#303538", Video, ["推荐", "关注"]],
   ["twitter", "X", "social", "#343839", AtSign, ["时间线", "回复"]],

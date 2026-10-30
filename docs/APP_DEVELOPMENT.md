@@ -17,3 +17,5 @@ WeChat, WhatsApp and Instagram now have independent components in AppSkins.tsx, 
 ## 0.4 appearance
 
 AppArtwork.tsx has code-redrawn app artwork. Do not call these official files or claim pixel fidelity. AppIcon keeps user-provided image/text overrides first. ios18.css sets canonical device-point metrics with uniform zoom; avoid adding per-viewport internal dimensions again. Keep brand/app skins separate from host Studio styling. Player-only root headers may be visually clipped; detail navigation remains available. BRAND_NOTICE.txt ships with Studio and exported players.
+
+Instagram now uses skins/InstagramSkin.tsx through the MymyInstagram compatibility export. It has Home, Reels and Profile navigation only; authored DMs are filtered from every view. See INSTAGRAM_CONTENT.md for local media slots and profile metadata.
