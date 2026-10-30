@@ -358,9 +358,10 @@
         "sender": "Pharrell Williams",
         "kind": "audio",
         "folder": "🎧",
-        "media": "",
+        "media": "/music/happy.mp3",
         "meta": {
-          "album": "🎧"
+          "album": "🎧",
+          "cover": "/music/happy.jpg"
         }
       },
       {
