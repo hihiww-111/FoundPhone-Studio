@@ -779,3 +779,16 @@
 .ios18 .native-music .music-playlist-art { display:grid;place-items:center;width:100%;aspect-ratio:1 / 1;border-radius:14px;background:linear-gradient(145deg,#eab4d0,#b94f85);color:#fff;overflow:hidden; }
 .ios18 .native-music .music-albums button:nth-child(2) .music-playlist-art { background:linear-gradient(145deg,#b7b8f2,#6d70c9); }
 .ios18 .native-music .music-albums button .music-playlist-art svg {width:45px;height:45px;}
+
+/* Hybrid local audio / Spotify player within Music */
+.ios18 .native-music .music-hybrid-player { display:flex; flex-direction:column; gap:8px; padding:10px 12px; max-height:290px; overflow-y:auto; }
+.ios18 .native-music .music-hybrid-heading { display:flex; align-items:center; gap:10px; min-width:0; }
+.ios18 .native-music .music-hybrid-heading > span { display:flex; flex:1; min-width:0; flex-direction:column; overflow:hidden; }
+.ios18 .native-music .music-hybrid-heading strong { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.ios18 .native-music .music-hybrid-heading small { opacity:.7; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.ios18 .native-music .music-hybrid-heading > button { border:0; background:transparent; font-size:22px; }
+.ios18 .native-music .music-hybrid-player audio { width:100%; }
+.ios18 .native-music .music-hybrid-player iframe { flex-shrink:0; }
+.ios18 .native-music .music-hybrid-actions { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.ios18 .native-music .music-hybrid-actions button { display:flex; align-items:center; gap:5px; border:0; background:transparent; }
+.ios18 .native-music .music-hybrid-actions a { font-size:12px; }
