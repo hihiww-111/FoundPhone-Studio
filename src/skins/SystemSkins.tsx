@@ -843,9 +843,6 @@ export function MusicSkin(p: Props) {
     </div>
   );
 }
-
-  );
-}
 function LocationMap({
   items,
   onItem,
