@@ -768,6 +768,11 @@ export function MusicSkin(p: Props) {
     const index = current >= 0 ? current : queue.findIndex((i) => i.id === song.id);
     chooseSong(queue[(index + 1) % queue.length]);
   };
+  useEffect(() => {
+    if (!song || !localAudio || !audioRef.current) return;
+    const audio = audioRef.current;
+    audio.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
+  }, [song?.id, localAudio]);
   const togglePlayback = () => {
     if (!localAudio || !audioRef.current) { setExpanded(true); return; }
     if (audioRef.current.paused) {
