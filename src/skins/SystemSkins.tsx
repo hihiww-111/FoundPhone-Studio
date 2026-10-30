@@ -724,47 +724,52 @@ export function FilesSkin(p: Props) {
 export function MusicSkin(p: Props) {
   const { tab, setTab, items } = useContent(p, "资料库");
   const [song, setSong] = useTrack(p, items);
+  const [playlist, setPlaylist] = useState("");
+  const playlists = ["最近常听", "完美的歌单"];
+  const visibleSongs = playlist
+    ? items.filter((i) => i.folder === playlist)
+    : items;
   return (
     <div className="catalog-skin native-music">
       <Header p={p} />
       <div className="catalog-scroll">
-        <h1>{tab}</h1>
-        {tab === "歌单" ? (
+        <h1>{playlist || tab}</h1>
+        {tab === "歌单" && !playlist ? (
           <div className="music-albums">
-            {groupItems(items, "我的音乐").map((g) => (
-              <button
-                key={g}
-                onClick={() => {
-                  const i = items.find((i) => (i.folder || "我的音乐") === g);
-                  if (i) setSong(i);
-                }}
-              >
-                <Music size={51} />
-                <strong>{g}</strong>
+            {playlists.map((name) => (
+              <button key={name} onClick={() => setPlaylist(name)}>
+                <span className="music-playlist-art"><Music size={45} /></span>
+                <strong>{name}</strong>
+                <small>{items.filter((i) => i.folder === name).length} 首歌曲</small>
               </button>
             ))}
           </div>
         ) : (
-          items.map((i, n) => (
-            <button
-              className="music-track"
-              key={i.id}
-              onClick={() => {
-                setSong(i);
-              }}
-            >
-              <small>{n + 1}</small>
-              <span>
-                <strong>{i.title}</strong>
-                <small>
-                  {i.sender} · {meta(i, "album")}
-                </small>
-              </span>
-              <span>{meta(i, "duration")}</span>
-            </button>
-          ))
+          <>
+            {playlist && (
+              <button className="notes-back" onClick={() => setPlaylist("")}>
+                <ChevronLeft size={17} /> 返回歌单
+              </button>
+            )}
+            {visibleSongs.map((i, n) => (
+              <button
+                className="music-track"
+                key={i.id}
+                onClick={() => setSong(i)}
+              >
+                <small>{n + 1}</small>
+                <span>
+                  <strong>{i.title}</strong>
+                  <small>{i.sender} · {meta(i, "album")}</small>
+                </span>
+                <span>{meta(i, "duration")}</span>
+              </button>
+            ))}
+            {visibleSongs.length === 0 && (
+              <p className="media-count">暂无歌曲，后续添加的音乐会显示在这里。</p>
+            )}
+          </>
         )}
-        <Empty items={items} />
       </div>
       {song && (
         <div className="native-now-playing">
@@ -779,13 +784,7 @@ export function MusicSkin(p: Props) {
           )}
           <button
             aria-label="下一首"
-            onClick={() =>
-              setSong(
-                items[
-                  (items.findIndex((i) => i.id === song.id) + 1) % items.length
-                ],
-              )
-            }
+            onClick={() => setSong(items[(items.findIndex((i) => i.id === song.id) + 1) % items.length])}
           >
             <SkipForward size={18} />
           </button>
@@ -794,7 +793,7 @@ export function MusicSkin(p: Props) {
       <Tabs
         tabs={["资料库", "歌单"]}
         value={tab}
-        set={setTab}
+        set={(t) => { setTab(t); setPlaylist(""); }}
         icons={[<Music />, <Folder />]}
       />
     </div>
