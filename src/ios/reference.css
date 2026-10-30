@@ -764,3 +764,7 @@
 .ios18 .native-photos .photo-more h2{font-size:21px;margin:0 0 14px;font-weight:700}
 .ios18 .native-photos .photo-more button{width:100%;display:flex;align-items:center;gap:14px;padding:18px 6px;background:transparent;border:0;border-bottom:1px solid #e5e5ea;text-align:left;font-size:16px;color:inherit}
 .ios18 .native-photos .photo-more button svg:last-child{margin-left:auto;color:#aaa}
+
+/* Hide the visible vertical scrollbar in the Photos app while keeping touch and wheel scrolling. */
+.ios18 .native-photos .catalog-scroll { scrollbar-width: none; -ms-overflow-style: none; }
+.ios18 .native-photos .catalog-scroll::-webkit-scrollbar { display: none; width: 0; height: 0; }
