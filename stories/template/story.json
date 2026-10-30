@@ -384,9 +384,10 @@
         "sender": "Ed Sheeran",
         "kind": "audio",
         "folder": "🎧",
-        "media": "",
+        "media": "/music/eyes-closed.mp3",
         "meta": {
-          "album": "🎧"
+          "album": "🎧",
+          "cover": "/music/eyes-closed.jpg"
         }
       },
       {
