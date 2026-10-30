@@ -410,9 +410,10 @@
         "sender": "Grover Washington, Jr. with Bill Withers",
         "kind": "audio",
         "folder": "🎧",
-        "media": "",
+        "media": "/music/just-the-two-of-us.mp3",
         "meta": {
-          "album": "🎧"
+          "album": "🎧",
+          "cover": "/music/just-the-two-of-us.jpg"
         }
       },
       {
