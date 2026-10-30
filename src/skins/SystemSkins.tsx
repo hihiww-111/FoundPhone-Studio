@@ -18,6 +18,9 @@ import {
   LockKeyhole,
   MapPin,
   Music,
+  MoreHorizontal,
+  Play,
+  Pause,
   Phone,
   Search,
   SkipForward,
@@ -25,7 +28,7 @@ import {
   Users,
   Wallet,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { download } from "../io";
 import { safeMedia, type Item } from "../schema";
 import {
@@ -732,27 +735,56 @@ function spotifyEmbedUrl(value: string): string {
       ? `https://open.spotify.com/embed/track/${id}?utm_source=generator`
       : "";
   } catch {
-    return "";
-  }
-}
-export function MusicSkin(p: Props) {
+    return ""export function MusicSkin(p: Props) {
   const { tab, setTab, items } = useContent(p, "资料库");
   const [song, setSong] = useTrack(p, items);
   const [playlist, setPlaylist] = useState("");
+  const [expanded, setExpanded] = useState(false);
+  const [playing, setPlaying] = useState(false);
+  const [menuId, setMenuId] = useState("");
+  const audioRef = useRef<HTMLAudioElement>(null);
   const playlists = ["最近常听", "🎧"];
   const visibleSongs = playlist ? items.filter((i) => i.folder === playlist) : items;
   const localAudio = song?.kind === "audio" ? safeMedia(song.media) : "";
   const spotifyUrl = song ? spotifyEmbedUrl(meta(song, "spotifyUrl")) : "";
   const appleMusicUrl = song ? meta(song, "appleMusicUrl") : "";
+  const cover = (item: Item) => {
+    const image = meta(item, "cover");
+    return image && safeMedia(image) ? image : "";
+  };
+  const chooseSong = (item: Item) => {
+    setSong(item);
+    setPlaying(false);
+    setMenuId("");
+    setExpanded(true);
+  };
   const nextSong = () => {
     if (!song || items.length === 0) return;
-    setSong(items[(items.findIndex((i) => i.id === song.id) + 1) % items.length]);
+    const current = visibleSongs.findIndex((i) => i.id === song.id);
+    const queue = visibleSongs.length ? visibleSongs : items;
+    const index = current >= 0 ? current : queue.findIndex((i) => i.id === song.id);
+    chooseSong(queue[(index + 1) % queue.length]);
+  };
+  const togglePlayback = () => {
+    if (!localAudio || !audioRef.current) { setExpanded(true); return; }
+    if (audioRef.current.paused) {
+      void audioRef.current.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
+    } else {
+      audioRef.current.pause();
+      setPlaying(false);
+    }
   };
   return (
-    <div className="catalog-skin native-music">
+    <div className="catalog-skin native-music music-apple-style">
       <Header p={p} />
-      <div className="catalog-scroll">
-        <h1>{playlist || tab}</h1>
+      <div className="music-apple-nav">
+        <button type="button" onClick={() => { setExpanded(false); if (playlist) setPlaylist(""); else setTab("资料库"); }}>
+          <ChevronLeft size={20} />资料库
+        </button>
+        <strong>{playlist ? "播放列表" : tab === "歌单" ? "播放列表" : "资料库"}</strong>
+        <span />
+      </div>
+      <div className="catalog-scroll music-apple-scroll">
         {tab === "歌单" && !playlist ? (
           <div className="music-albums">
             {playlists.map((name) => (
@@ -765,65 +797,50 @@ export function MusicSkin(p: Props) {
           </div>
         ) : (
           <>
-            {playlist && (
-              <button className="notes-back" onClick={() => setPlaylist("")}>
-                <ChevronLeft size={17} /> 返回歌单
-              </button>
-            )}
-            {visibleSongs.map((i, n) => (
-              <button className="music-track" key={i.id} onClick={() => setSong(i)}>
-                <small>{n + 1}</small>
-                <span>
-                  <strong>{i.title}</strong>
-                  <small>{i.sender} · {meta(i, "album")}</small>
-                </span>
-                <span>{meta(i, "duration")}</span>
-              </button>
+            {playlist && <div className="music-apple-playlist-label"><span className="music-playlist-art"><Music size={24} /></span><strong>{playlist}</strong><small>{visibleSongs.length} 首歌曲</small></div>}
+            {visibleSongs.map((i) => (
+              <div className="music-apple-track" key={i.id}>
+                <button type="button" className="music-apple-track-main" onClick={() => chooseSong(i)}>
+                  <span className="music-apple-art">{cover(i) ? <img src={cover(i)} alt="" /> : <Music size={23} />}</span>
+                  <span className="music-apple-track-copy"><strong>{i.title}</strong><small>{i.sender}{meta(i, "album") && meta(i, "album") !== "🎧" ? ` — ${meta(i, "album")}` : ""}</small></span>
+                </button>
+                <button type="button" className="music-apple-more" aria-label={`${i.title} 更多选项`} onClick={() => setMenuId(menuId === i.id ? "" : i.id)}><MoreHorizontal size={22} /></button>
+                {menuId === i.id && <div className="music-apple-menu"><button type="button" onClick={() => chooseSong(i)}>播放歌曲</button>{meta(i, "appleMusicUrl").startsWith("https://music.apple.com/") && <a href={meta(i, "appleMusicUrl")} target="_blank" rel="noopener noreferrer">在 Apple Music 中打开</a>}</div>}
+              </div>
             ))}
-            {visibleSongs.length === 0 && (
-              <p className="media-count">暂无歌曲，后续添加的音乐会显示在这里。</p>
-            )}
+            {visibleSongs.length === 0 && <p className="media-count">暂无歌曲，后续添加的音乐会显示在这里。</p>}
           </>
         )}
       </div>
       {song && (
-        <div className="native-now-playing music-hybrid-player">
-          <div className="music-hybrid-heading">
-            <Music size={20} />
-            <span><strong>{song.title}</strong><small>{song.sender}</small></span>
-            <button type="button" onClick={() => setSong(null)} aria-label="关闭播放器">×</button>
+        <>
+          <div className="music-apple-mini">
+            <button type="button" className="music-apple-mini-info" onClick={() => setExpanded(true)}>
+              <span className="music-apple-art">{cover(song) ? <img src={cover(song)} alt="" /> : <Music size={22} />}</span>
+              <strong>{song.title}</strong>
+            </button>
+            <button type="button" aria-label={playing ? "暂停" : "播放"} onClick={togglePlayback}>{playing ? <Pause size={23} fill="currentColor" /> : <Play size={23} fill="currentColor" />}</button>
+            <button type="button" aria-label="下一首" onClick={nextSong}><SkipForward size={25} fill="currentColor" /></button>
           </div>
-          {localAudio ? (
-            <AudioPlayer key={song.id} p={p} item={song} />
-          ) : spotifyUrl ? (
-            <iframe
-              key={song.id}
-              title={`Spotify 播放 ${song.title}`}
-              src={spotifyUrl}
-              width="100%"
-              height="152"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              loading="lazy"
-              style={{ border: 0, borderRadius: 12 }}
-            />
-          ) : (
-            <span className="music-audio-pending">暂未添加播放来源，请提供本地音频或 Spotify 歌曲链接。</span>
-          )}
-          <div className="music-hybrid-actions">
-            {appleMusicUrl.startsWith("https://music.apple.com/") && !localAudio && !spotifyUrl && (
-              <a href={appleMusicUrl} target="_blank" rel="noopener noreferrer">在 Apple Music 中打开</a>
-            )}
-            <button type="button" aria-label="下一首" onClick={nextSong}><SkipForward size={18} /> 下一首</button>
-          </div>
-        </div>
+          {localAudio && <audio key={song.id} ref={audioRef} src={localAudio} onEnded={nextSong} onPause={() => setPlaying(false)} onPlay={() => setPlaying(true)} />}
+          {expanded && <div className="music-apple-expanded">
+            <button type="button" className="music-apple-dismiss" onClick={() => setExpanded(false)}><ChevronLeft size={20} /> 返回播放列表</button>
+            <span className="music-apple-expanded-art">{cover(song) ? <img src={cover(song)} alt="" /> : <Music size={76} />}</span>
+            <h2>{song.title}</h2><p>{song.sender}</p>
+            {localAudio ? (
+              <div className="music-apple-expanded-controls"><button type="button" onClick={togglePlayback}>{playing ? <Pause size={32} fill="currentColor" /> : <Play size={32} fill="currentColor" />}</button><button type="button" onClick={nextSong}><SkipForward size={32} /></button></div>
+            ) : spotifyUrl ? (
+              <iframe key={song.id} title={`Spotify 播放 ${song.title}`} src={spotifyUrl} width="100%" height="152" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" style={{ border: 0, borderRadius: 12 }} />
+            ) : <p className="music-audio-pending">暂未添加播放来源，请提供本地音频或 Spotify 歌曲链接。</p>}
+            {appleMusicUrl.startsWith("https://music.apple.com/") && !localAudio && !spotifyUrl && <a href={appleMusicUrl} target="_blank" rel="noopener noreferrer">在 Apple Music 中打开</a>}
+          </div>}
+        </>
       )}
-      <Tabs
-        tabs={["资料库", "歌单"]}
-        value={tab}
-        set={(t) => { setTab(t); setPlaylist(""); }}
-        icons={[<Music />, <Folder />]}
-      />
+      <Tabs tabs={["资料库", "歌单"]} value={tab} set={(t) => { setTab(t); setPlaylist(""); setExpanded(false); }} icons={[<Music />, <Folder />]} />
     </div>
+  );
+}
+
   );
 }
 function LocationMap({
