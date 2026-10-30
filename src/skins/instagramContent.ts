@@ -68,3 +68,16 @@ export function moveInstagramReel(
   next.splice(Math.max(0, Math.min(next.length, target)), 0, id);
   return next;
 }
+
+export function reelSwipeTarget(
+  index: number,
+  count: number,
+  dx: number,
+  dy: number,
+) {
+  if (Math.abs(dy) < 45 || Math.abs(dy) <= Math.abs(dx)) return index;
+  return Math.max(
+    0,
+    Math.min(Math.max(0, count - 1), index + (dy < 0 ? 1 : -1)),
+  );
+}

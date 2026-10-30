@@ -33,6 +33,7 @@ import {
   instagramContent,
   orderedInstagramReels,
   moveInstagramReel,
+  reelSwipeTarget,
   instagramImages,
   instagramTab,
   instagramTabs,
@@ -225,6 +226,8 @@ export function InstagramSkin(p: SkinProps) {
   const [editName, setEditName] = useState("");
   const [editBio, setEditBio] = useState("");
   const reelScroll = useRef<HTMLDivElement>(null);
+  const swipe = useRef<{ x: number; y: number; index: number } | null>(null);
+  const swiped = useRef(false);
   const {
     posts,
     reels: authoredReels,
@@ -651,7 +654,6 @@ export function InstagramSkin(p: SkinProps) {
         <>
           <header className="ins-reels-header">
             <h1>Reels</h1>
-            <span>朋友</span>
             <button
               aria-label="调整视频顺序"
               onClick={() => setSheet("视频顺序")}
@@ -665,6 +667,50 @@ export function InstagramSkin(p: SkinProps) {
             role="region"
             aria-label="Reels短视频"
             tabIndex={0}
+            onPointerDown={(e) => {
+              swiped.current = false;
+              const control = (e.target as HTMLElement).closest(
+                "button, input, a",
+              );
+              swipe.current =
+                control && !control.classList.contains("ins-reel-tap")
+                  ? null
+                  : { x: e.clientX, y: e.clientY, index: activeReel };
+            }}
+            onPointerMove={(e) => {
+              if (!swipe.current) return;
+              const dx = e.clientX - swipe.current.x,
+                dy = e.clientY - swipe.current.y;
+              if (Math.abs(dy) > 12 && Math.abs(dy) > Math.abs(dx)) {
+                e.preventDefault();
+                e.currentTarget.setPointerCapture(e.pointerId);
+              }
+            }}
+            onPointerUp={(e) => {
+              const start = swipe.current;
+              swipe.current = null;
+              if (!start) return;
+              const dx = e.clientX - start.x,
+                dy = e.clientY - start.y;
+              if (Math.abs(dy) < 45 || Math.abs(dy) <= Math.abs(dx)) return;
+              swiped.current = true;
+              e.preventDefault();
+              e.stopPropagation();
+              const next = reelSwipeTarget(start.index, reels.length, dx, dy);
+              e.currentTarget.scrollTo({
+                top: next * e.currentTarget.clientHeight,
+                behavior: "smooth",
+              });
+            }}
+            onPointerCancel={() => {
+              swipe.current = null;
+            }}
+            onClickCapture={(e) => {
+              if (swiped.current) {
+                e.preventDefault();
+                e.stopPropagation();
+              }
+            }}
             onScroll={(e) => {
               const el = e.currentTarget;
               const n = Math.max(

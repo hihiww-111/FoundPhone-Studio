@@ -4,6 +4,7 @@ import {
   instagramContent,
   orderedInstagramReels,
   moveInstagramReel,
+  reelSwipeTarget,
   instagramImages,
   instagramTab,
 } from "./instagramContent";
@@ -106,5 +107,18 @@ describe("Reels custom order", () => {
     expect(moveInstagramReel(ids, "a", 3)).toEqual(["b", "c", "d", "a"]);
     expect(moveInstagramReel(ids, "missing", 2)).toEqual(ids);
     expect(ids).toEqual(["a", "b", "c", "d"]);
+  });
+});
+
+describe("Reels swipe paging", () => {
+  it("moves up to the next video and down to the previous, one at a time", () => {
+    expect(reelSwipeTarget(1, 6, 3, -240)).toBe(2);
+    expect(reelSwipeTarget(2, 6, 0, 180)).toBe(1);
+    expect(reelSwipeTarget(5, 6, 0, -180)).toBe(5);
+    expect(reelSwipeTarget(0, 6, 0, 180)).toBe(0);
+  });
+  it("does not change videos for taps, short movements or horizontal gestures", () => {
+    expect(reelSwipeTarget(2, 6, 1, -10)).toBe(2);
+    expect(reelSwipeTarget(2, 6, 160, -50)).toBe(2);
   });
 });
