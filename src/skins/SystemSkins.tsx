@@ -197,7 +197,7 @@ export function PhotosSkin(p: Props) {
           <div className="album-grid">
             {albums.map((g) => (
               <button key={g} onClick={() => setAlbum(g)}>
-                {items.find((i) => i.folder === g) ? <Media item={items.find((i) => i.folder === g)!} /> : <span className="photo-album-placeholder"><Image size={30} /></span>}
+                {items.find((i) => i.folder === g) ? <span className="photo-album-cover"><Media item={items.find((i) => i.folder === g)!} /></span> : <span className="photo-album-placeholder"><Image size={30} /></span>}
                 <strong>{g}</strong>
                 <small>
                   {(g === "最近项目" ? items.length : items.filter((i) => i.folder === g).length)} 项
