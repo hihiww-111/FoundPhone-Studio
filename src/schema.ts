@@ -197,7 +197,7 @@ export function validateWork(input: unknown): Work {
 }
 export function safeMedia(value: string) {
   if (/^\/photos\/bobo\/bobo-\d{2}\.jpg$/.test(value)) return value;
-  if (["/music/old-town-road.mp3", "/music/old-town-road.jpg", "/music/happy.mp3", "/music/happy.jpg", "/music/btbt.mp3", "/music/btbt.jpg", "/music/eyes-closed.mp3", "/music/eyes-closed.jpg", "/music/rush.mp3", "/music/rush.jpg", "/music/just-the-two-of-us.mp3", "/music/just-the-two-of-us.jpg", "/music/baby.mp3", "/music/baby.jpg", "/music/shape-of-you.mp3", "/music/shape-of-you.jpg"].includes(value)) return value;
+  if (["/music/old-town-road.mp3", "/music/old-town-road.jpg", "/music/happy.mp3", "/music/happy.jpg", "/music/btbt.mp3", "/music/btbt.jpg", "/music/eyes-closed.mp3", "/music/eyes-closed.jpg", "/music/rush.mp3", "/music/rush.jpg", "/music/just-the-two-of-us.mp3", "/music/just-the-two-of-us.jpg", "/music/baby.mp3", "/music/baby.jpg", "/music/shape-of-you.mp3", "/music/shape-of-you.jpg", "/music/racing-game.mp3", "/music/racing-game.jpg"].includes(value)) return value;
   return /^data:(image\/(png|jpeg|webp|gif)|audio\/(mpeg|mp3|wav|ogg|webm|mp4)|video\/(mp4|webm));base64,[a-zA-Z0-9+/=\s]+$/.test(
     value,
   )

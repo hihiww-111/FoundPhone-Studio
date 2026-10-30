@@ -3,7 +3,7 @@
   "id": "phone-a-story",
   "title": "张极的手机",
   "description": "人A的互动手机故事，第一阶段：锁屏与桌面配置。",
-  "revision": 4,
+  "revision": 5,
   "phone": {
     "owner": "张极",
     "date": "2026-10-25",
@@ -449,9 +449,10 @@
         "sender": "TOP登陆少年组合",
         "kind": "audio",
         "folder": "最近常听",
-        "media": "",
+        "media": "/music/racing-game.mp3",
         "meta": {
-          "album": "最近常听"
+          "album": "最近常听",
+          "cover": "/music/racing-game.jpg"
         }
       },
       {
