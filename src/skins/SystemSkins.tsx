@@ -725,7 +725,7 @@ export function MusicSkin(p: Props) {
   const { tab, setTab, items } = useContent(p, "资料库");
   const [song, setSong] = useTrack(p, items);
   const [playlist, setPlaylist] = useState("");
-  const playlists = ["最近常听", "完美的歌单"];
+  const playlists = ["最近常听", "🎧"];
   const visibleSongs = playlist
     ? items.filter((i) => i.folder === playlist)
     : items;
