@@ -336,7 +336,128 @@
         "time": "2026-07-29 00:00"
       }
     ],
-    "music": [],
+    "music": [
+      {
+        "id": "headphones-track-01",
+        "title": "Old Town Road",
+        "body": "",
+        "sender": "Lil Nas X",
+        "kind": "audio",
+        "folder": "🎧",
+        "media": "",
+        "meta": {
+          "album": "🎧"
+        }
+      },
+      {
+        "id": "headphones-track-02",
+        "title": "Happy (Oktoberfest Mix)",
+        "body": "",
+        "sender": "Pharrell Williams",
+        "kind": "audio",
+        "folder": "🎧",
+        "media": "",
+        "meta": {
+          "album": "🎧"
+        }
+      },
+      {
+        "id": "headphones-track-03",
+        "title": "BTBT (feat. DeVita)",
+        "body": "",
+        "sender": "B.I & Soulja Boy Tell 'Em",
+        "kind": "audio",
+        "folder": "🎧",
+        "media": "",
+        "meta": {
+          "album": "🎧"
+        }
+      },
+      {
+        "id": "headphones-track-04",
+        "title": "Eyes Closed",
+        "body": "",
+        "sender": "Ed Sheeran",
+        "kind": "audio",
+        "folder": "🎧",
+        "media": "",
+        "meta": {
+          "album": "🎧"
+        }
+      },
+      {
+        "id": "headphones-track-05",
+        "title": "Rush",
+        "body": "",
+        "sender": "Ayra Starr",
+        "kind": "audio",
+        "folder": "🎧",
+        "media": "",
+        "meta": {
+          "album": "🎧"
+        }
+      },
+      {
+        "id": "headphones-track-06",
+        "title": "Mbangu te",
+        "body": "",
+        "sender": "Ya Levis",
+        "kind": "audio",
+        "folder": "🎧",
+        "media": "",
+        "meta": {
+          "album": "🎧"
+        }
+      },
+      {
+        "id": "headphones-track-07",
+        "title": "Just the Two of Us",
+        "body": "",
+        "sender": "Grover Washington, Jr. with Bill Withers",
+        "kind": "audio",
+        "folder": "🎧",
+        "media": "",
+        "meta": {
+          "album": "🎧"
+        }
+      },
+      {
+        "id": "headphones-track-08",
+        "title": "Baby (feat. Ludacris)",
+        "body": "",
+        "sender": "Justin Bieber",
+        "kind": "audio",
+        "folder": "🎧",
+        "media": "",
+        "meta": {
+          "album": "🎧"
+        }
+      },
+      {
+        "id": "headphones-track-09",
+        "title": "I Want You",
+        "body": "",
+        "sender": "蛋堡",
+        "kind": "audio",
+        "folder": "🎧",
+        "media": "",
+        "meta": {
+          "album": "🎧"
+        }
+      },
+      {
+        "id": "headphones-track-10",
+        "title": "Shape of You",
+        "body": "",
+        "sender": "Ed Sheeran",
+        "kind": "audio",
+        "folder": "🎧",
+        "media": "",
+        "meta": {
+          "album": "🎧"
+        }
+      }
+    ],
     "weather": [
       {
         "id": "test-item-weather",
