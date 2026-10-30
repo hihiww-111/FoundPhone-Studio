@@ -829,3 +829,20 @@
 .ios18 .music-apple-style .music-apple-expanded iframe {flex-shrink:0;}
 .ios18 .music-apple-style .music-apple-expanded-controls {display:flex;gap:45px;}
 .ios18 .music-apple-style .music-apple-expanded-controls button {border:0;background:transparent;}
+
+/* Music layout corrections: single navigation, no clipped rows, compact list. */
+.ios18 .music-apple-style {display:flex;flex-direction:column;min-height:0;}
+.ios18 .music-apple-style .music-apple-nav {flex:0 0 auto;min-height:52px;padding:8px 16px;border-bottom:1px solid #ededed;position:relative;z-index:2;}
+.ios18 .music-apple-style .music-apple-nav > button {white-space:nowrap;flex:0 0 auto;font-size:14px;}
+.ios18 .music-apple-style .music-apple-nav > strong {position:absolute;left:50%;transform:translateX(-50%);max-width:42%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;pointer-events:none;}
+.ios18 .music-apple-style .music-apple-nav .music-apple-home {margin-left:auto;font-size:13px;}
+.ios18 .music-apple-style .music-apple-scroll {flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;padding:0 16px 112px;scroll-padding-top:8px;}
+.ios18 .music-apple-style .music-apple-track {min-height:66px;gap:8px;}
+.ios18 .music-apple-style .music-apple-track-main {gap:11px;padding:7px 0;min-height:66px;}
+.ios18 .music-apple-style .music-apple-art {flex-basis:48px;width:48px;height:48px;}
+.ios18 .music-apple-style .music-apple-track-copy {flex:1;gap:4px;}
+.ios18 .music-apple-style .music-apple-track-copy strong {font-size:15px;line-height:1.25;}
+.ios18 .music-apple-style .music-apple-track-copy small {font-size:12px;line-height:1.25;}
+.ios18 .music-apple-style .music-apple-more {flex-shrink:0;padding:10px 2px;}
+.ios18 .music-apple-style .music-apple-mini {flex:0 0 auto;}
+.ios18 .music-apple-style .music-apple-mini-info .music-apple-art {flex-basis:44px;width:44px;height:44px;}
