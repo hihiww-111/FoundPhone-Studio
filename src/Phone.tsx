@@ -1,3 +1,4 @@
+import { MusicPlaybackProvider } from "./MusicPlayback";
 import { StatusGlyph } from "./ios/StatusGlyph";
 import { SocialDetail, socialDetailApps } from "./skins/SocialDetails";
 import { NativeCalculator } from "./ios/Calculator";
@@ -106,11 +107,13 @@ type PhoneProps = Omit<Parameters<typeof PhoneRuntime>[0], "deviceLayout">;
 export function Phone(props: PhoneProps) {
   const deviceLayout = useDeviceLayout(props.work, props.creator);
   return (
-    <PhoneRuntime
-      {...props}
-      work={deviceLayout.work}
-      deviceLayout={deviceLayout}
-    />
+    <MusicPlaybackProvider key={props.work.id}>
+      <PhoneRuntime
+        {...props}
+        work={deviceLayout.work}
+        deviceLayout={deviceLayout}
+      />
+    </MusicPlaybackProvider>
   );
 }
 function PhoneRuntime({

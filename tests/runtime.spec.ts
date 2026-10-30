@@ -250,3 +250,61 @@ test("reference-calibrated settings, WeChat pages and control center", async ({
     .locator(".phone-screen")
     .screenshot({ path: "outputs/v0.7/wechat-me-fixture.png" });
 });
+
+test("music keeps playing across App navigation and restores controls", async ({ page }) => {
+  const story = structuredClone(fixture);
+  story.id = "background-music-regression";
+  story.phone.passcode = "";
+  story.installedApps = ["music", "notes"];
+  story.content.music = ["first", "second"].map((id) => ({
+    id: `background-${id}`,
+    title: `Background ${id}`,
+    body: "",
+    kind: "audio",
+    media: `/music/background-${id}.wav`,
+  }));
+  // Generated silence: the regression needs no bundled commercial audio.
+  const samples = 8000 * 30;
+  const wav = Buffer.alloc(44 + samples * 2);
+  wav.write("RIFF", 0);
+  wav.writeUInt32LE(wav.length - 8, 4);
+  wav.write("WAVEfmt ", 8);
+  wav.writeUInt32LE(16, 16);
+  wav.writeUInt16LE(1, 20);
+  wav.writeUInt16LE(1, 22);
+  wav.writeUInt32LE(8000, 24);
+  wav.writeUInt32LE(16000, 28);
+  wav.writeUInt16LE(2, 32);
+  wav.writeUInt16LE(16, 34);
+  wav.write("data", 36);
+  wav.writeUInt32LE(samples * 2, 40);
+  await page.route("**/music/background-*.wav", (route) =>
+    route.fulfill({ contentType: "audio/wav", body: wav }),
+  );
+  await page.route("**/work.json", (route) =>
+    route.fulfill({ json: compileStory(story).work }),
+  );
+  await page.goto("/");
+  await page.getByRole("button", { name: "轻触解锁" }).click();
+  await open(page, "音乐");
+  const audio = page.locator("audio[data-music-playback]");
+  await expect(audio).toHaveAttribute("preload", "none");
+  expect(await audio.evaluate((el: HTMLAudioElement) => el.paused)).toBe(true);
+  await page.getByRole("button", { name: "Background first", exact: true }).click();
+  await expect.poll(() => audio.evaluate((el: HTMLAudioElement) => el.currentTime)).toBeGreaterThan(0);
+  const position = await audio.evaluate((el: HTMLAudioElement) => el.currentTime);
+  await page.getByRole("button", { name: "主屏幕", exact: true }).click();
+  await open(page, "备忘录");
+  await expect.poll(() => audio.evaluate((el: HTMLAudioElement) => el.currentTime)).toBeGreaterThan(position + 0.5);
+  expect(await audio.evaluate((el: HTMLAudioElement) => el.paused)).toBe(false);
+  await page.getByRole("button", { name: "返回桌面", exact: true }).click();
+  await open(page, "音乐");
+  await page.getByRole("button", { name: "暂停", exact: true }).click();
+  expect(await audio.evaluate((el: HTMLAudioElement) => el.paused)).toBe(true);
+  const pausedAt = await audio.evaluate((el: HTMLAudioElement) => el.currentTime);
+  await page.getByRole("button", { name: "播放", exact: true }).click();
+  await expect.poll(() => audio.evaluate((el: HTMLAudioElement) => el.currentTime)).toBeGreaterThan(pausedAt);
+  await page.getByRole("button", { name: "下一首", exact: true }).click();
+  await expect(audio).toHaveAttribute("src", "/music/background-second.wav");
+  await expect.poll(() => audio.evaluate((el: HTMLAudioElement) => el.currentTime)).toBeGreaterThan(0);
+});

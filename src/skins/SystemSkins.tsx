@@ -1,5 +1,6 @@
 export { WeatherSkin, HealthSkin } from "./CalibratedSystemApps";
-import { AudioPlayer, useTrack } from "../audio";
+import { useTrack } from "../audio";
+import { useMusicPlayback } from "../MusicPlayback";
 import { useSkinState } from "../skinState";
 import {
   Calendar,
@@ -28,7 +29,7 @@ import {
   Users,
   Wallet,
 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { download } from "../io";
 import { safeMedia, type Item } from "../schema";
 import {
@@ -740,13 +741,13 @@ function spotifyEmbedUrl(value: string): string {
 }
 export function MusicSkin(p: Props) {
   const { tab, setTab, items } = useContent(p, "资料库");
-  const [song, setSong] = useTrack(p, items);
+  const [savedSong, setSong] = useTrack(p, items);
+  const playback = useMusicPlayback();
+  const song = playback.song ?? savedSong;
+  const playing = playback.playing;
   const [playlist, setPlaylist] = useState("");
   const [expanded, setExpanded] = useState(false);
-  const [playing, setPlaying] = useState(false);
   const [menuId, setMenuId] = useState("");
-  const [playRequest, setPlayRequest] = useState(0);
-  const audioRef = useRef<HTMLAudioElement>(null);
   const playlists = ["最近常听", "🎧"];
   const visibleSongs = playlist ? items.filter((i) => i.folder === playlist) : items;
   const localAudio = song?.kind === "audio" ? safeMedia(song.media) : "";
@@ -758,31 +759,15 @@ export function MusicSkin(p: Props) {
   };
   const chooseSong = (item: Item) => {
     setSong(item);
-    setPlaying(false);
+    playback.play(item, visibleSongs.length ? visibleSongs : items);
     setMenuId("");
     setExpanded(false);
-    setPlayRequest((count) => count + 1);
   };
-  const nextSong = () => {
-    if (!song || items.length === 0) return;
-    const current = visibleSongs.findIndex((i) => i.id === song.id);
-    const queue = visibleSongs.length ? visibleSongs : items;
-    const index = current >= 0 ? current : queue.findIndex((i) => i.id === song.id);
-    chooseSong(queue[(index + 1) % queue.length]);
-  };
-  useEffect(() => {
-    if (playRequest === 0 || !song || !localAudio || !audioRef.current) return;
-    const audio = audioRef.current;
-    audio.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
-  }, [playRequest, song?.id, localAudio]);
+  const nextSong = playback.next;
   const togglePlayback = () => {
-    if (!localAudio || !audioRef.current) { setExpanded(true); return; }
-    if (audioRef.current.paused) {
-      void audioRef.current.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
-    } else {
-      audioRef.current.pause();
-      setPlaying(false);
-    }
+    if (!song || !localAudio) { setExpanded(true); return; }
+    if (!playback.song) playback.play(song, visibleSongs.length ? visibleSongs : items);
+    else playback.toggle();
   };
   return (
     <div className="catalog-skin native-music music-apple-style">
@@ -831,7 +816,6 @@ export function MusicSkin(p: Props) {
             <button type="button" aria-label={playing ? "暂停" : "播放"} onClick={togglePlayback}>{playing ? <Pause size={23} fill="currentColor" /> : <Play size={23} fill="currentColor" />}</button>
             <button type="button" aria-label="下一首" onClick={nextSong}><SkipForward size={25} fill="currentColor" /></button>
           </div>
-          {localAudio && <audio key={song.id} ref={audioRef} src={localAudio} onEnded={nextSong} onPause={() => setPlaying(false)} onPlay={() => setPlaying(true)} />}
           {expanded && <div className="music-apple-expanded">
             <button type="button" className="music-apple-dismiss" onClick={() => setExpanded(false)}><ChevronLeft size={20} /> 返回播放列表</button>
             <span className="music-apple-expanded-art">{cover(song) ? <img src={cover(song)} alt="" /> : <Music size={76} />}</span>
