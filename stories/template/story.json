@@ -90,6 +90,171 @@
         "sender": "测试用户",
         "kind": "text",
         "meta": {}
+      },
+      {
+        "id": "bobo-photo-01",
+        "title": "啵啵 01",
+        "body": "啵啵相簿",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/bobo/bobo-01.jpg",
+        "folder": "啵啵",
+        "time": "2026-10-30 00:00",
+        "meta": {}
+      },
+      {
+        "id": "bobo-photo-02",
+        "title": "啵啵 02",
+        "body": "啵啵相簿",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/bobo/bobo-02.jpg",
+        "folder": "啵啵",
+        "time": "2026-10-30 00:00",
+        "meta": {}
+      },
+      {
+        "id": "bobo-photo-03",
+        "title": "啵啵 03",
+        "body": "啵啵相簿",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/bobo/bobo-03.jpg",
+        "folder": "啵啵",
+        "time": "2026-10-30 00:00",
+        "meta": {}
+      },
+      {
+        "id": "bobo-photo-04",
+        "title": "啵啵 04",
+        "body": "啵啵相簿",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/bobo/bobo-04.jpg",
+        "folder": "啵啵",
+        "time": "2026-10-30 00:00",
+        "meta": {}
+      },
+      {
+        "id": "bobo-photo-05",
+        "title": "啵啵 05",
+        "body": "啵啵相簿",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/bobo/bobo-05.jpg",
+        "folder": "啵啵",
+        "time": "2026-10-30 00:00",
+        "meta": {}
+      },
+      {
+        "id": "bobo-photo-06",
+        "title": "啵啵 06",
+        "body": "啵啵相簿",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/bobo/bobo-06.jpg",
+        "folder": "啵啵",
+        "time": "2026-10-30 00:00",
+        "meta": {}
+      },
+      {
+        "id": "bobo-photo-07",
+        "title": "啵啵 07",
+        "body": "啵啵相簿",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/bobo/bobo-07.jpg",
+        "folder": "啵啵",
+        "time": "2026-10-30 00:00",
+        "meta": {}
+      },
+      {
+        "id": "bobo-photo-08",
+        "title": "啵啵 08",
+        "body": "啵啵相簿",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/bobo/bobo-08.jpg",
+        "folder": "啵啵",
+        "time": "2026-10-30 00:00",
+        "meta": {}
+      },
+      {
+        "id": "bobo-photo-09",
+        "title": "啵啵 09",
+        "body": "啵啵相簿",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/bobo/bobo-09.jpg",
+        "folder": "啵啵",
+        "time": "2026-10-30 00:00",
+        "meta": {}
+      },
+      {
+        "id": "bobo-photo-10",
+        "title": "啵啵 10",
+        "body": "啵啵相簿",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/bobo/bobo-10.jpg",
+        "folder": "啵啵",
+        "time": "2026-10-30 00:00",
+        "meta": {}
+      },
+      {
+        "id": "bobo-photo-11",
+        "title": "啵啵 11",
+        "body": "啵啵相簿",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/bobo/bobo-11.jpg",
+        "folder": "啵啵",
+        "time": "2026-10-30 00:00",
+        "meta": {}
+      },
+      {
+        "id": "bobo-photo-12",
+        "title": "啵啵 12",
+        "body": "啵啵相簿",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/bobo/bobo-12.jpg",
+        "folder": "啵啵",
+        "time": "2026-10-30 00:00",
+        "meta": {}
+      },
+      {
+        "id": "bobo-photo-13",
+        "title": "啵啵 13",
+        "body": "啵啵相簿",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/bobo/bobo-13.jpg",
+        "folder": "啵啵",
+        "time": "2026-10-30 00:00",
+        "meta": {}
+      },
+      {
+        "id": "bobo-photo-14",
+        "title": "啵啵 14",
+        "body": "啵啵相簿",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/bobo/bobo-14.jpg",
+        "folder": "啵啵",
+        "time": "2026-10-30 00:00",
+        "meta": {}
+      },
+      {
+        "id": "bobo-photo-15",
+        "title": "啵啵 15",
+        "body": "啵啵相簿",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/bobo/bobo-15.jpg",
+        "folder": "啵啵",
+        "time": "2026-10-30 00:00",
+        "meta": {}
       }
     ],
     "safari": [
