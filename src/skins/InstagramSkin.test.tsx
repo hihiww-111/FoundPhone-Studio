@@ -61,7 +61,8 @@ describe("Instagram screens", () => {
       html.indexOf("Reel 6：视频6"),
     );
     expect(html).toContain('playsInline=""');
-    expect(html).toContain('muted=""');
+    expect(html).not.toContain('muted=""');
+    expect(html).toContain('aria-label="静音视频"');
   });
   it("uses the author's profile rather than reference screenshot identities", () => {
     const html = renderToStaticMarkup(

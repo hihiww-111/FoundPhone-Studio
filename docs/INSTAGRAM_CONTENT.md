@@ -8,7 +8,7 @@
 
 Reels 顺序固定来自故事数组，网页内不提供排序入口，旧存档 insReelOrder 不再参与排序。
 
-记录使用 `kind: "video"`、`folder: "Reels"`、`media: "/instagram/reels/reel-01.mp4"`。可选 `meta.cover` 为封面路径，`meta.music` 为显示的配乐文字，sender/body/avatar/likes/comments 使用原有字段。`meta.reel: "true"` 也可标记视频。视频应使用移动 Safari 支持的 MP4（H.264/AAC）。只有当前视频播放，默认静音；点画面暂停/继续，声音按钮开启声音。上下滑动、滚轮或方向键切换；退出 App 或切换页面时暂停。
+记录使用 `kind: "video"`、`folder: "Reels"`、`media: "/instagram/reels/reel-01.mp4"`。可选 `meta.cover` 为封面路径，`meta.music` 为显示的配乐文字，sender/body/avatar/likes/comments 使用原有字段。`meta.reel: "true"` 也可标记视频。视频应使用移动 Safari 支持的 MP4（H.264/AAC）。只有当前视频播放，每次进入 Reels 默认开启声音；点画面暂停/继续，声音按钮可手动静音。切入 Reels 时在点击事件内同步启动播放，若浏览器阻止自动播放则显示播放按钮供再次点击。上下滑动、滚轮或方向键切换；退出 App 或切换页面时暂停。
 
 ## 主页与个人主页
 

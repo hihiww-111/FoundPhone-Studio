@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useIsPresent } from "motion/react";
+import { flushSync } from "react-dom";
 import {
   ArrowLeft,
   Bookmark,
@@ -206,7 +207,7 @@ export function InstagramSkin(p: SkinProps) {
   const [selected, setSelected] = useState<Item | null>(null);
   const [sheet, setSheet] = useState("");
   const [story, setStory] = useState<Item | null>(null);
-  const [muted, setMuted] = useState(true);
+  const [muted, setMuted] = useState(false);
   const [notice, setNotice] = useState("");
   const [editName, setEditName] = useState("");
   const [editBio, setEditBio] = useState("");
@@ -250,10 +251,26 @@ export function InstagramSkin(p: SkinProps) {
     }
   };
   const changeTab = (next: InstagramTab) => {
-    setSelected(null);
-    setSheet("");
-    setStory(null);
-    setStoredTab(next);
+    const change = () => {
+      setSelected(null);
+      setSheet("");
+      setStory(null);
+      if (next === "Reels" && tab !== "Reels") setMuted(false);
+      setStoredTab(next);
+    };
+    if (next !== "Reels") {
+      change();
+      return;
+    }
+    // Mount and start within the tab tap, preserving Safari's user activation.
+    flushSync(change);
+    const video = reelScroll.current?.querySelector<HTMLVideoElement>(
+      '.ins-reel[data-active="true"] video',
+    );
+    if (video)
+      void video.play().catch(() => {
+        /* The visible play control allows retry. */
+      });
   };
   const share = async (text: string) => {
     try {
