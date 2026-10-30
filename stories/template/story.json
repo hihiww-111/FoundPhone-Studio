@@ -397,9 +397,10 @@
         "sender": "Ayra Starr",
         "kind": "audio",
         "folder": "🎧",
-        "media": "",
+        "media": "/music/rush.mp3",
         "meta": {
-          "album": "🎧"
+          "album": "🎧",
+          "cover": "/music/rush.jpg"
         }
       },
       {
