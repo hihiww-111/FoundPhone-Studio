@@ -185,33 +185,29 @@ export function ContactsSkin(p: Props) {
 export function PhotosSkin(p: Props) {
   const { tab, setTab, q, setQ, items } = useContent(p, "图库");
   const [album, setAlbum] = useState("");
+  const albums = ["最近项目", "个人收藏", "啵啵", "⊆(꒪¯ ꒳ ¯꒪）⊇ ੭ﾞ", "自拍", "截屏"];
   const list =
-    tab === "收藏"
-      ? items.filter((i) => i.favorite)
-      : album
-        ? items.filter((i) => (i.folder || "未分类") === album)
-        : items;
+    album === "最近项目" ? items : album === "已隐藏" ? items.filter((i) => i.hidden) : album === "最近删除" ? [] : album ? items.filter((i) => i.folder === album && !i.hidden) : items.filter((i) => !i.hidden);
   return (
     <div className="catalog-skin native-photos">
       <Header p={p} />
       <div className="catalog-scroll">
         <h1>{album || tab}</h1>
-        {tab === "相簿" && !album ? (
+        {tab === "精选集" && !album ? (
           <div className="album-grid">
-            {groupItems(items, "未分类").map((g) => (
+            {albums.map((g) => (
               <button key={g} onClick={() => setAlbum(g)}>
-                <Media
-                  item={items.find((i) => (i.folder || "未分类") === g)!}
-                />
+                {items.find((i) => i.folder === g) ? <Media item={items.find((i) => i.folder === g)!} /> : <span className="photo-album-placeholder"><Image size={30} /></span>}
                 <strong>{g}</strong>
                 <small>
-                  {items.filter((i) => (i.folder || "未分类") === g).length} 项
+                  {(g === "最近项目" ? items.length : items.filter((i) => i.folder === g).length)} 项
                 </small>
               </button>
             ))}
           </div>
         ) : (
           <>
+            {album && <button className="notes-back" onClick={() => setAlbum("")}><ChevronLeft size={17} /> 精选集</button>}
             <SearchBox value={q} set={setQ} />
             <div className="photo-mosaic">
               {list.map((i) => (
@@ -228,16 +224,17 @@ export function PhotosSkin(p: Props) {
             <p className="media-count">{list.length} 个项目</p>
           </>
         )}
-        <Empty items={list} />
+        {tab === "精选集" && !album && <section className="photo-more"><h2>更多项目</h2>{["已隐藏", "最近删除"].map((name) => <button key={name} onClick={() => setAlbum(name)}><Folder size={18} />{name}<ChevronRight size={18} /></button>)}</section>}
+        {!(tab === "精选集" && !album) && <Empty items={list} />}
       </div>
       <Tabs
-        tabs={["图库", "相簿", "收藏"]}
+        tabs={["图库", "精选集"]}
         value={tab}
         set={(t) => {
           setTab(t);
           setAlbum("");
         }}
-        icons={[<Image />, <Folder />, <Heart />]}
+        icons={[<Image />, <Folder />]}
       />
     </div>
   );
