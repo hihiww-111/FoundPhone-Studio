@@ -293,7 +293,7 @@ test("music keeps playing across App navigation and restores controls", async ({
   await page.getByRole("button", { name: "Background first", exact: true }).click();
   await expect.poll(() => audio.evaluate((el: HTMLAudioElement) => el.currentTime)).toBeGreaterThan(0);
   const position = await audio.evaluate((el: HTMLAudioElement) => el.currentTime);
-  await page.getByRole("button", { name: "主屏幕", exact: true }).click();
+  await page.getByRole("button", { name: "返回主屏幕", exact: true }).click();
   await open(page, "备忘录");
   await expect.poll(() => audio.evaluate((el: HTMLAudioElement) => el.currentTime)).toBeGreaterThan(position + 0.5);
   expect(await audio.evaluate((el: HTMLAudioElement) => el.paused)).toBe(false);
@@ -307,4 +307,29 @@ test("music keeps playing across App navigation and restores controls", async ({
   await page.getByRole("button", { name: "下一首", exact: true }).click();
   await expect(audio).toHaveAttribute("src", "/music/background-second.wav");
   await expect.poll(() => audio.evaluate((el: HTMLAudioElement) => el.currentTime)).toBeGreaterThan(0);
+});
+
+test("all 14 story Apps expose a top-right Home button", async ({ page }) => {
+  const story = JSON.parse(readFileSync(
+    new URL("../stories/template/story.json", import.meta.url), "utf8",
+  ));
+  story.phone.passcode = "";
+  const work = compileStory(story).work;
+  const installed = work.apps.filter((app) => app.installed);
+  expect(installed).toHaveLength(14);
+  await page.route("**/work.json", (route) => route.fulfill({ json: work }));
+  await page.goto("/");
+  await page.getByRole("button", { name: "轻触解锁" }).click();
+  for (const app of installed) {
+    await open(page, app.name);
+    const button = page.getByRole("button", { name: "返回主屏幕", exact: true });
+    await expect(button).toHaveCount(1);
+    await expect(button).toBeVisible();
+    const bounds = await button.boundingBox();
+    const screen = await page.locator(".phone-screen").boundingBox();
+    expect(bounds!.x).toBeGreaterThan(screen!.x + screen!.width / 2);
+    expect(bounds!.y).toBeLessThan(screen!.y + screen!.height / 4);
+    await button.click();
+    await expect(page.getByRole("button", { name: "打开" + app.name, exact: true })).toBeVisible();
+  }
 });

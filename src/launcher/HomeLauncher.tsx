@@ -1,3 +1,4 @@
+import { AppHomeButton } from "../ios/AppHomeButton";
 import { useEffect, useRef, useState, type ReactNode, type PointerEvent } from "react";
 import {
   Search,
@@ -706,6 +707,7 @@ export function HomeLauncher(p: Props) {
                     ? "保存布局"
                     : active?.name || "小组件"}
             </strong>
+            {p.storeOpen && <AppHomeButton onHome={() => p.closeStore?.()} />}
           </header>
           <div className="launcher-sheet-scroll">
             {sheet === "library" ? (

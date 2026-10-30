@@ -1,3 +1,4 @@
+import { AppHomeButton } from "./ios/AppHomeButton";
 import { MusicPlaybackProvider } from "./MusicPlayback";
 import { StatusGlyph } from "./ios/StatusGlyph";
 import { SocialDetail, socialDetailApps } from "./skins/SocialDetails";
@@ -270,6 +271,15 @@ function PhoneRuntime({
     for (const id of appSnapshots.current.keys())
       if (!recent.includes(id) && id !== app) appSnapshots.current.delete(id);
   };
+  const returnHome = () => {
+    captureApp();
+    setHomeRequest((n) => n + 1);
+    setKeyboard(false);
+    setQuickCamera(false);
+    setApp("");
+    setFolder("");
+    setPanel("");
+  };
   const open = (id: string) => {
     if (!work.apps.some((a) => a.id === id && a.installed)) return;
     setApp(id);
@@ -458,6 +468,9 @@ function PhoneRuntime({
                 creator={creator}
                 origin={launchOrigin}
               >
+                <div className="app-home-toolbar">
+                  <AppHomeButton onHome={returnHome} />
+                </div>
                 <AppContent
                   app={plugin}
                   name={
@@ -500,7 +513,7 @@ function PhoneRuntime({
                   "home-" + homeRequest + (app === "appstore" ? "store" : "")
                 }
                 storeOpen={app === "appstore"}
-                closeStore={() => setApp("")}
+                closeStore={returnHome}
                 work={work}
                 layout={deviceLayout.layout}
                 change={deviceLayout.change}
@@ -799,12 +812,7 @@ function PhoneRuntime({
                 beginUnlock();
                 return;
               }
-              captureApp();
-              setHomeRequest((n) => n + 1);
-              setKeyboard(false);
-              setApp("");
-              setFolder("");
-              setPanel("");
+              returnHome();
             }}
           />
           <div className="screen-dimmer" />

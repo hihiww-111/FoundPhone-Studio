@@ -776,7 +776,6 @@ export function MusicSkin(p: Props) {
           <ChevronLeft size={20} />{playlist || tab !== "资料库" ? "资料库" : "返回"}
         </button>
         <strong>{playlist ? "播放列表" : tab === "歌单" ? "播放列表" : "资料库"}</strong>
-        <button type="button" className="music-apple-home" onClick={p.onBack}><ChevronLeft size={15} />主屏幕</button>
       </div>
       <div className="catalog-scroll music-apple-scroll">
         {tab === "歌单" && !playlist ? (
