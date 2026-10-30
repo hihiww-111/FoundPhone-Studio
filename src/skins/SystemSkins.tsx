@@ -735,7 +735,10 @@ function spotifyEmbedUrl(value: string): string {
       ? `https://open.spotify.com/embed/track/${id}?utm_source=generator`
       : "";
   } catch {
-    return ""export function MusicSkin(p: Props) {
+    return "";
+  }
+}
+export function MusicSkin(p: Props) {
   const { tab, setTab, items } = useContent(p, "资料库");
   const [song, setSong] = useTrack(p, items);
   const [playlist, setPlaylist] = useState("");
