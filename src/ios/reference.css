@@ -757,3 +757,10 @@
   object-fit: cover;
   border-radius: inherit;
 }
+
+/* Photos curated collections */
+.ios18 .native-photos .photo-album-placeholder{display:grid;place-items:center;aspect-ratio:1;background:#ededf2;color:#b2b2b9;border-radius:12px;width:100%}
+.ios18 .native-photos .photo-more{margin:22px 0 12px}
+.ios18 .native-photos .photo-more h2{font-size:21px;margin:0 0 14px;font-weight:700}
+.ios18 .native-photos .photo-more button{width:100%;display:flex;align-items:center;gap:14px;padding:18px 6px;background:transparent;border:0;border-bottom:1px solid #e5e5ea;text-align:left;font-size:16px;color:inherit}
+.ios18 .native-photos .photo-more button svg:last-child{margin-left:auto;color:#aaa}
