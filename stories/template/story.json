@@ -423,9 +423,10 @@
         "sender": "Justin Bieber",
         "kind": "audio",
         "folder": "🎧",
-        "media": "",
+        "media": "/music/baby.mp3",
         "meta": {
-          "album": "🎧"
+          "album": "🎧",
+          "cover": "/music/baby.jpg"
         }
       },
       {
