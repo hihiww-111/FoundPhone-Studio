@@ -338,12 +338,76 @@
     ],
     "music": [
       {
-        "id": "test-item-music",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
+        "id": "recent-listen-01",
+        "title": "我 VS Justin Bieber",
+        "body": "",
+        "sender": "TOP 登陆少年组合",
+        "kind": "audio",
+        "folder": "最近常听",
+        "media": "",
+        "meta": {
+          "album": "我 VS Justin Bieber"
+        }
+      },
+      {
+        "id": "recent-listen-02",
+        "title": "LØVE IS DANGEROUS!",
+        "body": "",
+        "sender": "TOP 登陆少年组合",
+        "kind": "audio",
+        "folder": "最近常听",
+        "media": "",
+        "meta": {
+          "album": "LØVE IS DANGEROUS!"
+        }
+      },
+      {
+        "id": "recent-listen-03",
+        "title": "你能听到吗",
+        "body": "",
+        "sender": "TOP 登陆少年组合",
+        "kind": "audio",
+        "folder": "最近常听",
+        "media": "",
+        "meta": {
+          "album": "你能听到吗"
+        }
+      },
+      {
+        "id": "recent-listen-04",
+        "title": "命 (FATE)",
+        "body": "",
+        "sender": "TOP 登陆少年组合",
+        "kind": "audio",
+        "folder": "最近常听",
+        "media": "",
+        "meta": {
+          "album": "命 (FATE)"
+        }
+      },
+      {
+        "id": "recent-listen-05",
+        "title": "想得美",
+        "body": "",
+        "sender": "TOP 登陆少年组合",
+        "kind": "audio",
+        "folder": "最近常听",
+        "media": "",
+        "meta": {
+          "album": "想得美"
+        }
+      },
+      {
+        "id": "recent-listen-06",
+        "title": "Still Alive (背水一战)",
+        "body": "",
+        "sender": "TOP 登陆少年组合",
+        "kind": "audio",
+        "folder": "最近常听",
+        "media": "",
+        "meta": {
+          "album": "Still Alive (背水一战)"
+        }
       }
     ],
     "weather": [
