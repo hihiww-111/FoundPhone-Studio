@@ -755,7 +755,7 @@ export function MusicSkin(p: Props) {
               <button
                 className="music-track"
                 key={i.id}
-                onClick={() => setSong(i)}
+                onClick={() => { setSong(i); const link = meta(i, "appleMusicUrl"); if (link.startsWith("https://music.apple.com/")) window.open(link, "_blank", "noopener,noreferrer"); }}
               >
                 <small>{n + 1}</small>
                 <span>
