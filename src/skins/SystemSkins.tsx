@@ -721,14 +721,33 @@ export function FilesSkin(p: Props) {
     </div>
   );
 }
+function spotifyEmbedUrl(value: string): string {
+  try {
+    const url = new URL(value);
+    if (url.protocol !== "https:" || url.hostname !== "open.spotify.com") return "";
+    const parts = url.pathname.split("/").filter(Boolean);
+    const trackIndex = parts.indexOf("track");
+    const id = parts[trackIndex + 1];
+    return trackIndex >= 0 && id && /^[A-Za-z0-9]{22}$/.test(id)
+      ? `https://open.spotify.com/embed/track/${id}?utm_source=generator`
+      : "";
+  } catch {
+    return "";
+  }
+}
 export function MusicSkin(p: Props) {
   const { tab, setTab, items } = useContent(p, "资料库");
   const [song, setSong] = useTrack(p, items);
   const [playlist, setPlaylist] = useState("");
   const playlists = ["最近常听", "🎧"];
-  const visibleSongs = playlist
-    ? items.filter((i) => i.folder === playlist)
-    : items;
+  const visibleSongs = playlist ? items.filter((i) => i.folder === playlist) : items;
+  const localAudio = song?.kind === "audio" ? safeMedia(song.media) : "";
+  const spotifyUrl = song ? spotifyEmbedUrl(meta(song, "spotifyUrl")) : "";
+  const appleMusicUrl = song ? meta(song, "appleMusicUrl") : "";
+  const nextSong = () => {
+    if (!song || items.length === 0) return;
+    setSong(items[(items.findIndex((i) => i.id === song.id) + 1) % items.length]);
+  };
   return (
     <div className="catalog-skin native-music">
       <Header p={p} />
@@ -752,11 +771,7 @@ export function MusicSkin(p: Props) {
               </button>
             )}
             {visibleSongs.map((i, n) => (
-              <button
-                className="music-track"
-                key={i.id}
-                onClick={() => { setSong(i); const link = meta(i, "appleMusicUrl"); if (link.startsWith("https://music.apple.com/")) window.open(link, "_blank", "noopener,noreferrer"); }}
-              >
+              <button className="music-track" key={i.id} onClick={() => setSong(i)}>
                 <small>{n + 1}</small>
                 <span>
                   <strong>{i.title}</strong>
@@ -772,22 +787,34 @@ export function MusicSkin(p: Props) {
         )}
       </div>
       {song && (
-        <div className="native-now-playing">
-          <button onClick={() => p.onItem(song)}>
+        <div className="native-now-playing music-hybrid-player">
+          <div className="music-hybrid-heading">
             <Music size={20} />
-            {song.title}
-          </button>
-          {song.kind === "audio" && safeMedia(song.media) ? (
-            <AudioPlayer p={p} item={song} />
+            <span><strong>{song.title}</strong><small>{song.sender}</small></span>
+            <button type="button" onClick={() => setSong(null)} aria-label="关闭播放器">×</button>
+          </div>
+          {localAudio ? (
+            <AudioPlayer key={song.id} p={p} item={song} />
+          ) : spotifyUrl ? (
+            <iframe
+              key={song.id}
+              title={`Spotify 播放 ${song.title}`}
+              src={spotifyUrl}
+              width="100%"
+              height="152"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+              style={{ border: 0, borderRadius: 12 }}
+            />
           ) : (
-            <span className="music-audio-pending">音频待添加，上传音频文件后即可播放</span>
+            <span className="music-audio-pending">暂未添加播放来源，请提供本地音频或 Spotify 歌曲链接。</span>
           )}
-          <button
-            aria-label="下一首"
-            onClick={() => setSong(items[(items.findIndex((i) => i.id === song.id) + 1) % items.length])}
-          >
-            <SkipForward size={18} />
-          </button>
+          <div className="music-hybrid-actions">
+            {appleMusicUrl.startsWith("https://music.apple.com/") && !localAudio && !spotifyUrl && (
+              <a href={appleMusicUrl} target="_blank" rel="noopener noreferrer">在 Apple Music 中打开</a>
+            )}
+            <button type="button" aria-label="下一首" onClick={nextSong}><SkipForward size={18} /> 下一首</button>
+          </div>
         </div>
       )}
       <Tabs
