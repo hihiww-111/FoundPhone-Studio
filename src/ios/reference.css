@@ -846,17 +846,7 @@
 .ios18 .music-apple-style .music-apple-mini {flex:0 0 auto;}
 .ios18 .music-apple-style .music-apple-mini-info .music-apple-art {flex-basis:44px;width:44px;height:44px;}
 
-/* Phone-level navigation remains available in every App and detail page. */
-.ios18 .app-home-toolbar {
-  position: relative;
-  z-index: 50;
-  display: flex;
-  justify-content: flex-end;
-  flex: 0 0 44px;
-  min-height: 44px;
-  padding: 0 12px;
-  background: inherit;
-}
+/* Inline Home accessory: shares each App's existing top bar without a row. */
 .ios18 .app-home-button {
   display: inline-flex;
   align-items: center;
@@ -864,10 +854,11 @@
   gap: 2px;
   min-width: 76px;
   min-height: 44px;
-  padding: 0 6px;
+  padding: 0;
   border: 0;
-  border-radius: 12px;
-  background: #f5f5f7;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
   color: #007aff;
   font: inherit;
   font-size: 13px;
@@ -875,13 +866,32 @@
   cursor: pointer;
   touch-action: manipulation;
 }
-.ios18 .app-home-button:active { background: #e5e5ea; }
+.ios18 .app-screen > .app-home-button {
+  position: absolute;
+  z-index: 50;
+  top: 59px;
+  right: 12px;
+}
+.ios18 .app-home-button:active { opacity: .55; }
 .ios18 .app-home-button:focus-visible { outline: 2px solid #007aff; outline-offset: -2px; }
+/* Leave room beside existing menus, search and other navigation actions. */
+.ios18 .app-screen :is(.app-nav, .music-apple-nav, .settings-native-nav, .igh, .kzkh, .kzth, .kzxh, .post-detail-nav, .message-heading) {
+  padding-right: 96px;
+}
+.ios18 .skin-clock:has(.phone-a-clock) > .app-home-button { top: 72px; color: #ff9f0a; }
+.ios18 .phone-a-clock .pa-clock-actions { padding-right: 80px; }
+.ios18 .skin-weather:has(.phone-a-weather) > .app-home-button { top: 89px; color: #fff; }
+.ios18 .phone-a-weather :is(.paw-list-heading, .paw-detail-top) { padding-right: 80px; }
+.ios18 .skin-weather:has(.paw-detail-top) > .app-home-button { top: 73px; }
 .ios18 .launcher-sheet > header > .app-home-button {
   position: absolute;
   left: auto;
   right: 12px;
   top: 3px;
   min-height: 44px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
   font-size: 13px;
 }

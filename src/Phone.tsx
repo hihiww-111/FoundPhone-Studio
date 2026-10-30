@@ -468,9 +468,7 @@ function PhoneRuntime({
                 creator={creator}
                 origin={launchOrigin}
               >
-                <div className="app-home-toolbar">
-                  <AppHomeButton onHome={returnHome} />
-                </div>
+                <AppHomeButton onHome={returnHome} />
                 <AppContent
                   app={plugin}
                   name={
