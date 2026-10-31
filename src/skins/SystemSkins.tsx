@@ -319,8 +319,8 @@ export function SafariSkin(p: Props) {
     );
   return (
     <div className="catalog-skin native-safari">
-      <Header p={p} />
-      <div className="catalog-scroll">
+      <header className="app-nav safari-nav"><strong>浏览器</strong></header>
+      <div className={`catalog-scroll safari-content safari-content-${tab === "书签" ? "bookmarks" : "history"}`}>
         <h1>{tab}</h1>
         {tab === "历史记录" ? (
           <div className="safari-history" role="list" aria-label="搜索历史">
@@ -335,14 +335,14 @@ export function SafariSkin(p: Props) {
             ))}
           </div>
         ) : (
-          <div className="safari-favorites">
+          <div className="safari-bookmarks">
             {items.map((i) => (
               <button key={i.id} onClick={() => p.onItem(i)}>
                 <span>
                   <Globe size={28} />
                 </span>
                 <strong>{i.title}</strong>
-                <small>{meta(i, "url")}</small>
+                
               </button>
             ))}
           </div>
@@ -354,7 +354,7 @@ export function SafariSkin(p: Props) {
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="搜索或输入虚构网址"
+          placeholder="搜索书签与历史记录"
           aria-label="地址栏"
           onKeyDown={(e) => {
             if (e.key === "Enter" && tab !== "历史记录" && items[0])

@@ -3,7 +3,7 @@
   "id": "phone-a-story",
   "title": "张极的手机",
   "description": "人A的互动手机故事，第一阶段：锁屏与桌面配置。",
-  "revision": 24,
+  "revision": 25,
   "phone": {
     "owner": "张极",
     "date": "2026-10-25",
@@ -251,11 +251,30 @@
     ],
     "safari": [
       {
-        "id": "test-item-safari",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "id": "safari-bookmark-01",
+        "title": "猫毛过敏自救",
+        "body": "",
         "kind": "text",
+        "folder": "书签",
+        "favorite": true,
+        "meta": {}
+      },
+      {
+        "id": "safari-bookmark-02",
+        "title": "柯基注意事项",
+        "body": "",
+        "kind": "text",
+        "folder": "书签",
+        "favorite": true,
+        "meta": {}
+      },
+      {
+        "id": "safari-bookmark-03",
+        "title": "带你读懂双子座",
+        "body": "",
+        "kind": "text",
+        "folder": "书签",
+        "favorite": true,
         "meta": {}
       },
       {

@@ -8,7 +8,6 @@ import {
   MessageCircle,
   Video,
   Folder,
-  Search,
   Copy,
   Check,
 } from "lucide-react";
@@ -60,6 +59,9 @@ export function NativeDetail({
   };
   return (
     <div className={"native-detail native-detail-" + app}>
+      {app === "safari" ? (
+        <header className="app-nav safari-nav"><strong>浏览器</strong></header>
+      ) : (
       <header className="app-nav">
         <button aria-label="返回" onClick={back}>
           <ChevronLeft size={24} />
@@ -70,6 +72,7 @@ export function NativeDetail({
           <MoreHorizontal size={23} />
         </button>
       </header>
+      )}
       {copied && (
         <div className="native-action-sheet">
           <button onClick={copy}>
@@ -179,9 +182,8 @@ export function NativeDetail({
             <RichText value={item.richText} fallback={item.body} />
           </div>
           <footer className="native-reader-address">
-            <Search size={16} />
-            <span>{item.meta.url || item.title}</span>
-            <Share size={18} />
+            <button onClick={back} aria-label="返回书签"><ChevronLeft size={18} />书签</button>
+            <span>{item.title}</span>
           </footer>
         </>
       ) : (

@@ -4167,3 +4167,69 @@
   font-size: 14px;
   color: #8e8e93;
 }
+
+/* Safari fills the available phone screen; its title stays centered beside Home. */
+.ios18 .skin-safari .app-nav.safari-nav {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  min-height: 44px;
+  padding: 0 96px;
+}
+.ios18 .skin-safari .app-nav.safari-nav > strong {
+  position: static;
+  transform: none;
+  font-size: 17px;
+  white-space: nowrap;
+}
+.native-safari .safari-content {
+  padding: 0 12px 12px;
+}
+.native-safari .safari-content > h1 {
+  margin: 14px 4px;
+}
+.safari-content-bookmarks {
+  display: flex;
+  flex-direction: column;
+}
+.safari-bookmarks {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+  gap: 12px;
+}
+.safari-bookmarks > button {
+  display: flex;
+  flex: 1 0 100px;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  padding: 20px 24px;
+  text-align: left;
+  background: #fff;
+  border-radius: 20px;
+  color: #111;
+}
+.safari-bookmarks > button > span {
+  display: flex;
+  color: #0088ff;
+  flex-shrink: 0;
+}
+.safari-bookmarks strong {
+  font-size: 19px;
+  font-weight: 600;
+}
+.ios18 .native-detail-safari .native-reader-address button {
+  display: inline-flex;
+  align-items: center;
+  color: #007aff;
+  flex-shrink: 0;
+}
+.ios18 .native-detail-safari .native-reader-address > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
