@@ -895,3 +895,72 @@
   border-radius: 0;
   font-size: 13px;
 }
+
+/* Photos: centered navigation, balanced album cards, and clear photo spacing. */
+.ios18 .skin-photos .app-nav.photos-nav {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  flex-shrink: 0;
+  padding: 0 96px;
+  border-bottom: 1px solid #ececf0;
+  background: #ffffffed;
+}
+.ios18 .skin-photos .photos-nav > strong {
+  position: static;
+  transform: none;
+  font-size: 17px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.ios18 .native-photos .catalog-scroll {
+  padding: 0 16px 20px;
+}
+.ios18 .native-photos .catalog-scroll > h1 {
+  margin: 22px 0 18px;
+  font-size: 28px;
+  letter-spacing: -.6px;
+}
+.ios18 .native-photos .album-grid {
+  gap: 24px 16px;
+  padding: 0;
+  align-items: start;
+}
+.ios18 .native-photos .album-grid :is(.photo-album-cover, .photo-album-placeholder) {
+  border-radius: 18px;
+}
+.ios18 .native-photos .album-grid strong {
+  margin-top: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.ios18 .native-photos .album-grid small {
+  margin-top: 3px;
+  font-size: 12px;
+  color: #8e8e93;
+}
+.ios18 .native-photos .photo-mosaic {
+  gap: 5px;
+  margin-top: 14px;
+}
+.ios18 .native-photos .photo-mosaic > button {
+  border-radius: 9px;
+}
+.ios18 .native-photos .photo-more {
+  margin-top: 30px;
+}
+.ios18 .native-photos .media-count {
+  padding: 22px 0 6px;
+  font-size: 13px;
+}
+.ios18 .native-detail-photos .native-detail-toolbar button[aria-label="返回相册"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  white-space: nowrap;
+  font-size: 13px;
+}

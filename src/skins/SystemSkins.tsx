@@ -193,12 +193,12 @@ export function PhotosSkin(p: Props) {
   const albumCover = (name: string) =>
     items.find((i) => meta(i, "albumCover") === name) ||
     items.find((i) => i.folder === name);
-  const albums = ["最近项目", "个人收藏", "啵啵", "⊆(꒪¯ ꒳ ¯꒪）⊇ ੭ﾞ"];
+  const albums = ["最近项目", "啵啵", "⊆(꒪¯ ꒳ ¯꒪）⊇ ੭ﾞ"];
   const list =
-    album === "已隐藏" ? items.filter((i) => i.hidden) : album === "最近删除" ? [] : album ? items.filter((i) => i.folder === album && !i.hidden) : items.filter((i) => !i.hidden);
+    album === "已隐藏" ? items.filter((i) => i.hidden) : album ? items.filter((i) => i.folder === album && !i.hidden) : items.filter((i) => !i.hidden);
   return (
     <div className="catalog-skin native-photos">
-      <Header p={p} />
+      <header className="app-nav photos-nav"><strong>相册</strong></header>
       <div className="catalog-scroll">
         <h1>{album || tab}</h1>
         {tab === "精选集" && !album ? (
@@ -218,7 +218,6 @@ export function PhotosSkin(p: Props) {
           </div>
         ) : (
           <>
-            {album && <button className="notes-back" onClick={() => setAlbum("")}><ChevronLeft size={17} /> 精选集</button>}
             <SearchBox value={q} set={setQ} />
             <div className="photo-mosaic">
               {list.map((i) => (
@@ -235,7 +234,7 @@ export function PhotosSkin(p: Props) {
             <p className="media-count">{list.length} 个项目</p>
           </>
         )}
-        {tab === "精选集" && !album && <section className="photo-more"><h2>更多项目</h2>{["已隐藏", "最近删除"].map((name) => <button key={name} onClick={() => setAlbum(name)}><Folder size={18} />{name}<ChevronRight size={18} /></button>)}</section>}
+        {tab === "精选集" && !album && <section className="photo-more"><h2>更多项目</h2>{["已隐藏"].map((name) => <button key={name} onClick={() => setAlbum(name)}><Folder size={18} />{name}<ChevronRight size={18} /></button>)}</section>}
         {!(tab === "精选集" && !album) && <Empty items={list} />}
       </div>
       <Tabs

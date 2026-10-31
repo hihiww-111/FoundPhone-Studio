@@ -60,8 +60,8 @@ export function NativeDetail({
   };
   return (
     <div className={"native-detail native-detail-" + app}>
-      {app === "safari" ? (
-        <header className="app-nav safari-nav"><strong>浏览器</strong></header>
+      {app === "safari" || app === "photos" ? (
+        <header className={`app-nav ${app === "photos" ? "photos-nav" : "safari-nav"}`}><strong>{app === "photos" ? "相册" : "浏览器"}</strong></header>
       ) : (
       <header className="app-nav">
         <button aria-label="返回" onClick={back}>
@@ -96,6 +96,7 @@ export function NativeDetail({
             )}
           </div>
           <footer className="native-detail-toolbar">
+            <button aria-label="返回相册" onClick={back}><ChevronLeft /><span>相册</span></button>
             <button aria-label="分享照片说明" onClick={copy}>
               <Share />
             </button>
