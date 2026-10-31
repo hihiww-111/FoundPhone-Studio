@@ -195,7 +195,7 @@ export function PhotosSkin(p: Props) {
     items.find((i) => i.folder === name);
   const albums = ["最近项目", "个人收藏", "啵啵", "⊆(꒪¯ ꒳ ¯꒪）⊇ ੭ﾞ"];
   const list =
-    album === "最近项目" ? items : album === "已隐藏" ? items.filter((i) => i.hidden) : album === "最近删除" ? [] : album ? items.filter((i) => i.folder === album && !i.hidden) : items.filter((i) => !i.hidden);
+    album === "已隐藏" ? items.filter((i) => i.hidden) : album === "最近删除" ? [] : album ? items.filter((i) => i.folder === album && !i.hidden) : items.filter((i) => !i.hidden);
   return (
     <div className="catalog-skin native-photos">
       <Header p={p} />
@@ -210,7 +210,7 @@ export function PhotosSkin(p: Props) {
                 {cover ? <span className="photo-album-cover"><Media item={preview(cover)} /></span> : <span className="photo-album-placeholder"><Image size={30} /></span>}
                 <strong>{g}</strong>
                 <small>
-                  {(g === "最近项目" ? items.length : items.filter((i) => i.folder === g).length)} 项
+                  {items.filter((i) => i.folder === g && !i.hidden).length} 项
                 </small>
               </button>
             );
