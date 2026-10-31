@@ -259,3 +259,17 @@
 .ios18 .safari-gallery-controls button:disabled {
   opacity: .25;
 }
+
+.ios18 .native-reader .safari-article-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 0 20px;
+  border-radius: 12px;
+}
+.ios18 .native-detail-safari .detail-body {
+  font-size: 16px;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}

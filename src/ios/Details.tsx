@@ -183,6 +183,7 @@ export function NativeDetail({
           ) : (
             <div className="native-detail-scroll native-reader">
               <h1>{item.title}</h1>
+              {media && <img className="safari-article-image" src={media} alt={item.title} />}
               <RichText value={item.richText} fallback={item.body} />
             </div>
           )}
