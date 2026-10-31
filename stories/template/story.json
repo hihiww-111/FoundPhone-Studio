@@ -3,7 +3,7 @@
   "id": "phone-a-story",
   "title": "张极的手机",
   "description": "人A的互动手机故事，第一阶段：锁屏与桌面配置。",
-  "revision": 12,
+  "revision": 13,
   "phone": {
     "owner": "张极",
     "date": "2026-10-25",
@@ -630,6 +630,63 @@
         "media": "/instagram/reels/reel-05.mp4",
         "meta": {
           "cover": "/instagram/reels/reel-05.jpg"
+        }
+      },
+      {
+        "id": "instagram-profile-reel-01",
+        "title": "主页Reel 1",
+        "body": "",
+        "sender": "张极",
+        "kind": "video",
+        "folder": "Reels",
+        "media": "/instagram/profile-reels/reel-01.mp4",
+        "likes": 123,
+        "comments": [
+          "爱狗人士：汪汪跳舞水平这个厉害",
+          "汪起汪起：没想到有一天我在向狗学手势舞"
+        ],
+        "meta": {
+          "profileReel": "true",
+          "owner": "true",
+          "cover": "/instagram/profile-reels/reel-01.jpg"
+        }
+      },
+      {
+        "id": "instagram-profile-reel-02",
+        "title": "主页Reel 2",
+        "body": "",
+        "sender": "张极",
+        "kind": "video",
+        "folder": "Reels",
+        "media": "/instagram/profile-reels/reel-02.mp4",
+        "likes": 152,
+        "comments": [
+          "爱汪没理由：今天很帅哦",
+          "汪起汪起：好带劲啊！",
+          "喜欢刷小狗：小狗驾到，通通闪开"
+        ],
+        "meta": {
+          "profileReel": "true",
+          "owner": "true",
+          "cover": "/instagram/profile-reels/reel-02.jpg"
+        }
+      },
+      {
+        "id": "instagram-profile-reel-03",
+        "title": "主页Reel 3",
+        "body": "",
+        "sender": "张极",
+        "kind": "video",
+        "folder": "Reels",
+        "media": "/instagram/profile-reels/reel-03.mp4",
+        "likes": 99,
+        "comments": [
+          "狗狗是天狗狗是地：我摸一把"
+        ],
+        "meta": {
+          "profileReel": "true",
+          "owner": "true",
+          "cover": "/instagram/profile-reels/reel-03.jpg"
         }
       }
     ]

@@ -106,3 +106,24 @@ it("ignores old saved ordering and exposes fixed read-only counts without remove
   for (const label of ["调整视频顺序", "复制视频", "视频选项", "帖子选项"])
     expect(html).not.toContain(label);
 });
+
+it("shows three profile-video thumbnails in the homepage without autoplaying", () => {
+  const items = [1, 2, 3].map((n) =>
+    makeItem({
+      id: `profile-${n}`,
+      title: `主页Reel ${n}`,
+      sender: "机主",
+      kind: "video",
+      folder: "Reels",
+      media: `/instagram/profile-reels/reel-0${n}.mp4`,
+      meta: {
+        profileReel: "true",
+        owner: "true",
+        cover: `/instagram/profile-reels/reel-0${n}.jpg`,
+      },
+    }),
+  );
+  const html = renderToStaticMarkup(<InstagramSkin {...props} items={items} />);
+  expect(html.match(/aria-label="查看主页Reel [123]"/g)).toHaveLength(3);
+  expect(html).not.toContain("<video");
+});

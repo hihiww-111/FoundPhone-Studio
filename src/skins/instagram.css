@@ -872,3 +872,39 @@
   font-size: 11px;
   margin-top: 4px;
 }
+.ios18 .instagram-app .ins-profile-reels-preview > h2 {
+  font-size: 16px;
+  margin: 0;
+  padding: 12px;
+}
+.ios18 .instagram-app .ins-reels-header .ins-profile-back {
+  pointer-events: auto;
+  width: 32px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+}
+.ios18 .instagram-app .ins-authored-comments {
+  overflow-y: auto;
+  padding: 8px 0;
+}
+.ios18 .instagram-app .ins-authored-comments article {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 0;
+}
+.ios18 .instagram-app .ins-authored-comments article > div {
+  flex: 1;
+  min-width: 0;
+}
+.ios18 .instagram-app .ins-authored-comments strong {
+  font-size: 12px;
+}
+.ios18 .instagram-app .ins-authored-comments p {
+  font-size: 13px;
+  margin: 5px 0 0;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}

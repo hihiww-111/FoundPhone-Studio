@@ -28,6 +28,7 @@ import { safeMedia, type Item } from "../schema";
 import { useSkinState } from "../skinState";
 import {
   instagramContent,
+  instagramReelStats,
   reelSwipeTarget,
   instagramImages,
   instagramTab,
@@ -196,6 +197,10 @@ export function InstagramSkin(p: SkinProps) {
     "insFollowing",
     [],
   );
+  const [profileViewer, setProfileViewer] = useState(false);
+  const [profileIndex, setProfileIndex] = useState(0);
+  const [comments, setComments] = useState<Item | null>(null);
+  const viewingReels = tab === "Reels" || profileViewer;
   const [storedReel, setStoredReel] = useSkinState<number>(p, "insReel", 0);
   const [profileName, setProfileName] = useSkinState<string>(
     p,
@@ -217,18 +222,22 @@ export function InstagramSkin(p: SkinProps) {
   const {
     posts,
     reels: authoredReels,
+    profileReels,
     stories,
     ownPosts,
     ownReels,
   } = instagramContent(p.items, p.owner || "机主");
-  const reels = authoredReels;
+  const reels = profileViewer ? profileReels : authoredReels;
+  const currentIndex = profileViewer ? profileIndex : storedReel;
+  const setReelIndex = (index: number) =>
+    profileViewer ? setProfileIndex(index) : setStoredReel(index);
   const reelOrderKey = reels.map((i) => i.id).join("|");
   const profile = p.items.find((i) => i.meta.profile === "true");
   const username = profile?.meta.username || p.owner || "机主";
   const ownAvatar = profile?.avatar || "";
   const activeReel = Math.max(
     0,
-    Math.min(reels.length - 1, Math.floor(storedReel) || 0),
+    Math.min(reels.length - 1, Math.floor(currentIndex) || 0),
   );
   const authorPosts = posts.filter((i) => i.sender && i.sender !== p.owner);
   const people = authorPosts.filter(
@@ -253,6 +262,8 @@ export function InstagramSkin(p: SkinProps) {
   const changeTab = (next: InstagramTab) => {
     const change = () => {
       setSelected(null);
+      setProfileViewer(false);
+      setComments(null);
       setSheet("");
       setStory(null);
       if (next === "Reels" && tab !== "Reels") setMuted(false);
@@ -270,6 +281,24 @@ export function InstagramSkin(p: SkinProps) {
     if (video)
       void video.play().catch(() => {
         /* The visible play control allows retry. */
+      });
+  };
+  const openProfileReel = (item: Item) => {
+    const index = profileReels.findIndex((i) => i.id === item.id);
+    if (index < 0) return;
+    flushSync(() => {
+      setProfileIndex(index);
+      setProfileViewer(true);
+      setMuted(false);
+      setComments(null);
+      setSheet("");
+    });
+    const video = reelScroll.current?.querySelector<HTMLVideoElement>(
+      '.ins-reel[data-active="true"] video',
+    );
+    if (video)
+      void video.play().catch(() => {
+        /* Tap the visible play control to retry. */
       });
   };
   const share = async (text: string) => {
@@ -295,14 +324,14 @@ export function InstagramSkin(p: SkinProps) {
     return () => clearTimeout(timer);
   }, [notice]);
   useEffect(() => {
-    if (tab === "Reels" && reelScroll.current)
+    if (viewingReels && reelScroll.current)
       reelScroll.current.scrollTop =
         activeReel * reelScroll.current.clientHeight;
-  }, [tab, reelOrderKey]);
+  }, [viewingReels, reelOrderKey]);
   useEffect(() => {
-    if (tab === "Reels" && reels[activeReel] && !p.creator)
+    if (viewingReels && reels[activeReel] && !p.creator)
       p.onRead(reels[activeReel].id);
-  }, [tab, reels[activeReel]?.id]);
+  }, [viewingReels, reels[activeReel]?.id]);
   const post = (i: Item) => (
     <article className="ins-post" key={i.id}>
       <header className="ins-post-header">
@@ -370,6 +399,10 @@ export function InstagramSkin(p: SkinProps) {
           key={i.id}
           aria-label={`查看${i.title}`}
           onClick={() => {
+            if (i.meta.profileReel === "true") {
+              openProfileReel(i);
+              return;
+            }
             const index = reels.findIndex((r) => r.id === i.id);
             if (index >= 0) {
               setStoredReel(index);
@@ -394,8 +427,12 @@ export function InstagramSkin(p: SkinProps) {
     </div>
   );
   return (
-    <div className="instagram-app" data-mymy="instagram" data-ins-tab={tab}>
-      {tab !== "Reels" && (
+    <div
+      className="instagram-app"
+      data-mymy="instagram"
+      data-ins-tab={viewingReels ? "Reels" : tab}
+    >
+      {!viewingReels && (
         <header className="ins-header">
           <button
             aria-label={selected ? "返回Instagram动态" : "新建内容"}
@@ -430,7 +467,7 @@ export function InstagramSkin(p: SkinProps) {
           </button>
         </header>
       )}
-      {tab !== "Reels" && (
+      {!viewingReels && (
         <div className="ins-scroll" key={`${tab}-${selected?.id || "root"}`}>
           {selected ? (
             post(selected)
@@ -468,6 +505,12 @@ export function InstagramSkin(p: SkinProps) {
                   </button>
                 ))}
               </div>
+              {profileReels.length > 0 && (
+                <section className="ins-profile-reels-preview">
+                  <h2>Reels</h2>
+                  {grid(profileReels)}
+                </section>
+              )}
               {posts.map(post)}
               {!posts.length && (
                 <div className="ins-empty">
@@ -486,7 +529,7 @@ export function InstagramSkin(p: SkinProps) {
                     <strong>{profileName}</strong>
                     <div className="ins-profile-stats">
                       <span>
-                        <b>{ownPosts.length}</b>帖子
+                        <b>{ownPosts.length + ownReels.length}</b>帖子
                       </span>
                       <span>
                         <b>{profile?.meta.followers || "—"}</b>粉丝
@@ -619,9 +662,21 @@ export function InstagramSkin(p: SkinProps) {
           )}
         </div>
       )}
-      {tab === "Reels" && (
+      {viewingReels && (
         <>
           <header className="ins-reels-header">
+            {profileViewer && (
+              <button
+                className="ins-profile-back"
+                aria-label="返回视频网格"
+                onClick={() => {
+                  setComments(null);
+                  setProfileViewer(false);
+                }}
+              >
+                <ArrowLeft size={23} />
+              </button>
+            )}
             <h1>Reels</h1>
           </header>
           <div
@@ -683,7 +738,7 @@ export function InstagramSkin(p: SkinProps) {
                   Math.round(el.scrollTop / Math.max(1, el.clientHeight)),
                 ),
               );
-              if (n !== activeReel) setStoredReel(n);
+              if (n !== activeReel) setReelIndex(n);
             }}
             onKeyDown={(e) => {
               if (
@@ -721,7 +776,7 @@ export function InstagramSkin(p: SkinProps) {
               >
                 <ReelVideo
                   item={i}
-                  active={n === activeReel && !sheet && present}
+                  active={n === activeReel && !comments && !sheet && present}
                   muted={muted}
                   onMute={() => setMuted(!muted)}
                 />
@@ -733,12 +788,22 @@ export function InstagramSkin(p: SkinProps) {
                     onClick={() => toggle(i.id, liked, setLiked)}
                   >
                     <Heart fill={liked.includes(i.id) ? "#ff3040" : "none"} />
-                    <small>999+</small>
+                    <small>{instagramReelStats(i).likes}</small>
                   </button>
-                  <span className="ins-reel-count" aria-label="评论99+">
-                    <MessageCircle />
-                    <small>99+</small>
-                  </span>
+                  {instagramReelStats(i).commentsEnabled ? (
+                    <button
+                      aria-label={`查看${i.title}的评论`}
+                      onClick={() => setComments(i)}
+                    >
+                      <MessageCircle />
+                      <small>{instagramReelStats(i).comments}</small>
+                    </button>
+                  ) : (
+                    <span className="ins-reel-count" aria-label="评论99+">
+                      <MessageCircle />
+                      <small>99+</small>
+                    </span>
+                  )}
                   <button
                     aria-label={`收藏${i.title}`}
                     aria-pressed={saved.includes(i.id)}
@@ -749,17 +814,23 @@ export function InstagramSkin(p: SkinProps) {
                 </div>
                 <div className="ins-reel-caption">
                   <div>
-                    <Avatar name={i.sender || "Reels"} src={i.avatar} />
+                    <Avatar
+                      name={i.sender || "Reels"}
+                      src={i.avatar}
+                      own={i.sender === p.owner || i.meta.owner === "true"}
+                    />
                     <strong>{i.sender || "Reels"}</strong>
-                    {i.sender && (
-                      <button
-                        onClick={() =>
-                          toggle(i.sender, following, setFollowing)
-                        }
-                      >
-                        {following.includes(i.sender) ? "已关注" : "关注"}
-                      </button>
-                    )}
+                    {i.sender &&
+                      i.sender !== p.owner &&
+                      i.meta.owner !== "true" && (
+                        <button
+                          onClick={() =>
+                            toggle(i.sender, following, setFollowing)
+                          }
+                        >
+                          {following.includes(i.sender) ? "已关注" : "关注"}
+                        </button>
+                      )}
                   </div>
                   <p>{i.body}</p>
                   {i.meta.music && (
@@ -778,19 +849,64 @@ export function InstagramSkin(p: SkinProps) {
           <button
             key={name}
             aria-label={name}
-            aria-pressed={tab === name && !selected}
+            aria-pressed={
+              (viewingReels ? name === "Reels" : tab === name) && !selected
+            }
             onClick={() => changeTab(name)}
           >
             {name === "主页" ? (
-              <Home fill={tab === name ? "currentColor" : "none"} />
+              <Home
+                fill={!viewingReels && tab === name ? "currentColor" : "none"}
+              />
             ) : name === "Reels" ? (
-              <Clapperboard fill={tab === name ? "currentColor" : "none"} />
+              <Clapperboard fill={viewingReels ? "currentColor" : "none"} />
             ) : (
               <Avatar name={profileName} src={ownAvatar} own />
             )}
           </button>
         ))}
       </nav>
+      {comments && (
+        <div className="ins-overlay">
+          <button
+            className="ins-backdrop"
+            aria-label="关闭视频评论"
+            onClick={() => setComments(null)}
+          />
+          <section
+            className="ins-sheet"
+            role="dialog"
+            aria-modal="true"
+            aria-label="视频评论"
+          >
+            <header>
+              <b>评论 {comments.comments.length}</b>
+              <button
+                aria-label="关闭评论面板"
+                onClick={() => setComments(null)}
+              >
+                <X />
+              </button>
+            </header>
+            <div className="ins-authored-comments">
+              {comments.comments.map((text, n) => {
+                const colon = text.indexOf("：");
+                const name = colon >= 0 ? text.slice(0, colon) : "";
+                const body = colon >= 0 ? text.slice(colon + 1) : text;
+                return (
+                  <article key={n}>
+                    <Avatar name={name} />
+                    <div>
+                      <strong>{name}</strong>
+                      <p>{body}</p>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+        </div>
+      )}
       {sheet && (
         <div className="ins-overlay">
           <button

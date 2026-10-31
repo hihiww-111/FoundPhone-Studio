@@ -14,6 +14,13 @@ Reels 顺序固定来自故事数组，网页内不提供排序入口，旧存�
 
 普通记录显示在首页；`meta.story: "true"` 为快拍。轮播图可在 `meta.images` 中使用安全媒体路径的 JSON 数组。
 
-个人主页只显示 sender 等于机主、outgoing 为 true 或 `meta.owner: "true"` 的记录；陌生人的动态不会被算作机主发帖。可选个人资料记录使用 `meta.profile: "true"`，并配置 `meta.username`、`meta.followers`、`meta.following`、avatar 和 body。未提供粉丝/关注数时显示「—」，不会生成虚假数量。个人资料编辑、点赞、收藏和关注使用现有玩家存档，不改写故事原文。Instagram 的所有点赞数固定显示 999+、评论数固定显示 99+；评论只读且不可打开，无帖子选项或帖子/视频复制入口。个人主页分享仍只复制主页文字，不进入私信或发送给外部账号。
+个人主页只显示 sender 等于机主、outgoing 为 true 或 `meta.owner: "true"` 的记录；陌生人的动态不会被算作机主发帖。可选个人资料记录使用 `meta.profile: "true"`，并配置 `meta.username`、`meta.followers`、`meta.following`、avatar 和 body。未提供粉丝/关注数时显示「—」，不会生成虚假数量。个人资料编辑、点赞、收藏和关注使用现有玩家存档，不改写故事原文。原六条 Reels 与普通动态的点赞数固定显示 999+、评论数固定显示 99+；评论不可打开，无帖子选项或帖子/视频复制入口。个人主页分享仍只复制主页文字，不进入私信或发送给外部账号。
 
 修改素材后运行 story:validate、story:test、build，并检查六个视频的实际解码、手机触屏滑动和退出暂停。
+
+
+## 个人主页发布的三条 Reels
+
+三个独立槽位为 `public/instagram/profile-reels/reel-01.mp4` 至 `reel-03.mp4`，配同名 JPG 封面。记录标记 `meta.profileReel: "true"` 和 `meta.owner: "true"`；按上传顺序显示在首页的三列 Reels 预览与个人主页 Reels 子标签中，不加入原六条推荐视频流。
+
+点击缩略图后进入共享的 Reels 全屏播放器，只在这三条中滑动；左上角可返回网格。原六条播放顺序和固定数字不受影响。三条点赞数分别为 123 / 152 / 99；评论数直接来自各自 comments 数组（2 / 3 / 1），可打开只读评论面板，内容保留作者原文，不提供发表评论或私信入口。

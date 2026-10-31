@@ -12,23 +12,24 @@ export function instagramContent(items: Item[], owner: string) {
     (i) => i.folder !== "私信" && i.meta.profile !== "true",
   );
   const stories = visible.filter((i) => i.meta.story === "true");
-  const reels = visible.filter(
+  const allReels = visible.filter(
     (i) =>
       i.meta.story !== "true" &&
       i.kind === "video" &&
       (i.folder === "Reels" || i.meta.reel === "true"),
   );
   const posts = visible.filter(
-    (i) => i.meta.story !== "true" && !reels.includes(i),
+    (i) => i.meta.story !== "true" && !allReels.includes(i),
   );
   const own = (i: Item) =>
     i.outgoing || i.sender === owner || i.meta.owner === "true";
   return {
     posts,
-    reels,
+    reels: allReels.filter((i) => i.meta.profileReel !== "true"),
+    profileReels: allReels.filter((i) => i.meta.profileReel === "true"),
     stories,
     ownPosts: posts.filter(own),
-    ownReels: reels.filter(own),
+    ownReels: allReels.filter(own),
   };
 }
 export function instagramImages(item: Item): string[] {
@@ -59,4 +60,13 @@ export function reelSwipeTarget(
     0,
     Math.min(Math.max(0, count - 1), index + (dy < 0 ? 1 : -1)),
   );
+}
+
+export function instagramReelStats(item: Item) {
+  const commentsEnabled = item.meta.profileReel === "true";
+  return {
+    likes: commentsEnabled ? String(item.likes) : "999+",
+    comments: commentsEnabled ? String(item.comments.length) : "99+",
+    commentsEnabled,
+  };
 }

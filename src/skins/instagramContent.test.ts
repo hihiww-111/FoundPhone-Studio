@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { makeItem, safeMedia } from "../schema";
 import {
   instagramContent,
+  instagramReelStats,
   reelSwipeTarget,
   instagramImages,
   instagramTab,
@@ -102,5 +103,40 @@ describe("Reels swipe paging", () => {
   it("does not change videos for taps, short movements or horizontal gestures", () => {
     expect(reelSwipeTarget(2, 6, 1, -10)).toBe(2);
     expect(reelSwipeTarget(2, 6, 160, -50)).toBe(2);
+  });
+});
+
+describe("Profile Reels", () => {
+  it("keeps posted videos in the profile without adding them to the six-video stream", () => {
+    const feed = makeItem({ id: "feed", kind: "video", folder: "Reels" });
+    const profile = makeItem({
+      id: "profile",
+      sender: "机主",
+      kind: "video",
+      folder: "Reels",
+      meta: { profileReel: "true", owner: "true" },
+    });
+    const content = instagramContent([feed, profile], "机主");
+    expect(content.reels.map((i) => i.id)).toEqual(["feed"]);
+    expect(content.profileReels.map((i) => i.id)).toEqual(["profile"]);
+    expect(content.ownReels.map((i) => i.id)).toEqual(["profile"]);
+    expect(content.posts).toHaveLength(0);
+  });
+  it("enables exact authored counts and comments only for the new profile videos", () => {
+    const profile = makeItem({
+      likes: 123,
+      comments: ["甲：一", "乙：二"],
+      meta: { profileReel: "true" },
+    });
+    expect(instagramReelStats(profile)).toEqual({
+      likes: "123",
+      comments: "2",
+      commentsEnabled: true,
+    });
+    expect(instagramReelStats(makeItem({ likes: 123 }))).toEqual({
+      likes: "999+",
+      comments: "99+",
+      commentsEnabled: false,
+    });
   });
 });
