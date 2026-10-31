@@ -3,7 +3,7 @@
   "id": "phone-a-story",
   "title": "张极的手机",
   "description": "人A的互动手机故事，第一阶段：锁屏与桌面配置。",
-  "revision": 17,
+  "revision": 18,
   "phone": {
     "owner": "张极",
     "date": "2026-10-25",
@@ -552,6 +552,20 @@
       }
     ],
     "instagram": [
+      {
+        "id": "instagram-post-04",
+        "title": "粗门粗门",
+        "body": "粗门粗门",
+        "sender": "张极",
+        "kind": "image",
+        "folder": "帖子",
+        "media": "/instagram/posts/post-04/photo-01.jpg",
+        "meta": {
+          "owner": "true",
+          "images": "[\"/instagram/posts/post-04/photo-01.jpg\", \"/instagram/posts/post-04/photo-02.jpg\"]",
+          "aspectRatio": "1"
+        }
+      },
       {
         "id": "instagram-post-03",
         "title": "一起走过的路",
