@@ -3,7 +3,7 @@
   "id": "phone-a-story",
   "title": "张极的手机",
   "description": "人A的互动手机故事，第一阶段：锁屏与桌面配置。",
-  "revision": 28,
+  "revision": 29,
   "phone": {
     "owner": "张极",
     "date": "2026-10-25",
@@ -247,6 +247,202 @@
         "folder": "啵啵",
         "time": "2026-10-30 00:00",
         "meta": {}
+      },
+      {
+        "id": "recent-photo-01",
+        "title": "照片 01",
+        "body": "",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/recent/recent-01.jpg",
+        "folder": "最近项目",
+        "time": "",
+        "meta": {
+          "thumbnail": "/photos/recent/recent-01-thumb.jpg"
+        }
+      },
+      {
+        "id": "recent-photo-02",
+        "title": "照片 02",
+        "body": "",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/recent/recent-02.jpg",
+        "folder": "最近项目",
+        "time": "",
+        "meta": {
+          "thumbnail": "/photos/recent/recent-02-thumb.jpg"
+        }
+      },
+      {
+        "id": "recent-photo-03",
+        "title": "照片 03",
+        "body": "",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/recent/recent-03.jpg",
+        "folder": "最近项目",
+        "time": "",
+        "meta": {
+          "thumbnail": "/photos/recent/recent-03-thumb.jpg"
+        }
+      },
+      {
+        "id": "recent-photo-04",
+        "title": "照片 04",
+        "body": "",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/recent/recent-04.jpg",
+        "folder": "最近项目",
+        "time": "",
+        "meta": {
+          "thumbnail": "/photos/recent/recent-04-thumb.jpg"
+        }
+      },
+      {
+        "id": "recent-photo-05",
+        "title": "照片 05",
+        "body": "",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/recent/recent-05.jpg",
+        "folder": "最近项目",
+        "time": "",
+        "meta": {
+          "thumbnail": "/photos/recent/recent-05-thumb.jpg"
+        }
+      },
+      {
+        "id": "recent-photo-06",
+        "title": "照片 06",
+        "body": "",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/recent/recent-06.jpg",
+        "folder": "最近项目",
+        "time": "",
+        "meta": {
+          "thumbnail": "/photos/recent/recent-06-thumb.jpg"
+        }
+      },
+      {
+        "id": "recent-photo-07",
+        "title": "照片 07",
+        "body": "",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/recent/recent-07.jpg",
+        "folder": "最近项目",
+        "time": "",
+        "meta": {
+          "thumbnail": "/photos/recent/recent-07-thumb.jpg"
+        }
+      },
+      {
+        "id": "recent-photo-08",
+        "title": "照片 08",
+        "body": "",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/recent/recent-08.jpg",
+        "folder": "最近项目",
+        "time": "",
+        "meta": {
+          "thumbnail": "/photos/recent/recent-08-thumb.jpg"
+        }
+      },
+      {
+        "id": "recent-photo-09",
+        "title": "照片 09",
+        "body": "",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/recent/recent-09.jpg",
+        "folder": "最近项目",
+        "time": "",
+        "meta": {
+          "thumbnail": "/photos/recent/recent-09-thumb.jpg"
+        }
+      },
+      {
+        "id": "recent-photo-10",
+        "title": "照片 10",
+        "body": "",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/recent/recent-10.jpg",
+        "folder": "最近项目",
+        "time": "",
+        "meta": {
+          "thumbnail": "/photos/recent/recent-10-thumb.jpg"
+        }
+      },
+      {
+        "id": "recent-photo-11",
+        "title": "照片 11",
+        "body": "",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/recent/recent-11.jpg",
+        "folder": "最近项目",
+        "time": "",
+        "meta": {
+          "thumbnail": "/photos/recent/recent-11-thumb.jpg"
+        }
+      },
+      {
+        "id": "recent-photo-12",
+        "title": "照片 12",
+        "body": "",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/recent/recent-12.jpg",
+        "folder": "最近项目",
+        "time": "",
+        "meta": {
+          "thumbnail": "/photos/recent/recent-12-thumb.jpg"
+        }
+      },
+      {
+        "id": "recent-photo-13",
+        "title": "照片 13",
+        "body": "",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/recent/recent-13.jpg",
+        "folder": "最近项目",
+        "time": "",
+        "meta": {
+          "thumbnail": "/photos/recent/recent-13-thumb.jpg"
+        }
+      },
+      {
+        "id": "recent-photo-14",
+        "title": "照片 14",
+        "body": "",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/recent/recent-14.jpg",
+        "folder": "最近项目",
+        "time": "",
+        "meta": {
+          "thumbnail": "/photos/recent/recent-14-thumb.jpg"
+        }
+      },
+      {
+        "id": "recent-photo-15",
+        "title": "照片 15",
+        "body": "",
+        "sender": "张极",
+        "kind": "image",
+        "media": "/photos/recent/recent-15.jpg",
+        "folder": "最近项目",
+        "time": "",
+        "meta": {
+          "thumbnail": "/photos/recent/recent-15-thumb.jpg",
+          "albumCover": "最近项目"
+        }
       }
     ],
     "safari": [

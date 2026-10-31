@@ -189,6 +189,10 @@ export function ContactsSkin(p: Props) {
 export function PhotosSkin(p: Props) {
   const { tab, setTab, q, setQ, items } = useContent(p, "图库");
   const [album, setAlbum] = useState("");
+  const preview = (item: Item) => ({ ...item, media: safeMedia(meta(item, "thumbnail")) || item.media });
+  const albumCover = (name: string) =>
+    items.find((i) => meta(i, "albumCover") === name) ||
+    items.find((i) => i.folder === name);
   const albums = ["最近项目", "个人收藏", "啵啵", "⊆(꒪¯ ꒳ ¯꒪）⊇ ੭ﾞ"];
   const list =
     album === "最近项目" ? items : album === "已隐藏" ? items.filter((i) => i.hidden) : album === "最近删除" ? [] : album ? items.filter((i) => i.folder === album && !i.hidden) : items.filter((i) => !i.hidden);
@@ -199,15 +203,18 @@ export function PhotosSkin(p: Props) {
         <h1>{album || tab}</h1>
         {tab === "精选集" && !album ? (
           <div className="album-grid">
-            {albums.map((g) => (
+            {albums.map((g) => {
+              const cover = albumCover(g);
+              return (
               <button key={g} onClick={() => setAlbum(g)}>
-                {items.find((i) => i.folder === g) ? <span className="photo-album-cover"><Media item={items.find((i) => i.folder === g)!} /></span> : <span className="photo-album-placeholder"><Image size={30} /></span>}
+                {cover ? <span className="photo-album-cover"><Media item={preview(cover)} /></span> : <span className="photo-album-placeholder"><Image size={30} /></span>}
                 <strong>{g}</strong>
                 <small>
                   {(g === "最近项目" ? items.length : items.filter((i) => i.folder === g).length)} 项
                 </small>
               </button>
-            ))}
+            );
+            })}
           </div>
         ) : (
           <>
@@ -220,7 +227,7 @@ export function PhotosSkin(p: Props) {
                   key={i.id}
                   onClick={() => p.onItem(i)}
                 >
-                  <Media item={i} />
+                  <Media item={preview(i)} />
                   {i.favorite && <Heart size={12} fill="white" />}
                 </button>
               ))}
