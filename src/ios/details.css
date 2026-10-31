@@ -214,3 +214,48 @@
   background: none;
   color: #007aff;
 }
+
+.ios18 .safari-gallery {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+  background: #f8f8f8;
+}
+.ios18 .safari-gallery-stage {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  touch-action: pan-y pinch-zoom;
+  user-select: none;
+}
+.ios18 .safari-gallery-stage img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  -webkit-user-drag: none;
+}
+.ios18 .safari-gallery-controls {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  min-height: 42px;
+  background: #fff;
+  font-size: 13px;
+}
+.ios18 .safari-gallery-controls button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: #007aff;
+}
+.ios18 .safari-gallery-controls button:disabled {
+  opacity: .25;
+}

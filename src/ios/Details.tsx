@@ -11,6 +11,7 @@ import {
   Copy,
   Check,
 } from "lucide-react";
+import { SafariGallery } from "./SafariGallery";
 import { RichText } from "../RichText";
 import { safeMedia, type Item } from "../schema";
 export const nativeDetailApps = new Set([
@@ -177,10 +178,14 @@ export function NativeDetail({
         </div>
       ) : app === "safari" ? (
         <>
-          <div className="native-detail-scroll native-reader">
-            <h1>{item.title}</h1>
-            <RichText value={item.richText} fallback={item.body} />
-          </div>
+          {item.meta.gallery ? (
+            <SafariGallery key={item.id} title={item.title} sources={item.meta.gallery} />
+          ) : (
+            <div className="native-detail-scroll native-reader">
+              <h1>{item.title}</h1>
+              <RichText value={item.richText} fallback={item.body} />
+            </div>
+          )}
           <footer className="native-reader-address">
             <button onClick={back} aria-label="返回书签"><ChevronLeft size={18} />书签</button>
             <span>{item.title}</span>
