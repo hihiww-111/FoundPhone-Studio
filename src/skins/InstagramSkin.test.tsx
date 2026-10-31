@@ -107,7 +107,7 @@ it("ignores old saved ordering and exposes fixed read-only counts without remove
     expect(html).not.toContain(label);
 });
 
-it("shows three profile-video thumbnails in the homepage without autoplaying", () => {
+it("shows profile-video thumbnails only on the personal profile", () => {
   const items = [1, 2, 3].map((n) =>
     makeItem({
       id: `profile-${n}`,
@@ -123,7 +123,31 @@ it("shows three profile-video thumbnails in the homepage without autoplaying", (
       },
     }),
   );
-  const html = renderToStaticMarkup(<InstagramSkin {...props} items={items} />);
+  items.push(
+    makeItem({
+      id: "profile-info",
+      avatar: "/instagram/avatar.jpg",
+      meta: {
+        profile: "true",
+        username: "Notbobo",
+        followers: "333",
+        following: "0",
+      },
+    }),
+  );
+  const home = renderToStaticMarkup(<InstagramSkin {...props} items={items} />);
+  expect(home).not.toContain('aria-label="查看主页Reel');
+  expect(home).not.toContain("<video");
+  const html = renderToStaticMarkup(
+    <InstagramSkin {...props} items={items} ui={{ mymyTab: "个人主页" }} />,
+  );
   expect(html.match(/aria-label="查看主页Reel [123]"/g)).toHaveLength(3);
+  expect(html).toContain("Notbobo");
+  expect(html).toContain("<b>333</b>粉丝");
+  expect(html).toContain("<b>0</b>关注");
+  expect(html).toContain('src="/instagram/avatar.jpg"');
+  expect(html).not.toContain("发现用户");
+  expect(html).not.toContain('aria-label="新建内容"');
+  expect(html).not.toContain('class="ins-highlights"');
   expect(html).not.toContain("<video");
 });

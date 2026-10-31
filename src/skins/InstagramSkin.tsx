@@ -18,7 +18,6 @@ import {
   Play,
   Plus,
   UserRound,
-  UserRoundPlus,
   Volume2,
   VolumeX,
   X,
@@ -239,10 +238,10 @@ export function InstagramSkin(p: SkinProps) {
     0,
     Math.min(reels.length - 1, Math.floor(currentIndex) || 0),
   );
-  const authorPosts = posts.filter((i) => i.sender && i.sender !== p.owner);
-  const people = authorPosts.filter(
-    (i, n) => authorPosts.findIndex((other) => other.sender === i.sender) === n,
+  const profilePosts = p.items.filter(
+    (i) => ownPosts.includes(i) || ownReels.includes(i),
   );
+  const ownStories = stories.filter((i) => i.outgoing || i.sender === p.owner);
   const toggle = (
     id: string,
     values: string[],
@@ -335,7 +334,11 @@ export function InstagramSkin(p: SkinProps) {
   const post = (i: Item) => (
     <article className="ins-post" key={i.id}>
       <header className="ins-post-header">
-        <Avatar name={i.sender} src={i.avatar} />
+        <Avatar
+          name={i.sender}
+          src={i.avatar || (i.sender === p.owner ? ownAvatar : "")}
+          own={i.sender === p.owner}
+        />
         <div>
           <strong>{i.sender || profileName}</strong>
           <small>
@@ -434,18 +437,22 @@ export function InstagramSkin(p: SkinProps) {
     >
       {!viewingReels && (
         <header className="ins-header">
-          <button
-            aria-label={selected ? "返回Instagram动态" : "新建内容"}
-            onClick={() =>
-              selected
-                ? setSelected(null)
-                : p.creator
-                  ? p.onAdd()
-                  : setNotice("暂时没有可发布的内容")
-            }
-          >
-            {selected ? <ArrowLeft /> : <Plus size={28} />}
-          </button>
+          {selected || tab === "主页" ? (
+            <button
+              aria-label={selected ? "返回Instagram动态" : "新建内容"}
+              onClick={() =>
+                selected
+                  ? setSelected(null)
+                  : p.creator
+                    ? p.onAdd()
+                    : setNotice("暂时没有可发布的内容")
+              }
+            >
+              {selected ? <ArrowLeft /> : <Plus size={28} />}
+            </button>
+          ) : (
+            <span className="ins-header-spacer" aria-hidden="true" />
+          )}
           <h1 className={tab === "主页" && !selected ? "ins-wordmark" : ""}>
             {selected ? (
               "帖子"
@@ -499,18 +506,18 @@ export function InstagramSkin(p: SkinProps) {
                     onClick={() => openStory(i)}
                   >
                     <span className={seen.includes(i.id) ? "seen" : ""}>
-                      <Avatar name={i.sender} src={i.avatar} />
+                      <Avatar
+                        name={i.sender}
+                        src={
+                          i.avatar || (i.sender === p.owner ? ownAvatar : "")
+                        }
+                        own={i.sender === p.owner}
+                      />
                     </span>
                     <small>{i.sender}</small>
                   </button>
                 ))}
               </div>
-              {profileReels.length > 0 && (
-                <section className="ins-profile-reels-preview">
-                  <h2>Reels</h2>
-                  {grid(profileReels)}
-                </section>
-              )}
               {posts.map(post)}
               {!posts.length && (
                 <div className="ins-empty">
@@ -560,55 +567,18 @@ export function InstagramSkin(p: SkinProps) {
                   >
                     分享主页
                   </button>
-                  <button
-                    aria-label="发现用户"
-                    onClick={() => setSheet("发现用户")}
-                  >
-                    <UserRoundPlus size={20} />
-                  </button>
                 </div>
               </section>
-              {people.length > 0 && (
-                <section className="ins-discover">
-                  <div>
-                    <strong>发现用户</strong>
-                    <button onClick={() => setSheet("发现用户")}>
-                      查看全部
-                    </button>
-                  </div>
-                  <div className="ins-people">
-                    {people.map((i) => (
-                      <article key={i.sender}>
-                        <Avatar name={i.sender} src={i.avatar} />
-                        <b>{i.sender}</b>
-                        <button
-                          onClick={() =>
-                            toggle(i.sender, following, setFollowing)
-                          }
-                        >
-                          {following.includes(i.sender) ? "已关注" : "关注"}
-                        </button>
-                      </article>
-                    ))}
-                  </div>
-                </section>
-              )}
-              <div className="ins-highlights">
-                <button onClick={() => setNotice("还没有精选快拍")}>
-                  <span>
-                    <Plus size={28} />
-                  </span>
-                  <small>新建</small>
-                </button>
-                {stories
-                  .filter((i) => i.outgoing || i.sender === p.owner)
-                  .map((i) => (
+              {ownStories.length > 0 && (
+                <div className="ins-highlights">
+                  {ownStories.map((i) => (
                     <button key={i.id} onClick={() => openStory(i)}>
-                      <Avatar name={i.sender} src={i.avatar} />
+                      <Avatar name={i.sender} src={i.avatar || ownAvatar} own />
                       <small>{i.title}</small>
                     </button>
                   ))}
-              </div>
+                </div>
+              )}
               <div
                 className="ins-profile-tabs"
                 role="tablist"
@@ -635,13 +605,13 @@ export function InstagramSkin(p: SkinProps) {
               </div>
               {grid(
                 profileView === "帖子"
-                  ? ownPosts
+                  ? profilePosts
                   : profileView === "Reels"
                     ? ownReels
                     : posts.filter((i) => i.meta.tagged === "true"),
               )}
               {(profileView === "帖子"
-                ? ownPosts
+                ? profilePosts
                 : profileView === "Reels"
                   ? ownReels
                   : posts.filter((i) => i.meta.tagged === "true")
@@ -816,7 +786,12 @@ export function InstagramSkin(p: SkinProps) {
                   <div>
                     <Avatar
                       name={i.sender || "Reels"}
-                      src={i.avatar}
+                      src={
+                        i.avatar ||
+                        (i.sender === p.owner || i.meta.owner === "true"
+                          ? ownAvatar
+                          : "")
+                      }
                       own={i.sender === p.owner || i.meta.owner === "true"}
                     />
                     <strong>{i.sender || "Reels"}</strong>
@@ -981,22 +956,6 @@ export function InstagramSkin(p: SkinProps) {
                     </button>
                   ))}
                 {!saved.length && <p>还没有收藏</p>}
-              </div>
-            ) : sheet === "发现用户" ? (
-              <div className="ins-saved">
-                {people.map((i) => (
-                  <button
-                    key={i.sender}
-                    onClick={() => toggle(i.sender, following, setFollowing)}
-                  >
-                    <Avatar name={i.sender} src={i.avatar} />
-                    {i.sender}
-                    <span>
-                      {following.includes(i.sender) ? "已关注" : "关注"}
-                    </span>
-                  </button>
-                ))}
-                {!people.length && <p>暂时没有推荐用户</p>}
               </div>
             ) : (
               <p className="ins-sheet-note">

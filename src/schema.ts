@@ -196,6 +196,7 @@ export function validateWork(input: unknown): Work {
   return workSchema.parse(input);
 }
 export function safeMedia(value: string) {
+  if (value === "/instagram/avatar.jpg") return value;
   if (/^\/instagram\/profile-reels\/reel-0[1-3]\.(mp4|jpg)$/.test(value)) return value;
   if (/^\/instagram\/reels\/reel-0[1-6]\.(mp4|jpg)$/.test(value)) return value;
   if (/^\/photos\/bobo\/bobo-\d{2}\.jpg$/.test(value)) return value;

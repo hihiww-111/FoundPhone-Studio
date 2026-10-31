@@ -21,6 +21,11 @@ Reels 顺序固定来自故事数组，网页内不提供排序入口，旧存�
 
 ## 个人主页发布的三条 Reels
 
-三个独立槽位为 `public/instagram/profile-reels/reel-01.mp4` 至 `reel-03.mp4`，配同名 JPG 封面。记录标记 `meta.profileReel: "true"` 和 `meta.owner: "true"`；按上传顺序显示在首页的三列 Reels 预览与个人主页 Reels 子标签中，不加入原六条推荐视频流。
+三个独立槽位为 `public/instagram/profile-reels/reel-01.mp4` 至 `reel-03.mp4`，配同名 JPG 封面。记录标记 `meta.profileReel: "true"` 和 `meta.owner: "true"`；按上传顺序仅显示在个人主页默认帖子网格与 Reels 子标签中，首页不显示这组三条预览，不加入原六条推荐视频流。
 
 点击缩略图后进入共享的 Reels 全屏播放器，只在这三条中滑动；左上角可返回网格。原六条播放顺序和固定数字不受影响。三条点赞数分别为 123 / 152 / 99；评论数直接来自各自 comments 数组（2 / 3 / 1），可打开只读评论面板，内容保留作者原文，不提供发表评论或私信入口。
+
+
+## 当前账号资料
+
+账号 ID 为 `Notbobo`，粉丝 333、关注 0，使用 `public/instagram/avatar.jpg`（作者提供的 HEIC 图片转换为 JPEG，移除附加元数据）作为 Instagram 内的机主头像。角色姓名仍由原 phone.owner 提供。个人主页不显示发现用户、新建内容或新建精选快拍入口；已有快拍内容保留。

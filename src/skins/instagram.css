@@ -354,11 +354,7 @@
   font-weight: 650;
   font-size: 12px;
 }
-.ios18 .instagram-app .ins-profile-actions > button:last-child {
-  flex: 0 0 32px;
-  display: grid;
-  place-items: center;
-}
+
 .ios18 .instagram-app .ins-discover {
   padding: 12px 12px 4px;
 }
@@ -907,4 +903,10 @@
   margin: 5px 0 0;
   line-height: 1.6;
   overflow-wrap: anywhere;
+}
+
+.ios18 .instagram-app .ins-header-spacer {
+  width: 32px;
+  height: 44px;
+  flex: none;
 }
