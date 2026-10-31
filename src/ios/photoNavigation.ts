@@ -1,5 +1,9 @@
 import type { Item } from "../schema";
 
+export function libraryPhotos(items: Item[]): Item[] {
+  return items.filter((item) => !item.hidden && item.meta.albumOnly !== "true");
+}
+
 export function photoSequence(available: Item[], ids: string[]): Item[] {
   const byId = new Map(available.map((item) => [item.id, item]));
   return [...new Set(ids)].flatMap((id) => {

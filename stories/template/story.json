@@ -3,7 +3,7 @@
   "id": "phone-a-story",
   "title": "张极的手机",
   "description": "人A的互动手机故事，第一阶段：锁屏与桌面配置。",
-  "revision": 29,
+  "revision": 30,
   "phone": {
     "owner": "张极",
     "date": "2026-10-25",
@@ -442,6 +442,98 @@
         "meta": {
           "thumbnail": "/photos/recent/recent-15-thumb.jpg",
           "albumCover": "最近项目"
+        }
+      },
+      {
+        "id": "memory-photo-01",
+        "title": "相片 01",
+        "body": "",
+        "kind": "image",
+        "media": "/photos/memories/memory-01.jpg",
+        "folder": "⊆(꒪¯ ꒳ ¯꒪）⊇ ੭ﾞ",
+        "time": "",
+        "meta": {
+          "thumbnail": "/photos/memories/memory-01-thumb.jpg",
+          "albumOnly": "true",
+          "albumCover": "⊆(꒪¯ ꒳ ¯꒪）⊇ ੭ﾞ"
+        }
+      },
+      {
+        "id": "memory-photo-02",
+        "title": "相片 02",
+        "body": "",
+        "kind": "image",
+        "media": "/photos/memories/memory-02.jpg",
+        "folder": "⊆(꒪¯ ꒳ ¯꒪）⊇ ੭ﾞ",
+        "time": "",
+        "meta": {
+          "thumbnail": "/photos/memories/memory-02-thumb.jpg",
+          "albumOnly": "true"
+        }
+      },
+      {
+        "id": "memory-photo-03",
+        "title": "相片 03",
+        "body": "",
+        "kind": "image",
+        "media": "/photos/memories/memory-03.jpg",
+        "folder": "⊆(꒪¯ ꒳ ¯꒪）⊇ ੭ﾞ",
+        "time": "",
+        "meta": {
+          "thumbnail": "/photos/memories/memory-03-thumb.jpg",
+          "albumOnly": "true"
+        }
+      },
+      {
+        "id": "memory-photo-04",
+        "title": "相片 04",
+        "body": "",
+        "kind": "image",
+        "media": "/photos/memories/memory-04.jpg",
+        "folder": "⊆(꒪¯ ꒳ ¯꒪）⊇ ੭ﾞ",
+        "time": "",
+        "meta": {
+          "thumbnail": "/photos/memories/memory-04-thumb.jpg",
+          "albumOnly": "true"
+        }
+      },
+      {
+        "id": "memory-photo-05",
+        "title": "相片 05",
+        "body": "",
+        "kind": "image",
+        "media": "/photos/memories/memory-05.jpg",
+        "folder": "⊆(꒪¯ ꒳ ¯꒪）⊇ ੭ﾞ",
+        "time": "",
+        "meta": {
+          "thumbnail": "/photos/memories/memory-05-thumb.jpg",
+          "albumOnly": "true"
+        }
+      },
+      {
+        "id": "memory-photo-06",
+        "title": "相片 06",
+        "body": "",
+        "kind": "image",
+        "media": "/photos/memories/memory-06.jpg",
+        "folder": "⊆(꒪¯ ꒳ ¯꒪）⊇ ੭ﾞ",
+        "time": "",
+        "meta": {
+          "thumbnail": "/photos/memories/memory-06-thumb.jpg",
+          "albumOnly": "true"
+        }
+      },
+      {
+        "id": "memory-photo-07",
+        "title": "相片 07",
+        "body": "",
+        "kind": "image",
+        "media": "/photos/memories/memory-07.jpg",
+        "folder": "⊆(꒪¯ ꒳ ¯꒪）⊇ ੭ﾞ",
+        "time": "",
+        "meta": {
+          "thumbnail": "/photos/memories/memory-07-thumb.jpg",
+          "albumOnly": "true"
         }
       }
     ],

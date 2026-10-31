@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { makeItem } from "../schema";
-import { photoSequence, photoSwipeTarget } from "./photoNavigation";
+import { libraryPhotos, photoSequence, photoSwipeTarget } from "./photoNavigation";
 
 describe("photo viewer navigation", () => {
   const dog = makeItem({ id: "dog", folder: "啵啵" });
@@ -25,5 +25,18 @@ describe("photo viewer navigation", () => {
   it("ignores taps and vertical scrolling", () => {
     expect(photoSwipeTarget(1, 3, -10, 0)).toBe(1);
     expect(photoSwipeTarget(1, 3, -40, 90)).toBe(1);
+  });
+});
+
+describe("album-only photos", () => {
+  const normal = makeItem({ id: "normal" });
+  const albumOnly = makeItem({ id: "album-only", folder: "专属相簿", meta: { albumOnly: "true" } });
+  const hidden = makeItem({ id: "hidden", hidden: true });
+  it("excludes album-only and hidden photos from the library", () => {
+    expect(libraryPhotos([normal, albumOnly, hidden])).toEqual([normal]);
+  });
+  it("keeps album-only photos available to the album viewer", () => {
+    expect(photoSequence([normal, albumOnly], ["album-only"])).toEqual([albumOnly]);
+    expect(photoSequence(libraryPhotos([normal, albumOnly]), ["normal", "album-only"])).toEqual([normal]);
   });
 });

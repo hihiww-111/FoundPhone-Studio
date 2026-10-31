@@ -196,6 +196,7 @@ export function validateWork(input: unknown): Work {
   return workSchema.parse(input);
 }
 export function safeMedia(value: string) {
+  if (/^\/photos\/memories\/memory-0[1-7](-thumb)?\.jpg$/.test(value)) return value;
   if (/^\/photos\/recent\/recent-(0[1-9]|1[0-5])(-thumb)?\.jpg$/.test(value)) return value;
   if (value === "/safari/cat-allergy.jpg") return value;
   if (/^\/safari\/gemini\/page-0[1-9]\.jpg$/.test(value)) return value;

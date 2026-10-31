@@ -1,4 +1,5 @@
 export { WeatherSkin, HealthSkin } from "./CalibratedSystemApps";
+import { libraryPhotos } from "../ios/photoNavigation";
 import { useTrack } from "../audio";
 import { useMusicPlayback } from "../MusicPlayback";
 import { useSkinState } from "../skinState";
@@ -195,7 +196,7 @@ export function PhotosSkin(p: Props) {
     items.find((i) => i.folder === name);
   const albums = ["最近项目", "啵啵", "⊆(꒪¯ ꒳ ¯꒪）⊇ ੭ﾞ"];
   const list =
-    album === "已隐藏" ? items.filter((i) => i.hidden) : album ? items.filter((i) => i.folder === album && !i.hidden) : items.filter((i) => !i.hidden);
+    album === "已隐藏" ? items.filter((i) => i.hidden) : album ? items.filter((i) => i.folder === album && !i.hidden) : libraryPhotos(items);
   return (
     <div className="catalog-skin native-photos">
       <header className="app-nav photos-nav"><strong>相册</strong></header>
