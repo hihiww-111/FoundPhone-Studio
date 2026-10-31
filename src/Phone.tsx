@@ -1,4 +1,3 @@
-import { edgeViewport, MOBILE_PLAYER_QUERY } from "./runtime/viewport";
 import { photoSequence } from "./ios/photoNavigation";
 import { AppHomeButton } from "./ios/AppHomeButton";
 import { MusicPlaybackProvider } from "./MusicPlayback";
@@ -152,8 +151,6 @@ function PhoneRuntime({
   const noticesSeen = useRef(0);
   const [contextApp, setContextApp] = useState("");
   const [deviceScale, setDeviceScale] = useState(0.84);
-  const [edgeToEdge, setEdgeToEdge] = useState(false);
-  const [screenSize, setScreenSize] = useState({ width: 393, height: 852 });
   const shell = useRef<HTMLDivElement>(null);
   const gesture = useRef({ x: 0, y: 0, time: 0, zone: "" });
   const [launchOrigin, setLaunchOrigin] = useState(screenOrigin);
@@ -178,19 +175,6 @@ function PhoneRuntime({
     const el = shell.current;
     if (!el) return;
     const fit = () => {
-      const parent = el.parentElement!;
-      const mobile = !creator && !external && !!el.closest(".story-runtime") && window.matchMedia(MOBILE_PLAYER_QUERY).matches;
-      setEdgeToEdge(mobile);
-      if (mobile) {
-        const padding = getComputedStyle(parent);
-        const width = parent.clientWidth - parseFloat(padding.paddingLeft) - parseFloat(padding.paddingRight);
-        const height = parent.clientHeight - parseFloat(padding.paddingTop) - parseFloat(padding.paddingBottom);
-        const view = edgeViewport(width, height);
-        setDeviceScale(view.scale);
-        setScreenSize({ width: view.width, height: view.height });
-        return;
-      }
-      setScreenSize({ width: 393, height: 852 });
       setDeviceScale(
         Math.max(
           0.4,
@@ -210,7 +194,7 @@ function PhoneRuntime({
       observer.disconnect();
       window.removeEventListener("resize", fit);
     };
-  }, [creator, external, ready]);
+  }, [creator, ready]);
   const s = external ?? own;
   const runtimeRef = useRef(s);
   runtimeRef.current = s;
@@ -358,8 +342,7 @@ function PhoneRuntime({
   return (
     <div
       ref={shell}
-      data-edge-to-edge={edgeToEdge}
-      style={{ "--phone-scale": deviceScale, "--player-width": `${screenSize.width}px`, "--player-height": `${screenSize.height}px` } as CSSProperties}
+      style={{ "--phone-scale": deviceScale } as CSSProperties}
       className={`phone-shell ios18 ${work.phone.theme === "dark" ? "dark-phone" : ""}`}
     >
       <KeyboardContext.Provider value={setKeyboard}>
@@ -386,7 +369,7 @@ function PhoneRuntime({
               x,
               y,
               time: Date.now(),
-              zone: y < 58 ? "top" : y > screenSize.height - 34 ? "bottom" : locked ? "lock" : "",
+              zone: y < 58 ? "top" : y > 818 ? "bottom" : locked ? "lock" : "",
             };
           }}
           onPointerMove={(e) => {
@@ -401,7 +384,7 @@ function PhoneRuntime({
               g = gesture.current;
             const dy = y - g.y;
             if (g.zone === "top" && dy > 65)
-              setPanel(g.x > screenSize.width * 0.585 ? "control" : "notification");
+              setPanel(g.x > 230 ? "control" : "notification");
             else if ((g.zone === "bottom" || g.zone === "lock") && dy < -55) {
               gestureConsumed.current = true;
               if (!locked) captureApp();

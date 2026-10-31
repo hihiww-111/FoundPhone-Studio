@@ -4234,3 +4234,19 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* Notes: grouped native list, with room for future pinned notes. */
+.ios18 .native-notes { background: #f2f1f7; }
+.ios18 .native-notes .notes-nav { background: transparent; border: 0; justify-content: flex-start; }
+.ios18 .native-notes .notes-nav button { color: #d49a00; font-size: 17px; }
+.ios18 .native-notes .catalog-scroll > h1 { font-size: 34px; margin: 5px 16px 10px; }
+.ios18 .native-notes .catalog-search { margin: 0 16px 16px; background: #e4e3e9; border-radius: 11px; }
+.ios18 .notes-section > h2 { margin: 20px 30px 8px; font-size: 13px; font-weight: 400; color: #8e8e93; }
+.ios18 .native-notes .notes-list { margin: 0 16px; border-radius: 12px; }
+.ios18 .native-notes .notes-list > button { padding: 13px 16px; }
+.ios18 .native-notes .notes-list > button:last-child { border-bottom: 0; }
+.ios18 .native-notes .notes-list strong { display: block; font-size: 17px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ios18 .native-notes .notes-list p { font-size: 14px; margin-top: 4px; }
+.ios18 .native-notes .notes-list time { color: #555; margin-right: 5px; }
+.ios18 .native-notes .notes-footer { min-height: 45px; font-size: 12px; justify-content: center; position: relative; }
+.ios18 .native-notes .notes-footer > button { position: absolute; right: 16px; }

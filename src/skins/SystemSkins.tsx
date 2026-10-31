@@ -384,53 +384,36 @@ export function SafariSkin(p: Props) {
 }
 export function NotesSkin(p: Props) {
   const { q, setQ, items } = useContent(p, "备忘录");
-  const [folder, setFolder] = useState<string | null>(null);
-  const list = folder
-    ? items.filter((i) => (i.folder || "备忘录") === folder)
-    : items;
+  const [folders, setFolders] = useState(false);
+  const list = [...items].sort((a, b) => b.time.localeCompare(a.time));
+  const sections = [
+    { label: "📌 置顶", notes: list.filter((i) => i.favorite) },
+    { label: "备忘录", notes: list.filter((i) => !i.favorite) },
+  ];
   return (
     <div className="catalog-skin native-notes">
-      <Header p={p} />
-      <div className="catalog-scroll">
-        <button className="notes-back" onClick={() => setFolder(null)}>
-          <Folder size={17} />
-          文件夹
+      <header className="app-nav catalog-nav notes-nav">
+        <button onClick={() => setFolders(!folders)}>
+          <ChevronLeft size={22} />{folders ? "备忘录" : "文件夹"}
         </button>
-        <h1>{folder || "所有备忘录"}</h1>
+      </header>
+      <div className="catalog-scroll">
+        <h1>{folders ? "文件夹" : "备忘录"}</h1>
         <SearchBox value={q} set={setQ} />
-        {!folder && (
-          <div className="note-folders">
-            {groupItems(items, "备忘录").map((g) => (
-              <button key={g} onClick={() => setFolder(g)}>
-                <Folder size={17} />
-                {g}
-                <small>
-                  {items.filter((i) => (i.folder || "备忘录") === g).length}
-                </small>
-              </button>
-            ))}
-          </div>
-        )}
-        <div className="notes-list">
-          {list.map((i) => (
-            <button key={i.id} onClick={() => p.onItem(i)}>
-              <strong>
-                {i.password && <LockKeyhole size={12} />} {i.title}
-              </strong>
-              <p>
-                <time>{i.time.slice(5, 10)}</time>{" "}
-                {i.password ? "已锁定的备忘录" : i.body.split("\n")[0]}
-              </p>
-              <small>{i.folder}</small>
-            </button>
-          ))}
-        </div>
+        {folders ? <div className="notes-list"><button onClick={() => setFolders(false)}><strong><Folder size={18} />备忘录</strong><p>{list.length} 个备忘录</p></button></div> : sections.map(({label, notes}) => notes.length > 0 && (
+          <section className="notes-section" key={label}>
+            <h2>{label}</h2>
+            <div className="notes-list">
+              {notes.map((i) => <button key={i.id} onClick={() => p.onItem(i)}>
+                <strong>{i.password && <LockKeyhole size={12} />}{i.title}</strong>
+                <p><time>{i.time.slice(0, 10).replaceAll("-", "/")}</time>{" "}{i.password ? "已锁定的备忘录" : i.body.split("\n").find(Boolean)}</p>
+              </button>)}
+            </div>
+          </section>
+        ))}
         <Empty items={list} />
       </div>
-      <div className="notes-footer">
-        <span>{list.length} 则备忘录</span>
-        <Add p={p} label="新建备忘录" />
-      </div>
+      <div className="notes-footer"><span>{list.length} 个备忘录</span><Add p={p} label="新建备忘录" /></div>
     </div>
   );
 }

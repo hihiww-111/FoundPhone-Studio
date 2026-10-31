@@ -273,3 +273,9 @@
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
+
+.ios18 .native-detail-notes { background: #fff; }
+.ios18 .native-detail-notes .app-nav { background: #fff; border: 0; }
+.ios18 .native-note-paper { background: #fff; padding: 12px 22px 30px; }
+.ios18 .native-note-paper > time { margin: 2px 0 24px; }
+.ios18 .native-note-paper .detail-body { font-size: 17px; line-height: 1.7; white-space: pre-wrap; }

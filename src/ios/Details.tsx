@@ -144,7 +144,7 @@ export function NativeDetail({
       ) : app === "notes" ? (
         <>
           <div className="native-detail-scroll native-note-paper">
-            <time>{item.time}</time>
+            <time>{item.time.slice(0, 10).replace(/^(\d{4})-(\d{2})-(\d{2})$/, (_, y, m, d) => `${y}年${Number(m)}月${Number(d)}日`)}</time>
             <h1>{item.title}</h1>
             <RichText value={item.richText} fallback={item.body} />
           </div>
