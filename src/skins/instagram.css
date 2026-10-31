@@ -181,18 +181,32 @@
   min-height: 36px;
 }
 .ios18 .instagram-app .ins-carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+}
+.ios18 .instagram-app .ins-carousel[data-dragging="true"] {
+  cursor: grabbing;
+}
+.ios18 .instagram-app .ins-carousel-track {
   display: flex;
   width: 100%;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
+  height: 100%;
+  transition: transform 0.24s ease-out;
+  will-change: transform;
 }
-.ios18 .instagram-app .ins-carousel > img {
-  width: 100%;
+.ios18 .instagram-app .ins-carousel-track > img {
+  display: block;
   flex: 0 0 100%;
-  object-fit: cover;
-  aspect-ratio: 4/5;
-  scroll-snap-align: center;
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  -webkit-user-drag: none;
 }
 .ios18 .instagram-app .ins-feed-video {
   display: block;
@@ -918,4 +932,19 @@
   display: none;
   width: 0;
   height: 0;
+}
+
+.ios18 .instagram-app .ins-dots > button {
+  width: 20px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ios18 .instagram-app .ins-carousel-track {
+    transition: none;
+  }
+}
+.ios18 .instagram-app .ins-carousel {
+  overscroll-behavior-x: contain;
 }

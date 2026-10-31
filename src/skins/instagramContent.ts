@@ -70,3 +70,24 @@ export function instagramReelStats(item: Item) {
     commentsEnabled,
   };
 }
+
+export function imageSwipeTarget(
+  index: number,
+  count: number,
+  dx: number,
+  dy: number,
+) {
+  if (Math.abs(dx) < 24 || Math.abs(dx) <= Math.abs(dy) * 1.2) return index;
+  return Math.max(
+    0,
+    Math.min(Math.max(0, count - 1), index + (dx < 0 ? 1 : -1)),
+  );
+}
+
+export function instagramThumbnail(item: Item): string {
+  return (
+    safeMedia(item.meta.thumbnail || "") ||
+    instagramImages(item)[0] ||
+    safeMedia(item.meta.cover || "")
+  );
+}

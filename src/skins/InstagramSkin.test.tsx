@@ -218,3 +218,25 @@ it("hides publication times and removed header controls, and uses the authored p
   expect(profile).toContain("404NOTFound");
   expect(profile).not.toContain('aria-label="个人主页菜单"');
 });
+
+it("keeps the account fixed while a saved display name can change independently", () => {
+  const items = [
+    makeItem({
+      id: "profile-info",
+      meta: {
+        profile: "true",
+        username: "Notbobo",
+        displayName: "404NOTFound",
+      },
+    }),
+  ];
+  const html = renderToStaticMarkup(
+    <InstagramSkin
+      {...props}
+      items={items}
+      ui={{ mymyTab: "个人主页", insProfileName: "修改后的名字" }}
+    />,
+  );
+  expect(html).toContain("Notbobo");
+  expect(html).toContain("修改后的名字");
+});

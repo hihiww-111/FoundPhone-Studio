@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import { makeItem, safeMedia } from "../schema";
 import {
   instagramContent,
+  instagramThumbnail,
+  imageSwipeTarget,
   instagramReelStats,
   reelSwipeTarget,
   instagramImages,
@@ -139,4 +141,37 @@ describe("Profile Reels", () => {
       commentsEnabled: false,
     });
   });
+});
+
+describe("Photo carousel swipes", () => {
+  it("changes one image for a short horizontal touch in either direction", () => {
+    expect(imageSwipeTarget(0, 2, -30, 2)).toBe(1);
+    expect(imageSwipeTarget(1, 2, 30, 2)).toBe(0);
+    expect(imageSwipeTarget(0, 2, 80, 0)).toBe(0);
+    expect(imageSwipeTarget(1, 2, -80, 0)).toBe(1);
+  });
+  it("keeps vertical page scrolling and taps separate from photo paging", () => {
+    expect(imageSwipeTarget(0, 2, -10, 0)).toBe(0);
+    expect(imageSwipeTarget(0, 2, -30, 80)).toBe(0);
+    expect(imageSwipeTarget(0, 2, -30, 28)).toBe(0);
+  });
+});
+
+it("uses a lightweight safe thumbnail with a backwards-compatible first-photo fallback", () => {
+  const first = "/instagram/posts/post-01/photo-01.jpg";
+  const thumbnail = "/instagram/posts/post-01/thumbnail.jpg";
+  expect(
+    instagramThumbnail(
+      makeItem({ kind: "image", media: first, meta: { thumbnail } }),
+    ),
+  ).toBe(thumbnail);
+  expect(
+    instagramThumbnail(
+      makeItem({
+        kind: "image",
+        media: first,
+        meta: { thumbnail: "javascript:alert(1)" },
+      }),
+    ),
+  ).toBe(first);
 });

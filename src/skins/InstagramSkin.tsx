@@ -27,9 +27,11 @@ import { safeMedia, type Item } from "../schema";
 import { useSkinState } from "../skinState";
 import {
   instagramContent,
+  imageSwipeTarget,
   instagramReelStats,
   reelSwipeTarget,
   instagramImages,
+  instagramThumbnail,
   instagramTab,
   instagramTabs,
   type InstagramTab,
@@ -58,8 +60,77 @@ function Avatar({
 function PostMedia({ item }: { item: Item }) {
   const images = instagramImages(item);
   const [index, setIndex] = useState(0);
-  const drag = useRef<{ x: number; y: number; index: number } | null>(null);
+  const [offset, setOffset] = useState(0);
+  const [engaged, setEngaged] = useState(false);
+  const drag = useRef<{
+    x: number;
+    y: number;
+    index: number;
+    scale: number;
+    horizontal: boolean;
+  } | null>(null);
   const dragged = useRef(false);
+  const wheel = useRef({ total: 0, last: 0 });
+  useEffect(() => {
+    setIndex(0);
+    setOffset(0);
+    setEngaged(false);
+    drag.current = null;
+  }, [item.id]);
+  const start = (x: number, y: number, el: HTMLDivElement) => {
+    dragged.current = false;
+    setEngaged(true);
+    drag.current = {
+      x,
+      y,
+      index,
+      scale: el.clientWidth / Math.max(1, el.getBoundingClientRect().width),
+      horizontal: false,
+    };
+  };
+  const move = (x: number, y: number) => {
+    const gesture = drag.current;
+    if (!gesture) return;
+    const dx = x - gesture.x,
+      dy = y - gesture.y;
+    if (
+      !gesture.horizontal &&
+      Math.abs(dy) > 12 &&
+      Math.abs(dy) > Math.abs(dx)
+    ) {
+      drag.current = null;
+      setOffset(0);
+      return;
+    }
+    if (Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy) * 1.2)
+      gesture.horizontal = true;
+    if (!gesture.horizontal) return;
+    dragged.current = true;
+    const atEdge =
+      (gesture.index === 0 && dx > 0) ||
+      (gesture.index === images.length - 1 && dx < 0);
+    setOffset(dx * gesture.scale * (atEdge ? 0.2 : 1));
+  };
+  const finish = (x: number, y: number) => {
+    const gesture = drag.current;
+    drag.current = null;
+    setOffset(0);
+    if (!gesture) return false;
+    if (gesture.horizontal)
+      setIndex(
+        imageSwipeTarget(
+          gesture.index,
+          images.length,
+          x - gesture.x,
+          y - gesture.y,
+        ),
+      );
+    return gesture.horizontal;
+  };
+  const cancel = () => {
+    drag.current = null;
+    setOffset(0);
+  };
   if (item.kind === "video" && safeMedia(item.media))
     return (
       <video
@@ -84,80 +155,112 @@ function PostMedia({ item }: { item: Item }) {
         role="region"
         aria-label={`图片轮播：${item.title}`}
         tabIndex={0}
+        data-dragging={!!drag.current?.horizontal}
+        style={{ aspectRatio: item.meta.aspectRatio || "4 / 5" }}
         onPointerDown={(e) => {
-          dragged.current = false;
-          drag.current = { x: e.clientX, y: e.clientY, index };
+          if (e.pointerType === "touch" || e.button !== 0) return;
+          start(e.clientX, e.clientY, e.currentTarget);
+          e.currentTarget.setPointerCapture(e.pointerId);
         }}
         onPointerMove={(e) => {
-          if (!drag.current) return;
-          const dx = e.clientX - drag.current.x,
-            dy = e.clientY - drag.current.y;
-          if (Math.abs(dx) > 12 && Math.abs(dx) > Math.abs(dy)) {
-            e.preventDefault();
-            e.currentTarget.setPointerCapture(e.pointerId);
-          }
+          if (e.pointerType === "touch") return;
+          move(e.clientX, e.clientY);
+          if (drag.current?.horizontal) e.preventDefault();
         }}
         onPointerUp={(e) => {
-          const start = drag.current;
-          drag.current = null;
-          if (!start) return;
-          const dx = e.clientX - start.x,
-            dy = e.clientY - start.y;
-          if (Math.abs(dx) < 45 || Math.abs(dx) <= Math.abs(dy)) return;
-          dragged.current = true;
-          e.preventDefault();
-          e.stopPropagation();
-          const next = Math.max(
-            0,
-            Math.min(images.length - 1, start.index + (dx < 0 ? 1 : -1)),
-          );
-          e.currentTarget.scrollTo({
-            left: next * e.currentTarget.clientWidth,
-            behavior: "smooth",
-          });
+          if (e.pointerType === "touch") {
+            if (dragged.current) e.stopPropagation();
+            return;
+          }
+          if (finish(e.clientX, e.clientY)) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
         }}
-        onPointerCancel={() => {
-          drag.current = null;
+        onPointerCancel={(e) => {
+          if (e.pointerType !== "touch") cancel();
         }}
+        onLostPointerCapture={(e) => {
+          if (e.pointerType !== "touch" && drag.current) cancel();
+        }}
+        onTouchStart={(e) => {
+          if (e.touches.length !== 1) {
+            cancel();
+            return;
+          }
+          const touch = e.touches[0];
+          start(touch.clientX, touch.clientY, e.currentTarget);
+        }}
+        onTouchMove={(e) => {
+          if (e.touches.length !== 1) {
+            cancel();
+            return;
+          }
+          move(e.touches[0].clientX, e.touches[0].clientY);
+        }}
+        onTouchEnd={(e) => {
+          const touch = e.changedTouches[0];
+          if (touch && finish(touch.clientX, touch.clientY))
+            e.stopPropagation();
+        }}
+        onTouchCancel={cancel}
         onClickCapture={(e) => {
           if (dragged.current) {
             e.preventDefault();
             e.stopPropagation();
           }
         }}
+        onWheel={(e) => {
+          if (Math.abs(e.deltaX) <= Math.abs(e.deltaY) * 1.2) return;
+          wheel.current.total += e.deltaX;
+          const now = Date.now();
+          if (
+            Math.abs(wheel.current.total) < 24 ||
+            now - wheel.current.last < 350
+          )
+            return;
+          const direction = wheel.current.total > 0 ? 1 : -1;
+          wheel.current = { total: 0, last: now };
+          cancel();
+          setEngaged(true);
+          setIndex((current) =>
+            Math.max(0, Math.min(images.length - 1, current + direction)),
+          );
+        }}
         onKeyDown={(e) => {
           if (!["ArrowLeft", "ArrowRight"].includes(e.key)) return;
           e.preventDefault();
-          const next = Math.max(
-            0,
-            Math.min(
-              images.length - 1,
-              index + (e.key === "ArrowRight" ? 1 : -1),
+          cancel();
+          setEngaged(true);
+          setIndex(
+            Math.max(
+              0,
+              Math.min(
+                images.length - 1,
+                index + (e.key === "ArrowRight" ? 1 : -1),
+              ),
             ),
           );
-          e.currentTarget.scrollTo({
-            left: next * e.currentTarget.clientWidth,
-            behavior: "smooth",
-          });
-        }}
-        onScroll={(e) => {
-          const el = e.currentTarget;
-          setIndex(Math.round(el.scrollLeft / Math.max(1, el.clientWidth)));
         }}
       >
-        {images.map((src, n) => (
-          <img
-            key={`${n}-${src}`}
-            src={src}
-            alt={`${item.title} · ${n + 1}/${images.length}`}
-            loading="lazy"
-            style={
-              item.meta.aspectRatio
-                ? { aspectRatio: item.meta.aspectRatio, objectFit: "contain" }
-                : undefined
-            }
-          />
-        ))}
+        <div
+          className="ins-carousel-track"
+          style={{
+            transform: `translate3d(calc(${-index * 100}% + ${offset}px), 0, 0)`,
+            transition: drag.current?.horizontal ? "none" : undefined,
+          }}
+        >
+          {images.map((src, n) => (
+            <img
+              key={`${n}-${src}`}
+              src={src}
+              alt={`${item.title} · ${n + 1}/${images.length}`}
+              draggable={false}
+              loading={engaged && Math.abs(n - index) <= 1 ? "eager" : "lazy"}
+              style={{ objectFit: item.meta.aspectRatio ? "contain" : "cover" }}
+            />
+          ))}
+        </div>
       </div>
       {images.length > 1 && (
         <div
@@ -165,7 +268,19 @@ function PostMedia({ item }: { item: Item }) {
           aria-label={`第 ${index + 1} 张，共 ${images.length} 张`}
         >
           {images.map((_, n) => (
-            <i key={n} className={n === index ? "active" : ""} />
+            <button
+              type="button"
+              key={n}
+              aria-label={`查看第 ${n + 1} 张图片`}
+              aria-pressed={n === index}
+              onClick={() => {
+                cancel();
+                setEngaged(true);
+                setIndex(n);
+              }}
+            >
+              <i className={n === index ? "active" : ""} />
+            </button>
           ))}
         </div>
       )}
@@ -492,12 +607,8 @@ export function InstagramSkin(p: SkinProps) {
             } else openPost(i);
           }}
         >
-          {instagramImages(i)[0] || safeMedia(i.meta.cover) ? (
-            <img
-              src={instagramImages(i)[0] || safeMedia(i.meta.cover)}
-              alt={i.title}
-              loading="lazy"
-            />
+          {instagramThumbnail(i) ? (
+            <img src={instagramThumbnail(i)} alt={i.title} loading="lazy" />
           ) : (
             <span>{i.kind === "video" ? <Clapperboard /> : <ImageIcon />}</span>
           )}
@@ -994,6 +1105,10 @@ export function InstagramSkin(p: SkinProps) {
                   setSheet("");
                 }}
               >
+                <label>
+                  账号
+                  <input aria-label="固定账号" value={username} readOnly />
+                </label>
                 <label>
                   名字
                   <input

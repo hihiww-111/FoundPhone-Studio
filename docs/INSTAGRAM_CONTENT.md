@@ -28,7 +28,7 @@ Reels 顺序固定来自故事数组，网页内不提供排序入口，旧存�
 
 ## 当前账号资料
 
-账号 ID 与主页显示名为 `404NOTFound`，粉丝 333、关注 0，使用 `public/instagram/avatar.jpg`（作者提供的 HEIC 图片转换为 JPEG，移除附加元数据）作为 Instagram 内的机主头像。角色姓名仍由原 phone.owner 提供。个人主页不显示发现用户、新建内容或新建精选快拍入口；已有快拍内容保留。
+顶部账号 ID 固定为 `Notbobo`，主页显示名默认为 `404NOTFound`、可通过编辑个人资料单独修改，粉丝 333、关注 0，使用 `public/instagram/avatar.jpg`（作者提供的 HEIC 图片转换为 JPEG，移除附加元数据）作为 Instagram 内的机主头像。角色姓名仍由原 phone.owner 提供。个人主页不显示发现用户、新建内容或新建精选快拍入口；已有快拍内容保留。
 
 
 ## 图片帖子
@@ -38,3 +38,8 @@ Reels 顺序固定来自故事数组，网页内不提供排序入口，旧存�
 第一条帖子 id 为 instagram-post-01，配文为「摸摸小狗爪」，包含作者依次上传的 IMG_3704.jpg、IMG_3705.jpg。素材位于 public/instagram/posts/post-01/photo-01.jpg 和 photo-02.jpg，meta.images 保存顺序，meta.aspectRatio 为 1（方图完整显示）。后续帖子沿用独立 post-XX/photo-XX.jpg 目录，不合并成多条重复动态。
 
 Instagram 帖子不显示发布时间（保留底层 time 数据供故事引擎使用）。首页无动态通知爱心入口，个人主页无三杆菜单。点赞爱心仍保留。
+
+
+图片轮播由组件索引和 transform 控制，触摸采用 Touch 事件处理，鼠标采用 Pointer 事件处理。水平拖动跟手，松开切图；垂直手势保留页面滚动。也可点击分页圆点或按左右方向键切换。当前正式 Instagram 数据已移除 test-item-instagram 测试用户/测试内容记录，不影响其他 App 或开发测试夹具。
+
+每条图片帖子可配置 meta.thumbnail；当前六条帖子的网格使用各自 post-XX/thumbnail.jpg（最长边 512 像素），原图保持不变。轮播默认延迟加载，交互时加载相邻图片，避免首页一次解码全部原图。横向触控板滚动也可翻页，纵向滚动仍用于页面滚动。
