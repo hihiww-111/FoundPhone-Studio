@@ -200,7 +200,10 @@ export function PhotosSkin(p: Props) {
     <div className="catalog-skin native-photos">
       <header className="app-nav photos-nav"><strong>相册</strong></header>
       <div className="catalog-scroll">
-        <h1>{album || tab}</h1>
+        <div className="photos-section-heading">
+          {album && <button className="photos-back-collections" onClick={() => setAlbum("")}><ChevronLeft size={18} />返回精选集</button>}
+          <h1>{album || tab}</h1>
+        </div>
         {tab === "精选集" && !album ? (
           <div className="album-grid">
             {albums.map((g) => {
@@ -224,7 +227,7 @@ export function PhotosSkin(p: Props) {
                 <button
                   aria-label={`查看${i.title}`}
                   key={i.id}
-                  onClick={() => p.onItem(i)}
+                  onClick={() => p.onItem(i, list.map((photo) => photo.id))}
                 >
                   <Media item={preview(i)} />
                   {i.favorite && <Heart size={12} fill="white" />}

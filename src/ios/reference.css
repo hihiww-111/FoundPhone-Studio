@@ -964,3 +964,13 @@
   white-space: nowrap;
   font-size: 13px;
 }
+
+.ios18 .native-photos .photos-section-heading { margin: 22px 0 18px; }
+.ios18 .native-photos .photos-section-heading h1 { margin: 0; font-size: 28px; letter-spacing: -.6px; }
+.ios18 .native-photos .photos-back-collections { display: inline-flex; align-items: center; gap: 2px; padding: 0; min-height: 36px; margin: -8px 0 6px -4px; color: #007aff; font-size: 14px; }
+.ios18 .photo-viewer { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+.ios18 .photo-viewer .native-photo-stage { min-height: 0; touch-action: pan-y pinch-zoom; user-select: none; }
+.ios18 .photo-viewer .native-photo-stage img { -webkit-user-drag: none; }
+.ios18 .photo-viewer-controls { display: flex; align-items: center; justify-content: center; gap: 22px; min-height: 44px; flex-shrink: 0; font-size: 13px; color: #8e8e93; }
+.ios18 .photo-viewer-controls button { display: grid; place-items: center; width: 44px; height: 44px; color: #007aff; }
+.ios18 .photo-viewer-controls button:disabled { opacity: .25; }

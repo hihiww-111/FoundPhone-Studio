@@ -11,6 +11,7 @@ import {
   Copy,
   Check,
 } from "lucide-react";
+import { PhotoStage } from "./PhotoStage";
 import { SafariGallery } from "./SafariGallery";
 import { RichText } from "../RichText";
 import { safeMedia, type Item } from "../schema";
@@ -27,10 +28,14 @@ export function NativeDetail({
   app,
   item,
   back,
+  photos = [],
+  onPhoto,
 }: {
   app: string;
   item: Item;
   back: () => void;
+  photos?: Item[];
+  onPhoto?: (item: Item) => void;
 }) {
   const [favorite, setFavorite] = useState(item.favorite),
     [copied, setCopied] = useState(false),
@@ -85,16 +90,7 @@ export function NativeDetail({
       )}
       {app === "photos" ? (
         <>
-          <div className="native-photo-stage">
-            {media ? (
-              <img src={media} alt={item.title} />
-            ) : (
-              <div className="native-photo-caption">
-                <h2>{item.title}</h2>
-                <p>{item.body}</p>
-              </div>
-            )}
-          </div>
+          <PhotoStage item={item} photos={photos} onPhoto={onPhoto} />
           <footer className="native-detail-toolbar">
             <button aria-label="返回相册" onClick={back}><ChevronLeft /><span>相册</span></button>
             <button aria-label="分享照片说明" onClick={copy}>

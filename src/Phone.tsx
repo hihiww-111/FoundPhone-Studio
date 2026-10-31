@@ -1,3 +1,4 @@
+import { photoSequence } from "./ios/photoNavigation";
 import { AppHomeButton } from "./ios/AppHomeButton";
 import { MusicPlaybackProvider } from "./MusicPlayback";
 import { StatusGlyph } from "./ios/StatusGlyph";
@@ -905,6 +906,7 @@ function AppContent({
   work: Work;
 }) {
   const [detail, setDetail] = useState<Item | null>(null);
+  const [photoIds, setPhotoIds] = useState<string[]>([]);
   const [thread, setThread] = useState("");
   const [tab, setTab] = useState(app.tabs[0]);
   const [q, setQ] = useState("");
@@ -923,7 +925,7 @@ function AppContent({
       : tab === app.tabs[0]
         ? shown
         : shown.filter((i) => i.folder === tab);
-  const read = (i: Item) => {
+  const read = (i: Item, sequence?: string[]) => {
     if (creator) {
       onEdit(i);
       return;
@@ -943,6 +945,7 @@ function AppContent({
       onRead(i.id);
       return;
     }
+    if (app.id === "photos" && sequence) setPhotoIds(sequence);
     setDetail(i);
     if (!i.password || unlocks.includes(i.id)) onRead(i.id);
   };
@@ -1058,7 +1061,7 @@ function AppContent({
             />
           ) : nativeDetailApps.has(app.id) &&
             (!detail.password || unlocks.includes(detail.id)) ? (
-            <NativeDetail app={app.id} item={detail} back={back} />
+            <NativeDetail key={app.id === "photos" ? detail.id : app.id} app={app.id} item={detail} back={back} photos={app.id === "photos" ? photoSequence(shown, photoIds) : undefined} onPhoto={app.id === "photos" ? read : undefined} />
           ) : (
             <>
               <div className="app-nav">
