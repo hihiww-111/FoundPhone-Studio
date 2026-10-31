@@ -28,7 +28,7 @@ Reels 顺序固定来自故事数组，网页内不提供排序入口，旧存�
 
 ## 当前账号资料
 
-账号 ID 为 `Notbobo`，粉丝 333、关注 0，使用 `public/instagram/avatar.jpg`（作者提供的 HEIC 图片转换为 JPEG，移除附加元数据）作为 Instagram 内的机主头像。角色姓名仍由原 phone.owner 提供。个人主页不显示发现用户、新建内容或新建精选快拍入口；已有快拍内容保留。
+账号 ID 与主页显示名为 `404NOTFound`，粉丝 333、关注 0，使用 `public/instagram/avatar.jpg`（作者提供的 HEIC 图片转换为 JPEG，移除附加元数据）作为 Instagram 内的机主头像。角色姓名仍由原 phone.owner 提供。个人主页不显示发现用户、新建内容或新建精选快拍入口；已有快拍内容保留。
 
 
 ## 图片帖子
@@ -36,3 +36,5 @@ Reels 顺序固定来自故事数组，网页内不提供排序入口，旧存�
 个人主页「帖子」仅显示 ownPosts，三列网格只显示每条帖子的首图，多图帖子带叠图标记；Reels 仅显示在个人主页 Reels 子标签中。图片帖子同时进入首页动态。点击网格展开后与首页共享图片轮播，可左右滑动或用左右方向键翻图。
 
 第一条帖子 id 为 instagram-post-01，配文为「摸摸小狗爪」，包含作者依次上传的 IMG_3704.jpg、IMG_3705.jpg。素材位于 public/instagram/posts/post-01/photo-01.jpg 和 photo-02.jpg，meta.images 保存顺序，meta.aspectRatio 为 1（方图完整显示）。后续帖子沿用独立 post-XX/photo-XX.jpg 目录，不合并成多条重复动态。
+
+Instagram 帖子不显示发布时间（保留底层 time 数据供故事引擎使用）。首页无动态通知爱心入口，个人主页无三杆菜单。点赞爱心仍保留。

@@ -13,7 +13,6 @@ import {
   Home,
   Image as ImageIcon,
   LockKeyhole,
-  Menu,
   MessageCircle,
   Music2,
   Play,
@@ -258,6 +257,7 @@ function ReelVideo({
 
 export function InstagramSkin(p: SkinProps) {
   const present = useIsPresent();
+  const profile = p.items.find((i) => i.meta.profile === "true");
   const [storedTab, setStoredTab] = useSkinState<string>(p, "mymyTab", "主页");
   const tab = instagramTab(storedTab);
   const [liked, setLiked] = useSkinState<string[]>(p, "mymyLiked", []);
@@ -276,7 +276,7 @@ export function InstagramSkin(p: SkinProps) {
   const [profileName, setProfileName] = useSkinState<string>(
     p,
     "insProfileName",
-    p.owner || "机主",
+    profile?.meta.displayName || p.owner || "机主",
   );
   const [bio, setBio] = useSkinState<string>(p, "insBio", "");
   const [profileView, setProfileView] = useState("帖子");
@@ -303,7 +303,6 @@ export function InstagramSkin(p: SkinProps) {
   const setReelIndex = (index: number) =>
     profileViewer ? setProfileIndex(index) : setStoredReel(index);
   const reelOrderKey = reels.map((i) => i.id).join("|");
-  const profile = p.items.find((i) => i.meta.profile === "true");
   const username = profile?.meta.username || p.owner || "机主";
   const ownAvatar = profile?.avatar || "";
   const activeReel = Math.max(
@@ -415,15 +414,17 @@ export function InstagramSkin(p: SkinProps) {
               ? username
               : i.sender || profileName}
           </strong>
-          <small>
-            {i.meta.music ? (
-              <>
-                <Music2 size={11} /> {i.meta.music}
-              </>
-            ) : (
-              i.meta.location || i.time
-            )}
-          </small>
+          {(i.meta.music || i.meta.location) && (
+            <small>
+              {i.meta.music ? (
+                <>
+                  <Music2 size={11} /> {i.meta.music}
+                </>
+              ) : (
+                i.meta.location
+              )}
+            </small>
+          )}
         </div>
       </header>
       <div
@@ -470,7 +471,6 @@ export function InstagramSkin(p: SkinProps) {
           {i.body}
         </p>
         <span className="ins-comments-label">99+ 条评论</span>
-        <time>{i.time}</time>
       </div>
     </article>
   );
@@ -551,12 +551,6 @@ export function InstagramSkin(p: SkinProps) {
               </>
             )}
           </h1>
-          <button
-            aria-label={tab === "主页" ? "动态通知" : "个人主页菜单"}
-            onClick={() => setSheet(tab === "主页" ? "动态通知" : "菜单")}
-          >
-            {tab === "主页" ? <Heart /> : <Menu />}
-          </button>
         </header>
       )}
       {!viewingReels && (
@@ -1021,35 +1015,8 @@ export function InstagramSkin(p: SkinProps) {
                   完成
                 </button>
               </form>
-            ) : sheet === "菜单" ? (
-              <button
-                className="ins-menu-row"
-                onClick={() => setSheet("已收藏")}
-              >
-                <Bookmark />
-                已收藏
-              </button>
-            ) : sheet === "已收藏" ? (
-              <div className="ins-saved">
-                {posts
-                  .filter((i) => saved.includes(i.id))
-                  .map((i) => (
-                    <button
-                      key={i.id}
-                      onClick={() => {
-                        setSelected(i);
-                        setSheet("");
-                      }}
-                    >
-                      {i.title}
-                    </button>
-                  ))}
-                {!saved.length && <p>还没有收藏</p>}
-              </div>
             ) : (
-              <p className="ins-sheet-note">
-                {sheet === "动态通知" ? "还没有新通知" : "暂无内容"}
-              </p>
+              <p className="ins-sheet-note">暂无内容</p>
             )}
           </section>
         </div>

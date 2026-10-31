@@ -189,3 +189,32 @@ it("renders one two-image post in Home and a single thumbnail in the profile pos
   expect(profile).not.toContain(photos[1]);
   expect(profile).not.toContain('aria-label="查看主页Reel 1"');
 });
+
+it("hides publication times and removed header controls, and uses the authored profile name", () => {
+  const items = [
+    makeItem({
+      id: "profile-info",
+      meta: {
+        profile: "true",
+        username: "404NOTFound",
+        displayName: "404NOTFound",
+      },
+    }),
+    makeItem({
+      id: "dated-post",
+      title: "帖子",
+      sender: "机主",
+      time: "2026-10-01 12:34",
+    }),
+  ];
+  const home = renderToStaticMarkup(<InstagramSkin {...props} items={items} />);
+  expect(home).not.toContain("2026-10-01 12:34");
+  expect(home).not.toContain("<time");
+  expect(home).not.toContain('aria-label="动态通知"');
+  expect(home).toContain("404NOTFound");
+  const profile = renderToStaticMarkup(
+    <InstagramSkin {...props} items={items} ui={{ mymyTab: "个人主页" }} />,
+  );
+  expect(profile).toContain("404NOTFound");
+  expect(profile).not.toContain('aria-label="个人主页菜单"');
+});

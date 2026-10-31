@@ -3,7 +3,7 @@
   "id": "phone-a-story",
   "title": "张极的手机",
   "description": "人A的互动手机故事，第一阶段：锁屏与桌面配置。",
-  "revision": 20,
+  "revision": 21,
   "phone": {
     "owner": "张极",
     "date": "2026-10-25",
@@ -772,16 +772,17 @@
       },
       {
         "id": "instagram-owner-profile",
-        "title": "Notbobo",
+        "title": "404NOTFound",
         "body": "我和我的小狗",
         "sender": "张极",
         "kind": "text",
         "avatar": "/instagram/avatar.jpg",
         "meta": {
           "profile": "true",
-          "username": "Notbobo",
+          "username": "404NOTFound",
           "followers": "333",
-          "following": "0"
+          "following": "0",
+          "displayName": "404NOTFound"
         }
       }
     ]
