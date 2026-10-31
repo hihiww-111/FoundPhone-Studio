@@ -4130,3 +4130,40 @@
 .catalog-slot[hidden] {
   display: none;
 }
+
+.native-safari:has(.safari-history) {
+  background: #f2f2f7;
+}
+.safari-history {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.safari-history-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 20px;
+  border-radius: 20px;
+  background: #fff;
+  color: #000;
+}
+.safari-history-row > svg {
+  flex-shrink: 0;
+  color: #0088ff;
+}
+.safari-history-row > div {
+  min-width: 0;
+}
+.safari-history-row strong {
+  display: block;
+  font-size: 17px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.safari-history-row small {
+  display: block;
+  margin-top: 5px;
+  font-size: 14px;
+  color: #8e8e93;
+}

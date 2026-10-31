@@ -322,17 +322,31 @@ export function SafariSkin(p: Props) {
       <Header p={p} />
       <div className="catalog-scroll">
         <h1>{tab}</h1>
-        <div className="safari-favorites">
-          {items.map((i) => (
-            <button key={i.id} onClick={() => p.onItem(i)}>
-              <span>
-                <Globe size={28} />
-              </span>
-              <strong>{i.title}</strong>
-              <small>{meta(i, "url")}</small>
-            </button>
-          ))}
-        </div>
+        {tab === "历史记录" ? (
+          <div className="safari-history" role="list" aria-label="搜索历史">
+            {items.map((i) => (
+              <div className="safari-history-row" role="listitem" key={i.id}>
+                <Globe size={28} aria-hidden="true" />
+                <div>
+                  <strong>{i.title}</strong>
+                  <small>搜索记录</small>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="safari-favorites">
+            {items.map((i) => (
+              <button key={i.id} onClick={() => p.onItem(i)}>
+                <span>
+                  <Globe size={28} />
+                </span>
+                <strong>{i.title}</strong>
+                <small>{meta(i, "url")}</small>
+              </button>
+            ))}
+          </div>
+        )}
         <Empty items={items} label="没有匹配的虚构网页" />
       </div>
       <label className="safari-address">
@@ -343,7 +357,8 @@ export function SafariSkin(p: Props) {
           placeholder="搜索或输入虚构网址"
           aria-label="地址栏"
           onKeyDown={(e) => {
-            if (e.key === "Enter" && items[0]) p.onItem(items[0]);
+            if (e.key === "Enter" && tab !== "历史记录" && items[0])
+              p.onItem(items[0]);
           }}
         />
         <Search size={16} />
