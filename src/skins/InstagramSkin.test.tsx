@@ -240,3 +240,27 @@ it("keeps the account fixed while a saved display name can change independently"
   expect(html).toContain("Notbobo");
   expect(html).toContain("修改后的名字");
 });
+
+it("shows 404NOTFound for a saved legacy owner label under the fixed Notbobo account", () => {
+  const items = [
+    makeItem({
+      id: "profile",
+      meta: {
+        profile: "true",
+        username: "Notbobo",
+        displayName: "404NOTFound",
+      },
+    }),
+  ];
+  const html = renderToStaticMarkup(
+    <InstagramSkin
+      {...props}
+      owner="张极"
+      items={items}
+      ui={{ mymyTab: "个人主页", insProfileName: "张极" }}
+    />,
+  );
+  expect(html).toContain("Notbobo");
+  expect(html).toContain("<strong>404NOTFound</strong>");
+  expect(html).not.toContain("<strong>张极</strong>");
+});

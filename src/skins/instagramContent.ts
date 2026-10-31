@@ -91,3 +91,14 @@ export function instagramThumbnail(item: Item): string {
     safeMedia(item.meta.cover || "")
   );
 }
+
+export function instagramInitialDisplayName(
+  legacy: unknown,
+  owner: string,
+  authoredName: string,
+): string {
+  // The old owner-name default was saved as if the player had edited it.
+  if (typeof legacy === "string" && legacy.trim() && legacy.trim() !== owner)
+    return legacy;
+  return authoredName || owner || "机主";
+}

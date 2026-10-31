@@ -27,6 +27,7 @@ import { safeMedia, type Item } from "../schema";
 import { useSkinState } from "../skinState";
 import {
   instagramContent,
+  instagramInitialDisplayName,
   imageSwipeTarget,
   instagramReelStats,
   reelSwipeTarget,
@@ -390,8 +391,12 @@ export function InstagramSkin(p: SkinProps) {
   const [storedReel, setStoredReel] = useSkinState<number>(p, "insReel", 0);
   const [profileName, setProfileName] = useSkinState<string>(
     p,
-    "insProfileName",
-    profile?.meta.displayName || p.owner || "机主",
+    "insDisplayNameV2",
+    instagramInitialDisplayName(
+      p.ui?.insProfileName,
+      p.owner || "机主",
+      profile?.meta.displayName || "",
+    ),
   );
   const [bio, setBio] = useSkinState<string>(p, "insBio", "");
   const [profileView, setProfileView] = useState("帖子");
@@ -1100,7 +1105,12 @@ export function InstagramSkin(p: SkinProps) {
                 className="ins-edit-profile"
                 onSubmit={(e) => {
                   e.preventDefault();
-                  setProfileName(editName.trim() || p.owner || "机主");
+                  setProfileName(
+                    editName.trim() ||
+                      profile?.meta.displayName ||
+                      p.owner ||
+                      "机主",
+                  );
                   setBio(editBio.trim());
                   setSheet("");
                 }}

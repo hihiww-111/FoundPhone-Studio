@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import { makeItem, safeMedia } from "../schema";
 import {
   instagramContent,
+  instagramInitialDisplayName,
   instagramThumbnail,
   imageSwipeTarget,
   instagramReelStats,
@@ -174,4 +175,16 @@ it("uses a lightweight safe thumbnail with a backwards-compatible first-photo fa
       }),
     ),
   ).toBe(first);
+});
+
+it("replaces the legacy owner-name default without losing deliberate custom display names", () => {
+  expect(instagramInitialDisplayName("张极", "张极", "404NOTFound")).toBe(
+    "404NOTFound",
+  );
+  expect(instagramInitialDisplayName(undefined, "张极", "404NOTFound")).toBe(
+    "404NOTFound",
+  );
+  expect(instagramInitialDisplayName("自定义名字", "张极", "404NOTFound")).toBe(
+    "自定义名字",
+  );
 });
