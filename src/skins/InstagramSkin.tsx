@@ -8,6 +8,7 @@ import {
   ChevronDown,
   Clapperboard,
   Grid3X3,
+  Layers,
   Heart,
   Home,
   Image as ImageIcon,
@@ -58,6 +59,8 @@ function Avatar({
 function PostMedia({ item }: { item: Item }) {
   const images = instagramImages(item);
   const [index, setIndex] = useState(0);
+  const drag = useRef<{ x: number; y: number; index: number } | null>(null);
+  const dragged = useRef(false);
   if (item.kind === "video" && safeMedia(item.media))
     return (
       <video
@@ -79,13 +82,82 @@ function PostMedia({ item }: { item: Item }) {
     <>
       <div
         className="ins-carousel"
+        role="region"
+        aria-label={`图片轮播：${item.title}`}
+        tabIndex={0}
+        onPointerDown={(e) => {
+          dragged.current = false;
+          drag.current = { x: e.clientX, y: e.clientY, index };
+        }}
+        onPointerMove={(e) => {
+          if (!drag.current) return;
+          const dx = e.clientX - drag.current.x,
+            dy = e.clientY - drag.current.y;
+          if (Math.abs(dx) > 12 && Math.abs(dx) > Math.abs(dy)) {
+            e.preventDefault();
+            e.currentTarget.setPointerCapture(e.pointerId);
+          }
+        }}
+        onPointerUp={(e) => {
+          const start = drag.current;
+          drag.current = null;
+          if (!start) return;
+          const dx = e.clientX - start.x,
+            dy = e.clientY - start.y;
+          if (Math.abs(dx) < 45 || Math.abs(dx) <= Math.abs(dy)) return;
+          dragged.current = true;
+          e.preventDefault();
+          e.stopPropagation();
+          const next = Math.max(
+            0,
+            Math.min(images.length - 1, start.index + (dx < 0 ? 1 : -1)),
+          );
+          e.currentTarget.scrollTo({
+            left: next * e.currentTarget.clientWidth,
+            behavior: "smooth",
+          });
+        }}
+        onPointerCancel={() => {
+          drag.current = null;
+        }}
+        onClickCapture={(e) => {
+          if (dragged.current) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }}
+        onKeyDown={(e) => {
+          if (!["ArrowLeft", "ArrowRight"].includes(e.key)) return;
+          e.preventDefault();
+          const next = Math.max(
+            0,
+            Math.min(
+              images.length - 1,
+              index + (e.key === "ArrowRight" ? 1 : -1),
+            ),
+          );
+          e.currentTarget.scrollTo({
+            left: next * e.currentTarget.clientWidth,
+            behavior: "smooth",
+          });
+        }}
         onScroll={(e) => {
           const el = e.currentTarget;
           setIndex(Math.round(el.scrollLeft / Math.max(1, el.clientWidth)));
         }}
       >
         {images.map((src, n) => (
-          <img key={`${n}-${src}`} src={src} alt={item.title} loading="lazy" />
+          <img
+            key={`${n}-${src}`}
+            src={src}
+            alt={`${item.title} · ${n + 1}/${images.length}`}
+            loading="lazy"
+            style={
+              item.meta.aspectRatio
+                ? { aspectRatio: item.meta.aspectRatio, objectFit: "contain" }
+                : undefined
+            }
+          />
         ))}
       </div>
       {images.length > 1 && (
@@ -238,9 +310,7 @@ export function InstagramSkin(p: SkinProps) {
     0,
     Math.min(reels.length - 1, Math.floor(currentIndex) || 0),
   );
-  const profilePosts = p.items.filter(
-    (i) => ownPosts.includes(i) || ownReels.includes(i),
-  );
+  const profilePosts = ownPosts;
   const ownStories = stories.filter((i) => i.outgoing || i.sender === p.owner);
   const toggle = (
     id: string,
@@ -340,7 +410,11 @@ export function InstagramSkin(p: SkinProps) {
           own={i.sender === p.owner}
         />
         <div>
-          <strong>{i.sender || profileName}</strong>
+          <strong>
+            {i.sender === p.owner || i.meta.owner === "true"
+              ? username
+              : i.sender || profileName}
+          </strong>
           <small>
             {i.meta.music ? (
               <>
@@ -388,7 +462,12 @@ export function InstagramSkin(p: SkinProps) {
       <div className="ins-caption">
         <strong>999+ 次赞</strong>
         <p>
-          <b>{i.sender}</b> {i.body}
+          <b>
+            {i.sender === p.owner || i.meta.owner === "true"
+              ? username
+              : i.sender}
+          </b>{" "}
+          {i.body}
         </p>
         <span className="ins-comments-label">99+ 条评论</span>
         <time>{i.time}</time>
@@ -422,9 +501,15 @@ export function InstagramSkin(p: SkinProps) {
           ) : (
             <span>{i.kind === "video" ? <Clapperboard /> : <ImageIcon />}</span>
           )}
-          {i.kind === "video" && (
+          {i.kind === "video" ? (
             <Clapperboard className="ins-grid-badge" size={17} />
-          )}
+          ) : instagramImages(i).length > 1 ? (
+            <Layers
+              className="ins-grid-badge"
+              size={17}
+              aria-label="多图帖子"
+            />
+          ) : null}
         </button>
       ))}
     </div>
@@ -794,7 +879,11 @@ export function InstagramSkin(p: SkinProps) {
                       }
                       own={i.sender === p.owner || i.meta.owner === "true"}
                     />
-                    <strong>{i.sender || "Reels"}</strong>
+                    <strong>
+                      {i.sender === p.owner || i.meta.owner === "true"
+                        ? username
+                        : i.sender || "Reels"}
+                    </strong>
                     {i.sender &&
                       i.sender !== p.owner &&
                       i.meta.owner !== "true" && (

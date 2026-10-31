@@ -141,7 +141,7 @@ it("shows profile-video thumbnails only on the personal profile", () => {
   const html = renderToStaticMarkup(
     <InstagramSkin {...props} items={items} ui={{ mymyTab: "个人主页" }} />,
   );
-  expect(html.match(/aria-label="查看主页Reel [123]"/g)).toHaveLength(3);
+  expect(html).not.toContain('aria-label="查看主页Reel');
   expect(html).toContain("Notbobo");
   expect(html).toContain("<b>333</b>粉丝");
   expect(html).toContain("<b>0</b>关注");
@@ -150,4 +150,42 @@ it("shows profile-video thumbnails only on the personal profile", () => {
   expect(html).not.toContain('aria-label="新建内容"');
   expect(html).not.toContain('class="ins-highlights"');
   expect(html).not.toContain("<video");
+});
+
+it("renders one two-image post in Home and a single thumbnail in the profile post grid", () => {
+  const photos = [
+    "/instagram/posts/post-01/photo-01.jpg",
+    "/instagram/posts/post-01/photo-02.jpg",
+  ];
+  const items = [
+    makeItem({
+      id: "post-01",
+      title: "摸摸小狗爪",
+      body: "摸摸小狗爪",
+      sender: "机主",
+      kind: "image",
+      media: photos[0],
+      meta: { owner: "true", images: JSON.stringify(photos), aspectRatio: "1" },
+    }),
+    makeItem({
+      id: "profile-video",
+      title: "主页Reel 1",
+      sender: "机主",
+      kind: "video",
+      folder: "Reels",
+      media: "/instagram/profile-reels/reel-01.mp4",
+      meta: { owner: "true", profileReel: "true" },
+    }),
+  ];
+  const home = renderToStaticMarkup(<InstagramSkin {...props} items={items} />);
+  for (const photo of photos) expect(home).toContain(photo);
+  expect(home).toContain("摸摸小狗爪");
+  expect(home).toContain('aria-label="第 1 张，共 2 张"');
+  const profile = renderToStaticMarkup(
+    <InstagramSkin {...props} items={items} ui={{ mymyTab: "个人主页" }} />,
+  );
+  expect(profile).toContain('aria-label="查看摸摸小狗爪"');
+  expect(profile).toContain(photos[0]);
+  expect(profile).not.toContain(photos[1]);
+  expect(profile).not.toContain('aria-label="查看主页Reel 1"');
 });

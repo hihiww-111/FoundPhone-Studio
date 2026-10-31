@@ -910,3 +910,12 @@
   height: 44px;
   flex: none;
 }
+.ios18 .instagram-app .ins-carousel {
+  touch-action: pan-y;
+  cursor: grab;
+}
+.ios18 .instagram-app .ins-carousel::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
