@@ -21,3 +21,57 @@
     background: #000;
   }
 }
+
+/* Use the real browser viewport on phones; retain the framed simulator on desktop. */
+.story-runtime:has(.phone-shell[data-edge-to-edge="true"]) {
+  min-height: 0;
+  box-sizing: border-box;
+  padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+  background: #000;
+}
+.story-runtime .phone-shell[data-edge-to-edge="true"] {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+.story-runtime .phone-shell[data-edge-to-edge="true"]::before,
+.story-runtime .phone-shell[data-edge-to-edge="true"]::after {
+  display: none;
+}
+.story-runtime .phone-shell[data-edge-to-edge="true"] .phone-screen {
+  width: var(--player-width);
+  height: var(--player-height);
+  border: 0;
+  border-radius: 0;
+}
+.story-runtime .phone-shell[data-edge-to-edge="true"] .interactive-home .home-app-grid {
+  width: 100%;
+  flex-basis: 100%;
+  grid-template-rows: repeat(6, minmax(72px, 1fr));
+  grid-auto-rows: minmax(72px, 1fr);
+  height: 100%;
+  min-height: 432px;
+}
+.story-runtime .phone-shell[data-edge-to-edge="true"] .interactive-home .home-pages {
+  overflow-y: auto;
+  touch-action: pan-y;
+}
+.story-runtime .phone-shell[data-edge-to-edge="true"] .launcher-cell .app-icon {
+  width: 54px;
+  height: 54px;
+}
+.story-runtime .phone-shell[data-edge-to-edge="true"] .launcher-cell .app-name {
+  font-size: 11px;
+  line-height: 14px;
+}
+.story-runtime .phone-shell[data-edge-to-edge="true"] .phone-a-weather-widget-city { font-size: 15px; }
+.story-runtime .phone-shell[data-edge-to-edge="true"] .phone-a-weather-widget-temperature { font-size: 40px; }
+.story-runtime .phone-shell[data-edge-to-edge="true"] .phone-a-weather-widget-condition { flex-direction: row; align-items: center; gap: 5px; font-size: 14px; }
+.story-runtime .phone-shell[data-edge-to-edge="true"] .phone-a-weather-widget-icon,
+.story-runtime .phone-shell[data-edge-to-edge="true"] .phone-a-weather-widget-icon svg { width: 22px; height: 22px; }
+.story-runtime .phone-shell[data-edge-to-edge="true"] .phone-a-weather-widget-range b { font-size: 18px; }

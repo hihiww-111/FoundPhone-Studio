@@ -26,7 +26,7 @@ export function readLauncherOrigin(
   const icon = launcher.querySelector<HTMLElement>(".app-icon") ?? launcher;
   const a = icon.getBoundingClientRect(),
     b = screen.getBoundingClientRect();
-  const scale = b.width / DEVICE_WIDTH;
+  const scale = b.width / screen.clientWidth;
   return {
     x: (a.x - b.x) / scale,
     y: (a.y - b.y) / scale,
