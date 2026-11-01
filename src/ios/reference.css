@@ -995,3 +995,53 @@
 .phone-shell.ios18 .phone-screen.in-app .status-bar {
   background: transparent;
 }
+
+/* Quiet, centered root navigation for the three browsing apps. */
+.ios18 :is(.native-calendar, .native-files, .redbook-ui) > .catalog-nav {
+  position: relative;
+  min-height: 48px;
+  border: 0;
+  background: transparent;
+}
+.ios18 :is(.native-calendar, .native-files, .redbook-ui) > .catalog-nav > button:first-child {
+  display: none;
+}
+.ios18 :is(.native-calendar, .native-files, .redbook-ui) > .catalog-nav > strong {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  font-weight: 650;
+  letter-spacing: .2px;
+}
+.ios18 :is(.native-calendar, .native-files, .redbook-ui) > .catalog-nav > div {
+  margin-left: auto;
+}
+.ios18 .native-calendar { background: #f5f5fa; }
+.ios18 .native-calendar .catalog-scroll { padding: 12px 16px 24px; }
+.ios18 .native-calendar .month-title { margin: 0; padding: 16px 10px; background: #fff; border-radius: 22px 22px 0 0; }
+.ios18 .native-calendar .month-title h2 { font-size: 21px; font-weight: 650; }
+.ios18 .native-calendar .month-title button { width: 36px; height: 36px; display: grid; place-items: center; color: #ed4b51; background: #fff2f3; border-radius: 50%; }
+.ios18 .native-calendar .calendar-grid { margin: 0; padding: 4px 10px 18px; background: #fff; border-radius: 0 0 22px 22px; gap: 6px 3px; }
+.ios18 .native-calendar .calendar-grid small { color: #92929b; font-size: 12px; padding: 6px 0; }
+.ios18 .native-calendar .calendar-grid button { width: 36px; height: 36px; margin: auto; border-radius: 50%; font-size: 16px; }
+.ios18 .native-calendar .calendar-grid .selected { color: #fff; background: #ed4b51; box-shadow: 0 4px 10px #ed4b5128; }
+.ios18 .native-calendar .native-section { margin: 25px 4px 12px; font-size: 17px; }
+.ios18 .native-calendar .calendar-event { margin: 8px 0; padding: 16px; border-radius: 16px; background: #fff; border: 0; border-left: 3px solid #ed4b51; }
+.ios18 .native-files { background: #f4f6fa; }
+.ios18 .native-files .catalog-scroll > h1 { font-size: 28px; margin: 16px 18px; }
+.ios18 .native-files .catalog-search { background: #e8ecf2; border-radius: 12px; margin: 0 18px 22px; }
+.ios18 .native-files :is(.file-grid, .file-folders) { padding: 0 18px 20px; gap: 20px 14px; }
+.ios18 .native-files .file-grid > div { background: #fff; border-radius: 18px; padding: 16px 8px 10px; box-shadow: 0 4px 16px #263e6010; }
+.ios18 .native-files .file-grid strong { font-size: 14px; line-height: 1.5; margin-top: 12px; }
+.ios18 .native-files .file-grid small { font-size: 11px; color: #8b94a3; }
+.ios18 .native-files .file-folders > button { background: #fff; border-radius: 18px; padding: 22px 10px; color: #428be6; }
+.ios18 .redbook-ui { background: #fafafa; }
+.ios18 .redbook-ui .redbook-top { justify-content: center; gap: 28px; padding: 8px 16px 12px; background: transparent; }
+.ios18 .redbook-ui .redbook-top > button { font-size: 16px; color: #929299; padding: 6px 2px; }
+.ios18 .redbook-ui .redbook-top > .selected { color: #202126; border-color: #ff3855; font-weight: 650; }
+.ios18 .redbook-ui .catalog-search { border-radius: 20px; background: #eeeff2; margin: 4px 14px 18px; }
+.ios18 .redbook-ui .redbook-masonry { padding: 0 12px 20px; gap: 12px; }
+.ios18 .redbook-ui .redbook-masonry > button { border-radius: 16px; background: #fff; box-shadow: 0 3px 12px #1d27380a; overflow: hidden; }
+.ios18 .redbook-ui .redbook-masonry > button > strong { font-size: 14px; line-height: 1.5; padding: 10px 10px 4px; }
+.ios18 .redbook-ui .redbook-masonry > button > div:last-child { padding: 8px 10px 12px; color: #8b8b93; }
