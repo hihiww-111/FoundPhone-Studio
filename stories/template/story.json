@@ -3,7 +3,7 @@
   "id": "phone-a-story",
   "title": "张极的手机",
   "description": "人A的互动手机故事，第一阶段：锁屏与桌面配置。",
-  "revision": 36,
+  "revision": 37,
   "phone": {
     "owner": "张极",
     "date": "2026-10-25",
@@ -722,6 +722,26 @@
         "kind": "text",
         "folder": "备忘录",
         "favorite": false,
+        "meta": {}
+      },
+      {
+        "id": "notes-pinned-2026-08-29",
+        "title": "我们说好",
+        "body": "我们说好要一起吹海风\n\n我们说好要一起去318\n\n我们说好要一起拼乐高\n\n我们说好要一起骑摩托\n\n我们说好要一起做好top",
+        "time": "2026-08-29",
+        "kind": "text",
+        "folder": "备忘录",
+        "favorite": true,
+        "meta": {}
+      },
+      {
+        "id": "notes-pinned-2024-08-29",
+        "title": "要记得天天开心！",
+        "body": "要记得努力让大家开心💪",
+        "time": "2024-08-29",
+        "kind": "text",
+        "folder": "备忘录",
+        "favorite": true,
         "meta": {}
       }
     ],
