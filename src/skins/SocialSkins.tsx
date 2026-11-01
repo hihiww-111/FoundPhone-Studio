@@ -325,55 +325,7 @@ export function FacebookSkin(p: Props) {
     </div>
   );
 }
-export function RedbookSkin(p: Props) {
-  const { tab, setTab, q, setQ, items } = useContent(p, "发现");
-  const list =
-    tab === "收藏"
-      ? items.filter((i) => i.favorite)
-      : tab === "关注"
-        ? items.filter((i) => i.folder === "关注")
-        : items;
-  return (
-    <div className="catalog-skin redbook-ui">
-      <Header p={p} />
-      <div className="redbook-top">
-        {["关注", "发现", "收藏"].map((t) => (
-          <button
-            key={t}
-            className={tab === t ? "selected" : ""}
-            onClick={() => setTab(t)}
-          >
-            {t}
-          </button>
-        ))}
-      </div>
-      <div className="catalog-scroll">
-        <SearchBox value={q} set={setQ} />
-        <div className="redbook-masonry">
-          {list.map((i) => (
-            <button key={i.id} onClick={() => p.onItem(i)}>
-              <Media item={i} />
-              <strong>{i.title}</strong>
-              <div>
-                <Avatar name={i.sender} />
-                <small>{i.sender}</small>
-                <Heart size={12} />
-                <small>{i.likes}</small>
-              </div>
-            </button>
-          ))}
-        </div>
-        <Empty items={list} />
-      </div>
-      <Tabs
-        tabs={["发现", "收藏"]}
-        value={tab}
-        set={setTab}
-        icons={[<Home />, <Bookmark />]}
-      />
-    </div>
-  );
-}
+export { RedbookSkin } from "./RedbookSkin";
 export function PinterestSkin(p: Props) {
   const { tab, setTab, q, setQ, items } = useContent(p, "发现");
   const [board, setBoard] = useState("");

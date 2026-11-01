@@ -1,0 +1,45 @@
+.ios18 .rb-app { background: #fff; color: #222; font-size: 15px; }
+.ios18 .rb-app button { font: inherit; color: inherit; }
+.ios18 .rb-app .rb-scroll { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; }
+.ios18 .rb-discover-head { height: 58px; position: sticky; top: 0; z-index: 2; display: flex; align-items: center; justify-content: center; background: #fff; border-bottom: 1px solid #f3f3f3; }
+.ios18 .rb-discover-head > span { font-size: 20px; font-weight: 650; position: relative; }
+.ios18 .rb-discover-head > span::after { content: ''; position: absolute; left: 8px; right: 8px; bottom: -8px; height: 3px; background: #ff2442; border-radius: 3px; }
+.ios18 .rb-discover-head > svg { position: absolute; left: 18px; color: #333; }
+.ios18 .rb-post-grid { columns: 2; column-gap: 6px; padding: 6px; background: #f7f7f7; }
+.ios18 .rb-card { display: block; width: 100%; break-inside: avoid; border: 0; border-radius: 7px; overflow: hidden; background: #fff; text-align: left; padding: 0; margin: 0 0 7px; }
+.ios18 .rb-card > img,.ios18 .rb-card > video { width: 100%; height: auto; display: block; }
+.ios18 .rb-card > strong { display: block; font-size: 14px; line-height: 1.5; padding: 9px 10px 2px; }
+.ios18 .rb-card-author { display: flex; align-items: center; gap: 5px; padding: 9px 10px 12px; color: #888; font-size: 11px; }
+.ios18 .rb-card-author .catalog-avatar { width: 20px; height: 20px; font-size: 10px; }
+.ios18 .rb-card-author > span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ios18 .rb-profile { background: #171717; color: #fff; padding: 0 20px 28px; }
+.ios18 .rb-profile-tools { display: flex; align-items: center; gap: 18px; height: 52px; padding-right: 85px; color: #ddd; }
+.ios18 .rb-profile-tools > span { flex: 1; }
+.ios18 .rb-identity { display: flex; gap: 18px; align-items: center; padding: 22px 0 30px; }
+.ios18 .rb-black-avatar { width: 76px; height: 76px; border-radius: 50%; background: #000; border: 1px solid #333; flex: none; }
+.ios18 .rb-identity > h1 { font-size: 27px; margin: 0; font-weight: 650; }
+.ios18 .rb-stats { display: flex; align-items: center; gap: 25px; font-size: 14px; color: #ddd; }
+.ios18 .rb-stats b { color: #fff; font-size: 20px; }
+.ios18 .rb-profile-tabs { display: flex; align-items: center; justify-content: space-around; position: sticky; top: 0; z-index: 2; background: #fff; border-radius: 18px 18px 0 0; margin-top: -12px; border-bottom: 1px solid #f0f0f0; padding: 0 10px; }
+.ios18 .rb-profile-tabs button { display: flex; align-items: center; justify-content: center; gap: 3px; height: 55px; background: none; border: 0; color: #999; opacity: 1; position: relative; }
+.ios18 .rb-profile-tabs .selected { color: #222; font-weight: 650; }
+.ios18 .rb-profile-tabs .selected::after { content: ''; position: absolute; height: 3px; background: #ff2442; bottom: 6px; left: 22px; right: 10px; border-radius: 4px; }
+.ios18 .rb-bottom { display: flex; align-items: center; justify-content: space-around; flex: none; min-height: 58px; border-top: 1px solid #f1f1f1; background: #fff; }
+.ios18 .rb-bottom button { border: 0; background: none; min-width: 52px; min-height: 48px; padding: 5px; color: #999; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 2px; font-size: 14px; }
+.ios18 .rb-bottom button:disabled { opacity: 1; cursor: default; }
+.ios18 .rb-bottom [aria-current='page'] { color: #222; font-weight: 650; }
+.ios18 .rb-bottom .rb-publish { background: #ff2442; color: #fff; border-radius: 12px; min-width: 46px; min-height: 34px; padding: 2px 9px; }
+.ios18 .rb-empty { min-height: 260px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: #aaa; font-size: 13px; }
+.ios18 .phone-screen:has(.rb-app[data-rb-page='我']) .status-bar { background: #171717; color: #fff; }
+.ios18 .skin-redbook:has(.rb-app[data-rb-page='我']) > .app-home-button { color: #fff; }
+.ios18 .rb-detail-nav { display: flex; align-items: center; gap: 10px; height: 52px; flex: none; padding: 0 96px 0 12px; }
+.ios18 .rb-detail-nav button { background: none; border: 0; padding: 0; }
+.ios18 .rb-detail-nav strong { flex: 1; font-size: 14px; }
+.ios18 .rb-gallery { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.ios18 .rb-gallery img { width: 100%; flex: 0 0 100%; object-fit: contain; scroll-snap-align: start; }
+.ios18 .rb-detail > h1 { font-size: 20px; line-height: 1.5; padding: 18px 18px 8px; margin: 0; }
+.ios18 .rb-detail .detail-body { padding: 0 18px 24px; font-size: 15px; line-height: 1.8; white-space: pre-wrap; }
+.ios18 .rb-comments { border-top: 1px solid #eee; padding: 18px; font-size: 14px; }
+.ios18 .rb-comments h2 { font-size: 15px; margin-bottom: 12px; }
+.ios18 .rb-comments p { padding: 10px 0; }
+.ios18 .rb-detail-footer { flex: none; display: flex; justify-content: flex-end; align-items: center; gap: 14px; height: 55px; padding: 0 20px; border-top: 1px solid #eee; color: #666; }
