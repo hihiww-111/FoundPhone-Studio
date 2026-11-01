@@ -18,7 +18,7 @@ export function RedbookSkin(p: Props) {
   };
   return <div className="catalog-skin redbook-ui rb-app" data-rb-page={detail ? "详情" : page}>
     {detail ? <>
-      <header className="rb-detail-nav"><button aria-label="返回小红书" onClick={() => setDetail(null)}><ChevronLeft size={24}/></button><Avatar name={detail.sender}/><strong>{detail.sender || "笔记"}</strong><Share2 size={20}/></header>
+      <header className="rb-detail-nav"><button aria-label="返回小红书" onClick={() => setDetail(null)}><ChevronLeft size={24}/></button><span className="rb-detail-nav-space" aria-hidden="true"/><Share2 size={20}/></header>
       <article className="rb-scroll rb-detail">
         <RedbookGallery key={detail.id} title={detail.title} sources={meta(detail, "images", detail.media)}/>
         <h1>{detail.title}</h1><RichText value={detail.richText} fallback={detail.body}/>
