@@ -974,3 +974,23 @@
 .ios18 .photo-viewer-controls { display: flex; align-items: center; justify-content: center; gap: 22px; min-height: 44px; flex-shrink: 0; font-size: 13px; color: #8e8e93; }
 .ios18 .photo-viewer-controls button { display: grid; place-items: center; width: 44px; height: 44px; color: #007aff; }
 .ios18 .photo-viewer-controls button:disabled { opacity: .25; }
+
+/* App surfaces paint through the system safe areas, inside the device frame. */
+.ios18 .app-screen:has(.catalog-slot, .app-post-detail, .native-detail, .native-settings, .phone-a-clock, .phone-a-weather) {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.ios18 .app-screen > .catalog-slot > :not(.catalog-loading),
+.ios18 .app-screen > .native-detail,
+.ios18 .app-screen > .app-post-detail,
+.ios18 .app-screen > .native-settings,
+.ios18 .app-screen > .phone-a-clock,
+.ios18 .app-screen > .phone-a-weather {
+  box-sizing: border-box;
+  border-top: 59px solid transparent;
+  border-bottom: 34px solid transparent;
+  background-clip: border-box;
+}
+.phone-shell.ios18 .phone-screen.in-app .status-bar {
+  background: transparent;
+}
