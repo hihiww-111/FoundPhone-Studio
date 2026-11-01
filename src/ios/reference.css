@@ -990,6 +990,7 @@
   border-top: 59px solid transparent;
   border-bottom: 34px solid transparent;
   background-clip: border-box;
+  background-origin: border-box;
 }
 .phone-shell.ios18 .phone-screen.in-app .status-bar {
   background: transparent;
