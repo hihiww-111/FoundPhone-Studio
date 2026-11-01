@@ -3,7 +3,7 @@
   "id": "phone-a-story",
   "title": "张极的手机",
   "description": "人A的互动手机故事，第一阶段：锁屏与桌面配置。",
-  "revision": 32,
+  "revision": 36,
   "phone": {
     "owner": "张极",
     "date": "2026-10-25",
@@ -997,7 +997,64 @@
         "meta": {}
       }
     ],
-    "redbook": [],
+    "redbook": [
+      {
+        "id": "redbook-saved-photo-tips",
+        "title": "X网热议 | 帮人拍照 +iPhone原相机出片技巧",
+        "body": "外网很火的普通人拍照干货，分成两部分。\n很多人拍照不好看，不是长相问题，是拍摄方法没找对。\n\n帮别人拍照怎么拍\n不要紧贴着人物站，稍微后退一点，留出空间。\n尽量放低机位，手机微微仰一点点，避开头顶裁切。\n不要一直盯着脸拍，多拍全身/半身，抓住松弛自然的瞬间。\n引导对方动起来，走路、转头、抬手，抓拍比僵硬摆拍好看很多。\n避开杂乱背景，背景干净，人物才会突出。\n\niPhone拍摄小技巧\n打开相机，调整到合适模式，不要直接放大裁切。\n对焦点锁定在人物脸上，拉低一点曝光，画面更有质感。\n尽量用原相机拍摄，后期再微调，不要开过重美颜。\n保持手部稳定，或者找支撑物，避免画面模糊。\n\n拍照核心：优先抓整体氛围感，而不是死磕脸部细节。\n不用追求完美，自然松弛的状态，最容易拍出好看照片。",
+        "kind": "image",
+        "media": "/redbook/posts/post-01/photo-01.jpg",
+        "favorite": true,
+        "folder": "收藏",
+        "sender": "",
+        "meta": {
+          "images": "/redbook/posts/post-01/photo-01.jpg|/redbook/posts/post-01/photo-02.jpg",
+          "thumbnail": "/redbook/posts/post-01/thumbnail.jpg"
+        }
+      },
+      {
+        "id": "redbook-saved-g318",
+        "title": "🚗【318自驾】10天川藏线攻略",
+        "body": "有人跑了十几次进藏，终于总结出这条不踩雷、不赶路、舒适度满分的路线👇\n照着走，稳稳当当到拉萨！\n📍Day 1：成都→康定（260km / 4h）\n✅ 雅安出发，正式踏上G318\n✅ 穿二郎山隧道，打卡泸定桥\n🏨 住康定（海拔2395m）基本无高反\n📍Day 2：康定→雅江（150km）\n⛰️ 翻越折多山（超4000m，别久留！）\n📸 新都桥——摄影天堂\n🏨 住雅江（2530m）安心睡\n📍Day 3：雅江→巴塘（300km）\n🛣️ 天路十八弯，观景台拍照\n🍚 理塘吃午饭\n🌿 毛亚大草原+姊妹湖\n🏨 住巴塘（2580m）\n📍Day 4：巴塘→如美（150km）\n🌉 过金沙江大桥，正式进藏！\n🎯 今天景点少，行程轻松\n🏨 住如美（2600m）\n📍Day 5：如美→八宿（300km）\n⚠️ 翻东达山（5130m）+怒江72拐\n🚧 这段常堵车，心态放平\n📍Day 6：八宿→波密（220km）\n❄️ 然乌湖（冬天绝美！）\n🏔️ 米堆冰川（可选）\n🏨 住波密\n📍Day 7：波密→林芝（220km）\n🌲 鲁朗小镇（像瑞士）\n🍲 吃石锅鸡！\n🏔️ 色季拉山，碰运气看南迦巴瓦峰\n🏨 住林芝\n📍Day 8：林芝→拉萨（390km）\n🛣️ 免费林拉高速直达拉萨\n🍜 晚上吃藏餐+看夜景\n📍Day 9：拉萨周边游\n🔹 南线：羊卓雍措（绝美圣湖）\n🔹 北线：纳木错（推荐都去！）\n📍Day 10：拉萨一日游\n🏛️ 布达拉宫（上午）\n🛍️ 八廓街+大昭寺（下午）",
+        "kind": "image",
+        "media": "/redbook/posts/post-02/photo-01.jpg",
+        "favorite": true,
+        "folder": "收藏",
+        "sender": "",
+        "meta": {
+          "images": "/redbook/posts/post-02/photo-01.jpg|/redbook/posts/post-02/photo-02.jpg|/redbook/posts/post-02/photo-03.jpg",
+          "thumbnail": "/redbook/posts/post-02/thumbnail.jpg"
+        }
+      },
+      {
+        "id": "redbook-saved-qijiang",
+        "title": "綦江走不走？綦江！",
+        "body": "🏢关于綦江：\n作为紧挨着贵州的綦江素来就有着“重庆南大门”之称，在古时候这儿还有一个很美的名字就叫做“夜郎溪”，不得不说这名字真的很美！这里除了有得天独厚的地理优势以外，更是有着丰富的天然矿产资源和秀丽的自然景观。像天然氧吧古剑山 ⛰️、青山绿水的东溪古镇、国家地质公园老瀛山 ⛰️ 以及高庙避暑胜地等等。而且綦江还是农民版画 🎨 之乡！\n\n📍来綦江绝对是少不了一碗米粉的 🍜！记住三大米粉就对了！（扶欢米粉、赶水米粉、三江四钢米粉），感觉綦江对外宣传美食都有北渡鱼 🐟，但是感觉本地人好像都不怎么吃，其次就是百步梯的豆花真的值得一试！",
+        "kind": "image",
+        "media": "/redbook/posts/post-03/photo-01.jpg",
+        "favorite": true,
+        "folder": "收藏",
+        "sender": "",
+        "meta": {
+          "images": "/redbook/posts/post-03/photo-01.jpg|/redbook/posts/post-03/photo-02.jpg",
+          "thumbnail": "/redbook/posts/post-03/thumbnail.jpg"
+        }
+      },
+      {
+        "id": "redbook-saved-skate-films",
+        "title": "电影推荐 | 我们板仔有自己的观影清单",
+        "body": "在滑板文化中，滑板影片在数十年间一直是这项运动的主导媒介\n故事始于1980年代，当滑板产业陷入瓶颈时，一家名为Powell-Peralta的公司用一部促销影片，引发了一场彻底改变滑板亚文化的革命。\n此前，滑板多与竞技比赛关联，但滑板影片的出现，成功地将滑板的核心从单纯的竞争，转向了对个性、创造力和反叛美学的追求。\n\n这场视觉革命的起点，是1987年由传奇滑手兼导演斯泰西·佩拉尔塔为Powell-Peralta旗下白骨队拍摄的《The Search for Animal Chin》\n与其说它是一部电影，不如说是一封写给滑板的情书。奠定了早期滑板影片的基调：它不是记录，而是生活方式的表达。\n\n1991年，马克·冈萨雷斯和斯派克·琼斯共创的《Video Days》横空出世，被视为历史上最具影响力和最受喜爱的滑板影片之一。滑板影片开始形成自己的视觉语言和价值观：崇尚原创、技巧难度，以及对城市环境的创造性破坏。滑板影片也迎来了它的经典时期，并真正成为一种独立流派。",
+        "kind": "image",
+        "media": "/redbook/posts/post-04/photo-01.jpg",
+        "favorite": true,
+        "folder": "收藏",
+        "sender": "",
+        "meta": {
+          "images": "/redbook/posts/post-04/photo-01.jpg|/redbook/posts/post-04/photo-02.jpg",
+          "thumbnail": "/redbook/posts/post-04/thumbnail.jpg"
+        }
+      }
+    ],
     "instagram": [
       {
         "id": "instagram-post-06",

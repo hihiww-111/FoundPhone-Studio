@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Bookmark, ChevronLeft, Heart, LockKeyhole, Menu, MessageCircle, Plus, Search, Share2, Store, User } from "lucide-react";
 import { RichText } from "../RichText";
 import { safeMedia, type Item } from "../schema";
-import { Avatar, Media, meta, type Props } from "./shared";
+import { Avatar, meta, type Props } from "./shared";
 import "./redbook.css";
+import { RedbookGallery } from "./RedbookGallery";
 
 export function RedbookSkin(p: Props) {
   const [page, setPage] = useState<"发现" | "我">("发现");
@@ -17,11 +18,9 @@ export function RedbookSkin(p: Props) {
   };
   return <div className="catalog-skin redbook-ui rb-app" data-rb-page={detail ? "详情" : page}>
     {detail ? <>
-      <header className="rb-detail-nav"><button aria-label="返回小红书" onClick={() => setDetail(null)}><ChevronLeft size={24}/></button><Avatar name={detail.sender}/><strong>{detail.sender}</strong><Share2 size={20}/></header>
+      <header className="rb-detail-nav"><button aria-label="返回小红书" onClick={() => setDetail(null)}><ChevronLeft size={24}/></button><Avatar name={detail.sender}/><strong>{detail.sender || "笔记"}</strong><Share2 size={20}/></header>
       <article className="rb-scroll rb-detail">
-        <div className="rb-gallery" aria-label="帖子图片，可左右滑动">
-          {(meta(detail, "images") ? meta(detail, "images").split("|") : [detail.media]).map((src, index) => safeMedia(src) ? <img key={index} src={safeMedia(src)} alt={`${detail.title} · ${index + 1}`}/> : null)}
-        </div>
+        <RedbookGallery key={detail.id} title={detail.title} sources={meta(detail, "images", detail.media)}/>
         <h1>{detail.title}</h1><RichText value={detail.richText} fallback={detail.body}/>
         {detail.comments.length > 0 && <section className="rb-comments"><h2>评论</h2>{detail.comments.map((c,i)=><p key={i}>{c}</p>)}</section>}
       </article>
@@ -40,7 +39,7 @@ export function RedbookSkin(p: Props) {
         </>}
         <div className="rb-post-grid">
           {list.map(i=><button className="rb-card" key={i.id} onClick={()=>open(i)} aria-label={`查看帖子：${i.title}`}>
-            <Media item={i}/><strong>{i.title}</strong><div className="rb-card-author"><Avatar name={i.sender}/><span>{i.sender}</span><Heart size={14}/><small>{i.likes || ''}</small></div>
+            <img src={safeMedia(meta(i, "thumbnail", i.media))} alt={i.title} loading="lazy"/><strong>{i.title}</strong><div className="rb-card-author"><Avatar name={i.sender}/><span>{i.sender}</span><Heart size={14}/><small>{i.likes || ''}</small></div>
           </button>)}
         </div>
         {list.length === 0 && <div className="rb-empty"><Bookmark size={28}/><p>{page === '我' ? '还没有收藏的笔记' : '暂时没有笔记'}</p></div>}
