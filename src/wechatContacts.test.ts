@@ -11,4 +11,8 @@ describe("WeChat address book",()=>{
  it("groups Chinese remarks and Latin names with nonalphabetic names last",()=>{
   expect(["阿航","綦江","张三","JI","123"].map(wechatInitial)).toEqual(["A","Q","Z","J","#"]);
  });
+ it("orders section initials A-Z even when Latin and Chinese names mix",()=>{
+  const names=["妈咪","苏新皓","张峻豪","张泽禹","朱志鑫","A左左"];
+  expect(wechatContacts(names.map(title=>makeItem({title}))).map(c=>c.name)).toEqual(["A左左","妈咪","苏新皓","张峻豪","张泽禹","朱志鑫"]);
+ });
 });

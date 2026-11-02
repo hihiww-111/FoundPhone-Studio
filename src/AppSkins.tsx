@@ -2,7 +2,7 @@ import { wechatContacts } from "./wechatContacts";
 import "./ios/wechat-contacts.css";
 import { NativeComposer } from "./DeviceSystem";
 import { useSkinState } from "./skinState";
-import { Fragment, useState } from "react";
+import { Fragment, useLayoutEffect, useRef, useState } from "react";
 import {
   ChevronLeft,
   Plus,
@@ -91,6 +91,7 @@ function MessageList({
   onRead,
   whatsapp = false,
   ownerAvatar = "",
+  startAtEnd = false,
 }: {
   items: Item[];
   creator: boolean;
@@ -98,9 +99,20 @@ function MessageList({
   onRead: (id: string) => void;
   whatsapp?: boolean;
   ownerAvatar?: string;
+  startAtEnd?: boolean;
 }) {
+  const transcript = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    if (!startAtEnd || !transcript.current) return;
+    const box = transcript.current;
+    const bottom = () => { box.scrollTop = box.scrollHeight; };
+    bottom();
+    const loadingImages = Array.from(box.querySelectorAll("img")).filter(img => !img.complete);
+    loadingImages.forEach(img => img.addEventListener("load", bottom, {once: true}));
+    return () => loadingImages.forEach(img => img.removeEventListener("load", bottom));
+  }, [startAtEnd]);
   return (
-    <div className={`skin-messages ${whatsapp ? "wa-wallpaper" : ""}`}>
+    <div ref={transcript} className={`skin-messages ${whatsapp ? "wa-wallpaper" : ""}`}>
       {items.map((i, index) => (
         <Fragment key={i.id}>
         {i.time && (index === 0 || i.time.slice(0,10) !== items[index-1].time.slice(0,10)) && <div className="skin-date">{i.time.slice(0,10).replace(/^(\d{4})-(\d{2})-(\d{2})$/, (_,y,m,d)=>`${y}年${Number(m)}月${Number(d)}日`)}</div>}
@@ -164,7 +176,15 @@ export function WeChatSkin(p: SkinProps) {
     [searchOpen, setSearchOpen] = useState(false),
     [utility, setUtility] = useState(""),
     [contactQuery, setContactQuery] = useState(""),
-    [selectedContact, setSelectedContact] = useState("");
+    [selectedContact, setSelectedContact] = useState(""),
+    [chatAtEnd, setChatAtEnd] = useState(false);
+  const [openedThreads, setOpenedThreads] = useSkinState<string[]>(p, "openedThreads", []);
+  const openThread = (thread: string) => {
+    setChatAtEnd(openedThreads.includes(thread));
+    setOpenedThreads(v => v.includes(thread) ? v : [...v, thread]);
+    p.onThread(thread);
+    p.onRead(thread);
+  };
   const [readThreads, setReadThreads] = useSkinState<string[]>(
     p,
     "readThreads",
@@ -176,7 +196,7 @@ export function WeChatSkin(p: SkinProps) {
         .filter((i) => !["朋友圈", "我"].includes(i.folder))
         .map((i) => i.title),
     ),
-  ].sort((a,b) => Number(p.items.some(i=>i.title===b && i.meta.pinned==="true")) - Number(p.items.some(i=>i.title===a && i.meta.pinned==="true")));
+  ].reverse().sort((a,b) => Number(p.items.some(i=>i.title===b && i.meta.pinned==="true")) - Number(p.items.some(i=>i.title===a && i.meta.pinned==="true")));
   const contacts = wechatContacts(p.items, p.owner);
   const shownContacts = contacts.filter(c => c.name.toLowerCase().includes(contactQuery.toLowerCase()));
   const contact = contacts.find(c => c.name === selectedContact);
@@ -253,7 +273,7 @@ export function WeChatSkin(p: SkinProps) {
       {contact ? (
         <div className="skin-scroll wx-contact-detail">
           <section className="wx-contact-identity"><Avatar name={contact.name} src={contact.avatar}/><h1>{contact.name}</h1></section>
-          <button className="wx-send-message" onClick={() => { p.onThread(contact.thread); p.onRead(contact.thread); setSelectedContact(""); setTab("微信"); }}><MessageCircle size={20}/>发消息</button>
+          <button className="wx-send-message" onClick={() => { openThread(contact.thread); setSelectedContact(""); setTab("微信"); }}><MessageCircle size={20}/>发消息</button>
         </div>
       ) : utility ? (
         <div className="skin-scroll wx-utility">
@@ -294,6 +314,8 @@ export function WeChatSkin(p: SkinProps) {
       ) : p.thread ? (
         <>
           <MessageList
+            key={p.thread}
+            startAtEnd={chatAtEnd}
             items={p.items.filter((i) => i.title === p.thread)}
             ownerAvatar="/wechat/avatar.jpg"
             creator={p.creator}
@@ -331,7 +353,7 @@ export function WeChatSkin(p: SkinProps) {
           )}
         </div>
       ) : (
-        <div className="skin-scroll">
+        <div className="skin-scroll" data-wx-list={tab}>
           {tab === "微信" ? (
             <>
               {searchOpen && (
@@ -362,8 +384,7 @@ export function WeChatSkin(p: SkinProps) {
                       key={t}
                       onClick={() => {
                         setReadThreads((v) => (v.includes(t) ? v : [...v, t]));
-                        p.onThread(t);
-                        p.onRead(t);
+                        openThread(t);
                       }}
                     >
                       <span className="wx-chat-avatar">
@@ -394,7 +415,7 @@ export function WeChatSkin(p: SkinProps) {
               {contactSections.map(letter=><section id={`wx-address-${letter}`} key={letter}><h2>{letter}</h2>{shownContacts.filter(c=>c.initial===letter).map(c=><button key={c.name} className="wx-contact" onClick={()=>setSelectedContact(c.name)}><Avatar name={c.name} src={c.avatar}/><span>{c.name}</span></button>)}</section>)}
               {!shownContacts.length && <p className="skin-empty">暂无联系人</p>}
               <p className="wx-contact-count">{shownContacts.length} 位联系人</p>
-              <nav className="wx-address-index" aria-label="联系人索引">{contactSections.map(letter=><button key={letter} onClick={()=>document.getElementById(`wx-address-${letter}`)?.scrollIntoView({block:"start"})}>{letter}</button>)}</nav>
+
             </div>
           ) : tab === "发现" ? (
             <div className="wx-discover-groups">
@@ -480,6 +501,7 @@ export function WeChatSkin(p: SkinProps) {
           )}
         </div>
       )}
+      {tab === "通讯录" && !p.thread && !moments && !utility && !contact && <nav className="wx-address-index" aria-label="联系人索引">{contactSections.map(letter=><button key={letter} onClick={()=>document.getElementById(`wx-address-${letter}`)?.scrollIntoView({block:"start"})}>{letter}</button>)}</nav>}
       {!p.thread && !moments && !utility && !contact && (
         <nav className="wx-bottom">
           {[

@@ -13,5 +13,5 @@ export function wechatContacts(items: Item[], owner = "") {
     const messages = items.filter(i => i.title === name);
     const incoming = messages.find(i => !i.outgoing && i.sender !== owner && i.sender !== "我");
     return {name, thread: name, avatar: incoming?.avatar || messages.find(i => i.avatar)?.avatar || "", initial: wechatInitial(name)};
-  }).sort((a,b) => a.initial === "#" && b.initial !== "#" ? 1 : b.initial === "#" && a.initial !== "#" ? -1 : collator.compare(a.name,b.name));
+  }).sort((a,b) => a.initial === "#" && b.initial !== "#" ? 1 : b.initial === "#" && a.initial !== "#" ? -1 : a.initial.localeCompare(b.initial, "en") || collator.compare(a.name,b.name));
 }
