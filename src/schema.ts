@@ -196,7 +196,7 @@ export function validateWork(input: unknown): Work {
   return workSchema.parse(input);
 }
 export function safeMedia(value: string) {
-  if (value === "/wechat/avatar.jpg" || value === "/wechat/contacts/zhang-junhao.jpg") return value;
+  if (value === "/wechat/avatar.jpg" || value === "/wechat/contacts/zhang-junhao.jpg" || value === "/wechat/contacts/su-xinhao.jpg" || value === "/wechat/contacts/mom.jpg" || value === "/wechat/contacts/zhang-zeyu.jpg" || value === "/wechat/contacts/zhu-zhixin.jpg" || value === "/wechat/contacts/zuo-hang.jpg" || value === "/wechat/messages/mom-bobo.jpg") return value;
   if (/^\/redbook\/posts\/post-0[1-4]\/(photo-\d{2}|thumbnail)\.jpg$/.test(value)) return value;
   if (/^\/photos\/memories\/memory-0[1-7](-thumb)?\.jpg$/.test(value)) return value;
   if (/^\/photos\/recent\/recent-(0[1-9]|1[0-5])(-thumb)?\.jpg$/.test(value)) return value;

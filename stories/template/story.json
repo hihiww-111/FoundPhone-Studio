@@ -3,7 +3,7 @@
   "id": "phone-a-story",
   "title": "张极的手机",
   "description": "人A的互动手机故事，第一阶段：锁屏与桌面配置。",
-  "revision": 38,
+  "revision": 42,
   "phone": {
     "owner": "张极",
     "date": "2026-10-25",
@@ -34,6 +34,41 @@
       "id": "zhang-junhao",
       "name": "张峻豪",
       "avatar": "/wechat/contacts/zhang-junhao.jpg",
+      "phone": "",
+      "bio": ""
+    },
+    {
+      "id": "su-xinhao",
+      "name": "苏新皓",
+      "avatar": "/wechat/contacts/su-xinhao.jpg",
+      "phone": "",
+      "bio": ""
+    },
+    {
+      "id": "mom",
+      "name": "妈咪",
+      "avatar": "/wechat/contacts/mom.jpg",
+      "phone": "",
+      "bio": ""
+    },
+    {
+      "id": "zhang-zeyu",
+      "name": "张泽禹",
+      "avatar": "/wechat/contacts/zhang-zeyu.jpg",
+      "phone": "",
+      "bio": ""
+    },
+    {
+      "id": "zhu-zhixin",
+      "name": "朱志鑫",
+      "avatar": "/wechat/contacts/zhu-zhixin.jpg",
+      "phone": "",
+      "bio": ""
+    },
+    {
+      "id": "zuo-hang",
+      "name": "A左左",
+      "avatar": "/wechat/contacts/zuo-hang.jpg",
       "phone": "",
       "bio": ""
     }
@@ -110,6 +145,659 @@
           "body": "我再想想🤔",
           "time": "2026-05-02",
           "read": true
+        }
+      ]
+    },
+    {
+      "id": "wechat-su-xinhao",
+      "app": "wechat",
+      "title": "苏新皓",
+      "participants": [
+        "owner",
+        "su-xinhao"
+      ],
+      "messages": [
+        {
+          "id": "wechat-sxh-20260422-01",
+          "senderId": "owner",
+          "body": "你说我送左航什么生日礼物比较好啊？",
+          "time": "2026-04-22",
+          "read": true
+        },
+        {
+          "id": "wechat-sxh-20260422-02",
+          "senderId": "su-xinhao",
+          "body": "现在开始想会不会有点太早？这个我今年还没考虑过诶，要不送点和猫相关的？",
+          "time": "2026-04-22",
+          "read": true
+        },
+        {
+          "id": "wechat-sxh-20260422-03",
+          "senderId": "owner",
+          "body": "可是总觉得那是送给厚米，我想送左航可以用的，这是给左航的礼物！",
+          "time": "2026-04-22",
+          "read": true
+        },
+        {
+          "id": "wechat-sxh-20260422-04",
+          "senderId": "su-xinhao",
+          "body": "嗯……那你最近再多多观察一下？",
+          "time": "2026-04-22",
+          "read": true
+        },
+        {
+          "id": "wechat-sxh-20260422-05",
+          "senderId": "owner",
+          "body": "我已经很努力了🫨",
+          "time": "2026-04-22",
+          "read": true
+        },
+        {
+          "id": "wechat-sxh-20260422-06",
+          "senderId": "su-xinhao",
+          "body": "小极你也别盯得太明显",
+          "time": "2026-04-22",
+          "read": true
+        },
+        {
+          "id": "wechat-sxh-20260422-07",
+          "senderId": "owner",
+          "body": "我哪有？！",
+          "time": "2026-04-22",
+          "read": true
+        },
+        {
+          "id": "wechat-sxh-20260422-08",
+          "senderId": "su-xinhao",
+          "body": "行，那就没有",
+          "time": "2026-04-22",
+          "read": true
+        },
+        {
+          "id": "wechat-sxh-20260422-09",
+          "senderId": "owner",
+          "body": "OK派你也帮我观察观察👍",
+          "time": "2026-04-22",
+          "read": true
+        },
+        {
+          "id": "wechat-sxh-20260912-01",
+          "senderId": "su-xinhao",
+          "body": "你送左航一根超长蛋挞然后让我们三分一根是啥意思？会不会有点太over了？",
+          "time": "2026-09-12",
+          "read": true
+        },
+        {
+          "id": "wechat-sxh-20260912-02",
+          "senderId": "owner",
+          "body": "那一根大家分着吃刚刚好嘛！",
+          "time": "2026-09-12",
+          "read": true
+        },
+        {
+          "id": "wechat-sxh-20260912-03",
+          "senderId": "su-xinhao",
+          "body": "那左航？",
+          "time": "2026-09-12",
+          "read": true
+        },
+        {
+          "id": "wechat-sxh-20260912-04",
+          "senderId": "owner",
+          "body": "我觉得他值得吃一根！",
+          "time": "2026-09-12",
+          "read": true
+        },
+        {
+          "id": "wechat-sxh-20260912-05",
+          "senderId": "su-xinhao",
+          "body": "我不值得咯",
+          "time": "2026-09-12",
+          "read": true
+        },
+        {
+          "id": "wechat-sxh-20260912-06",
+          "senderId": "owner",
+          "body": "我没这么说！！！",
+          "time": "2026-09-12",
+          "read": true
+        }
+      ]
+    },
+    {
+      "id": "wechat-mom",
+      "app": "wechat",
+      "title": "妈咪",
+      "participants": [
+        "owner",
+        "mom"
+      ],
+      "messages": [
+        {
+          "id": "wechat-mom-01",
+          "senderId": "mom",
+          "body": "最近要多注意休息，好像流感很严重",
+          "time": "",
+          "read": true
+        },
+        {
+          "id": "wechat-mom-02",
+          "senderId": "owner",
+          "body": "我会的，妈咪你和爸也是！",
+          "time": "",
+          "read": true
+        },
+        {
+          "id": "wechat-mom-03",
+          "senderId": "owner",
+          "body": "我放假就回家看你们😭",
+          "time": "",
+          "read": true
+        },
+        {
+          "id": "wechat-mom-04",
+          "senderId": "mom",
+          "body": "好呀好呀",
+          "time": "",
+          "read": true
+        },
+        {
+          "id": "wechat-mom-05",
+          "senderId": "mom",
+          "body": "汇报啵啵",
+          "time": "",
+          "read": true
+        },
+        {
+          "id": "wechat-mom-06",
+          "senderId": "mom",
+          "body": "",
+          "time": "",
+          "read": true,
+          "kind": "image",
+          "media": "/wechat/messages/mom-bobo.jpg"
+        },
+        {
+          "id": "wechat-mom-07",
+          "senderId": "owner",
+          "body": "真的想你们了！！！",
+          "time": "",
+          "read": true
+        }
+      ]
+    },
+    {
+      "id": "wechat-zhang-zeyu",
+      "app": "wechat",
+      "title": "张泽禹",
+      "participants": [
+        "owner",
+        "zhang-zeyu"
+      ],
+      "messages": [
+        {
+          "id": "wechat-zhang-zeyu-20260801-01",
+          "senderId": "owner",
+          "body": "我打得很烂吗？",
+          "time": "2026-08-01",
+          "read": true
+        },
+        {
+          "id": "wechat-zhang-zeyu-20260801-02",
+          "senderId": "zhang-zeyu",
+          "body": "你这种我觉得买挂吧不然",
+          "time": "2026-08-01",
+          "read": true
+        },
+        {
+          "id": "wechat-zhang-zeyu-20260801-03",
+          "senderId": "zhang-zeyu",
+          "body": "买了我不举报你因为不买有点想举报了",
+          "time": "2026-08-01",
+          "read": true
+        },
+        {
+          "id": "wechat-zhang-zeyu-20260801-04",
+          "senderId": "zhang-zeyu",
+          "body": "有教程你看看不？",
+          "time": "2026-08-01",
+          "read": true
+        },
+        {
+          "id": "wechat-zhang-zeyu-20260801-05",
+          "senderId": "owner",
+          "body": "看…",
+          "time": "2026-08-01",
+          "read": true
+        },
+        {
+          "id": "wechat-zhang-zeyu-20260802-01",
+          "senderId": "zhang-zeyu",
+          "body": "你跟着左航多练练吧我就不参与了",
+          "time": "2026-08-02",
+          "read": true
+        },
+        {
+          "id": "wechat-zhang-zeyu-20260802-02",
+          "senderId": "zhang-zeyu",
+          "body": "我上分去了",
+          "time": "2026-08-02",
+          "read": true
+        },
+        {
+          "id": "wechat-zhang-zeyu-20260802-03",
+          "senderId": "owner",
+          "body": "好",
+          "time": "2026-08-02",
+          "read": true
+        },
+        {
+          "id": "wechat-zhang-zeyu-20260912-01",
+          "senderId": "zhang-zeyu",
+          "body": "蛋挞谢了，这么突然？",
+          "time": "2026-09-12",
+          "read": true
+        },
+        {
+          "id": "wechat-zhang-zeyu-20260912-02",
+          "senderId": "owner",
+          "body": "刚好刷到了！",
+          "time": "2026-09-12",
+          "read": true
+        },
+        {
+          "id": "wechat-zhang-zeyu-20260912-03",
+          "senderId": "zhang-zeyu",
+          "body": "享口福了味道不错",
+          "time": "2026-09-12",
+          "read": true
+        }
+      ]
+    },
+    {
+      "id": "wechat-zhu-zhixin",
+      "app": "wechat",
+      "title": "朱志鑫",
+      "participants": [
+        "owner",
+        "zhu-zhixin"
+      ],
+      "messages": [
+        {
+          "id": "wechat-zhu-zhixin-undated-01",
+          "senderId": "zhu-zhixin",
+          "body": "点外卖了一起吗？",
+          "time": "",
+          "read": true
+        },
+        {
+          "id": "wechat-zhu-zhixin-undated-02",
+          "senderId": "owner",
+          "body": "来啦！",
+          "time": "",
+          "read": true
+        },
+        {
+          "id": "wechat-zhu-zhixin-20260803-01",
+          "senderId": "owner",
+          "body": "亲爱的朱志鑫",
+          "time": "2026-08-03",
+          "read": true
+        },
+        {
+          "id": "wechat-zhu-zhixin-20260803-02",
+          "senderId": "zhu-zhixin",
+          "body": "有求于我？",
+          "time": "2026-08-03",
+          "read": true
+        },
+        {
+          "id": "wechat-zhu-zhixin-20260803-03",
+          "senderId": "owner",
+          "body": "你可以陪我打瓦吗？",
+          "time": "2026-08-03",
+          "read": true
+        },
+        {
+          "id": "wechat-zhu-zhixin-20260803-04",
+          "senderId": "zhu-zhixin",
+          "body": "不找左航了",
+          "time": "2026-08-03",
+          "read": true
+        },
+        {
+          "id": "wechat-zhu-zhixin-20260803-05",
+          "senderId": "owner",
+          "body": "我怕我打太菜了他烦我啊！！",
+          "time": "2026-08-03",
+          "read": true
+        },
+        {
+          "id": "wechat-zhu-zhixin-20260803-06",
+          "senderId": "zhu-zhixin",
+          "body": "那就来烦我了？",
+          "time": "2026-08-03",
+          "read": true
+        },
+        {
+          "id": "wechat-zhu-zhixin-20260803-07",
+          "senderId": "owner",
+          "body": "不是啊我要给左航一个惊喜",
+          "time": "2026-08-03",
+          "read": true
+        },
+        {
+          "id": "wechat-zhu-zhixin-20260803-08",
+          "senderId": "owner",
+          "body": "让他看到我的天赋",
+          "time": "2026-08-03",
+          "read": true
+        },
+        {
+          "id": "wechat-zhu-zhixin-20260803-09",
+          "senderId": "zhu-zhixin",
+          "body": "哦哦哦",
+          "time": "2026-08-03",
+          "read": true
+        },
+        {
+          "id": "wechat-zhu-zhixin-20260804-01",
+          "senderId": "owner",
+          "body": "今天练习吗？",
+          "time": "2026-08-04",
+          "read": true
+        },
+        {
+          "id": "wechat-zhu-zhixin-20260804-02",
+          "senderId": "zhu-zhixin",
+          "body": "算了吧我感觉有点那个了我戒瓦了好吧",
+          "time": "2026-08-04",
+          "read": true
+        },
+        {
+          "id": "wechat-zhu-zhixin-20260912-01",
+          "senderId": "zhu-zhixin",
+          "body": "让我们三分一根蛋挞会不会太抠门了？",
+          "time": "2026-09-12",
+          "read": true
+        },
+        {
+          "id": "wechat-zhu-zhixin-20260912-02",
+          "senderId": "owner",
+          "body": "有的吃就很好了啊！",
+          "time": "2026-09-12",
+          "read": true
+        }
+      ]
+    },
+    {
+      "id": "wechat-zuo-hang",
+      "app": "wechat",
+      "title": "A左左",
+      "participants": [
+        "owner",
+        "zuo-hang"
+      ],
+      "messages": [
+        {
+          "id": "wechat-zuohang-20260522-01",
+          "senderId": "owner",
+          "body": "左航！祝你二十岁生日快乐！！来到二字头的年纪一定越来越幸福，能够得到想要的自由，有底气拒绝所有不喜欢的东西，我会支持你的！用你挂在嘴边的词来祝福你吧，平安健康，再加上，开心顺遂🥳你今天是全世界最帅的二十岁寿星💪",
+          "time": "2026-05-22",
+          "read": true,
+          "meta": {
+            "pinned": "true"
+          }
+        },
+        {
+          "id": "wechat-zuohang-20260522-02",
+          "senderId": "zuo-hang",
+          "body": "这波走心了",
+          "time": "2026-05-22",
+          "read": true,
+          "meta": {
+            "pinned": "true"
+          }
+        },
+        {
+          "id": "wechat-zuohang-20260522-03",
+          "senderId": "zuo-hang",
+          "body": "我们都要平安健康开心顺遂",
+          "time": "2026-05-22",
+          "read": true,
+          "meta": {
+            "pinned": "true"
+          }
+        },
+        {
+          "id": "wechat-zuohang-20260522-04",
+          "senderId": "zuo-hang",
+          "body": "祝福收到，严肃执行",
+          "time": "2026-05-22",
+          "read": true,
+          "meta": {
+            "pinned": "true"
+          }
+        },
+        {
+          "id": "wechat-zuohang-20260522-05",
+          "senderId": "owner",
+          "body": "你是最棒的左航🎉",
+          "time": "2026-05-22",
+          "read": true,
+          "meta": {
+            "pinned": "true"
+          }
+        },
+        {
+          "id": "wechat-zuohang-20260522-06",
+          "senderId": "zuo-hang",
+          "body": "OK啊你也是最棒的张极",
+          "time": "2026-05-22",
+          "read": true,
+          "meta": {
+            "pinned": "true"
+          }
+        },
+        {
+          "id": "wechat-zuohang-20260802-01",
+          "senderId": "owner",
+          "body": "左航…这把我的…没打好…",
+          "time": "2026-08-02",
+          "read": true,
+          "meta": {
+            "pinned": "true"
+          }
+        },
+        {
+          "id": "wechat-zuohang-20260802-02",
+          "senderId": "zuo-hang",
+          "body": "没关系，这不是刚上手吗？",
+          "time": "2026-08-02",
+          "read": true,
+          "meta": {
+            "pinned": "true"
+          }
+        },
+        {
+          "id": "wechat-zuohang-20260802-03",
+          "senderId": "owner",
+          "body": "打瓦真的比想象中难多了！！",
+          "time": "2026-08-02",
+          "read": true,
+          "meta": {
+            "pinned": "true"
+          }
+        },
+        {
+          "id": "wechat-zuohang-20260802-04",
+          "senderId": "zuo-hang",
+          "body": "新手都这样呢，没事到时候我们都在",
+          "time": "2026-08-02",
+          "read": true,
+          "meta": {
+            "pinned": "true"
+          }
+        },
+        {
+          "id": "wechat-zuohang-20260802-05",
+          "senderId": "zuo-hang",
+          "body": "由我兜底",
+          "time": "2026-08-02",
+          "read": true,
+          "meta": {
+            "pinned": "true"
+          }
+        },
+        {
+          "id": "wechat-zuohang-20260802-06",
+          "senderId": "zuo-hang",
+          "body": "表演赛正常发挥就行我们再陪你多练练",
+          "time": "2026-08-02",
+          "read": true,
+          "meta": {
+            "pinned": "true"
+          }
+        },
+        {
+          "id": "wechat-zuohang-20260802-07",
+          "senderId": "owner",
+          "body": "找你练可以吗",
+          "time": "2026-08-02",
+          "read": true,
+          "meta": {
+            "pinned": "true"
+          }
+        },
+        {
+          "id": "wechat-zuohang-20260802-08",
+          "senderId": "zuo-hang",
+          "body": "当然可以有啥不行的，上号",
+          "time": "2026-08-02",
+          "read": true,
+          "meta": {
+            "pinned": "true"
+          }
+        },
+        {
+          "id": "wechat-zuohang-20260912-01",
+          "senderId": "owner",
+          "body": "左航！我买了超长蛋挞给你！",
+          "time": "2026-09-12",
+          "read": true,
+          "meta": {
+            "pinned": "true"
+          }
+        },
+        {
+          "id": "wechat-zuohang-20260912-02",
+          "senderId": "zuo-hang",
+          "body": "给我干嘛？",
+          "time": "2026-09-12",
+          "read": true,
+          "meta": {
+            "pinned": "true"
+          }
+        },
+        {
+          "id": "wechat-zuohang-20260912-03",
+          "senderId": "zuo-hang",
+          "body": "无事献殷勤？",
+          "time": "2026-09-12",
+          "read": true,
+          "meta": {
+            "pinned": "true"
+          }
+        },
+        {
+          "id": "wechat-zuohang-20260912-04",
+          "senderId": "owner",
+          "body": "这不是最近很火吗！",
+          "time": "2026-09-12",
+          "read": true,
+          "meta": {
+            "pinned": "true"
+          }
+        },
+        {
+          "id": "wechat-zuohang-20260912-05",
+          "senderId": "zuo-hang",
+          "body": "就给我？",
+          "time": "2026-09-12",
+          "read": true,
+          "meta": {
+            "pinned": "true"
+          }
+        },
+        {
+          "id": "wechat-zuohang-20260912-06",
+          "senderId": "owner",
+          "body": "呃这个大家也有的对！",
+          "time": "2026-09-12",
+          "read": true,
+          "meta": {
+            "pinned": "true"
+          }
+        },
+        {
+          "id": "wechat-zuohang-20260912-07",
+          "senderId": "zuo-hang",
+          "body": "哦不是只给我啊那行",
+          "time": "2026-09-12",
+          "read": true,
+          "meta": {
+            "pinned": "true"
+          }
+        },
+        {
+          "id": "wechat-zuohang-20260912-08",
+          "senderId": "owner",
+          "body": "但是只有你有独享资格！！",
+          "time": "2026-09-12",
+          "read": true,
+          "meta": {
+            "pinned": "true"
+          }
+        },
+        {
+          "id": "wechat-zuohang-20260912-09",
+          "senderId": "zuo-hang",
+          "body": "他们都有了？你吃了没？",
+          "time": "2026-09-12",
+          "read": true,
+          "meta": {
+            "pinned": "true"
+          }
+        },
+        {
+          "id": "wechat-zuohang-20260912-10",
+          "senderId": "owner",
+          "body": "他们已瓜分…我忘了买我的份",
+          "time": "2026-09-12",
+          "read": true,
+          "meta": {
+            "pinned": "true"
+          }
+        },
+        {
+          "id": "wechat-zuohang-20260912-11",
+          "senderId": "zuo-hang",
+          "body": "我吃不完掰一半给你要不？",
+          "time": "2026-09-12",
+          "read": true,
+          "meta": {
+            "pinned": "true"
+          }
+        },
+        {
+          "id": "wechat-zuohang-20260912-12",
+          "senderId": "owner",
+          "body": "你真好！我来了！",
+          "time": "2026-09-12",
+          "read": true,
+          "meta": {
+            "pinned": "true"
+          }
         }
       ]
     }

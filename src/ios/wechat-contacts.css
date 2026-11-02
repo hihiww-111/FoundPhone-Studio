@@ -19,3 +19,4 @@
 .ios18 .wx-send-message { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; margin-top: 12px; padding: 18px; color: #576b95; background: #fff; border: 0; font-size: 17px; font-weight: 600; }
 .ios18 .wechat-ui[data-contact="true"] .wx-nav > button:last-child { visibility: hidden; }
 .ios18 .wechat-ui[data-contact="true"][data-thread="false"][data-moments="false"][data-utility="false"] .wx-nav > button:first-child { visibility: visible; }
+.ios18 .wechat-ui .wx-chat-row.wx-chat-pinned { background: #e9e9e9; }

@@ -1050,3 +1050,7 @@
   opacity: 1;
   cursor: default;
 }
+
+/* Chat transcripts remain scrollable without a visible native scroll track. */
+.ios18 :is(.skin-messages, .chat-content) { scrollbar-width: none; }
+.ios18 :is(.skin-messages, .chat-content)::-webkit-scrollbar { display: none; width: 0; height: 0; }

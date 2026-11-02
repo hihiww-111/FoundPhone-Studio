@@ -103,7 +103,7 @@ function MessageList({
     <div className={`skin-messages ${whatsapp ? "wa-wallpaper" : ""}`}>
       {items.map((i, index) => (
         <Fragment key={i.id}>
-        {(index === 0 || i.time.slice(0,10) !== items[index-1].time.slice(0,10)) && <div className="skin-date">{i.time.slice(0,10).replace(/^(\d{4})-(\d{2})-(\d{2})$/, (_,y,m,d)=>`${y}年${Number(m)}月${Number(d)}日`)}</div>}
+        {i.time && (index === 0 || i.time.slice(0,10) !== items[index-1].time.slice(0,10)) && <div className="skin-date">{i.time.slice(0,10).replace(/^(\d{4})-(\d{2})-(\d{2})$/, (_,y,m,d)=>`${y}年${Number(m)}月${Number(d)}日`)}</div>}
         <div
           key={i.id}
           className={`skin-message ${i.outgoing ? "outgoing" : ""}`}
@@ -176,7 +176,7 @@ export function WeChatSkin(p: SkinProps) {
         .filter((i) => !["朋友圈", "我"].includes(i.folder))
         .map((i) => i.title),
     ),
-  ];
+  ].sort((a,b) => Number(p.items.some(i=>i.title===b && i.meta.pinned==="true")) - Number(p.items.some(i=>i.title===a && i.meta.pinned==="true")));
   const contacts = wechatContacts(p.items, p.owner);
   const shownContacts = contacts.filter(c => c.name.toLowerCase().includes(contactQuery.toLowerCase()));
   const contact = contacts.find(c => c.name === selectedContact);
@@ -358,7 +358,7 @@ export function WeChatSkin(p: SkinProps) {
                     last = list.at(-1)!;
                   return (
                     <button
-                      className="wx-chat-row"
+                      className={`wx-chat-row${list.some(i=>i.meta.pinned === "true") ? " wx-chat-pinned" : ""}`}
                       key={t}
                       onClick={() => {
                         setReadThreads((v) => (v.includes(t) ? v : [...v, t]));
