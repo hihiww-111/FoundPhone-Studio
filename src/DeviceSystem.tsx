@@ -410,7 +410,7 @@ export function DeviceKeyboard({ close, scriptedText }: { close: () => void; scr
     [shift, setShift] = useState(false),
     [numbers, setNumbers] = useState(false);
   return (
-    <div className="device-keyboard" role="dialog" aria-label="屏幕键盘">
+    <div className="device-keyboard" data-scripted={scriptedText !== undefined} role="dialog" aria-label="屏幕键盘">
       <div className="keyboard-draft">
         <input
           autoFocus={scriptedText === undefined}

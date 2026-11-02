@@ -3,7 +3,7 @@
   "id": "phone-a-story",
   "title": "张极的手机",
   "description": "人A的互动手机故事，第一阶段：锁屏与桌面配置。",
-  "revision": 43,
+  "revision": 44,
   "phone": {
     "owner": "张极",
     "date": "2026-10-25",
@@ -805,12 +805,64 @@
   "content": {
     "phone": [
       {
-        "id": "test-item-phone",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
+        "id": "phone-contact-cat",
+        "title": "🐈‍⬛（不过敏版）",
+        "folder": "通讯录",
         "kind": "text",
-        "meta": {}
+        "body": "",
+        "meta": {
+          "contactId": "cat"
+        }
+      },
+      {
+        "id": "phone-contact-mom",
+        "title": "妈咪",
+        "folder": "通讯录",
+        "kind": "text",
+        "body": "",
+        "meta": {
+          "contactId": "mom"
+        }
+      },
+      {
+        "id": "phone-contact-su",
+        "title": "苏新皓",
+        "folder": "通讯录",
+        "kind": "text",
+        "body": "",
+        "meta": {
+          "contactId": "su"
+        }
+      },
+      {
+        "id": "phone-contact-junhao",
+        "title": "张峻豪",
+        "folder": "通讯录",
+        "kind": "text",
+        "body": "",
+        "meta": {
+          "contactId": "junhao"
+        }
+      },
+      {
+        "id": "phone-contact-zeyu",
+        "title": "张泽禹",
+        "folder": "通讯录",
+        "kind": "text",
+        "body": "",
+        "meta": {
+          "contactId": "zeyu"
+        }
+      },
+      {
+        "id": "phone-contact-zhixin",
+        "title": "朱志鑫",
+        "folder": "通讯录",
+        "kind": "text",
+        "body": "",
+        "meta": {
+          "contactId": "zhixin"
+        }
       }
     ],
     "photos": [
@@ -1483,6 +1535,15 @@
         "kind": "note",
         "folder": "备忘录",
         "hidden": true
+      },
+      {
+        "id": "interlude-happy-note",
+        "title": "幸福易如反掌✌️",
+        "body": "真正见了面好不知所措，还好预先点了最近很火的固体杨枝甘露，递上去的时候左航还有心情开玩笑，说原来接到的是外卖电话！气氛一下好了很多，但我还是很紧张啊我莫名其妙说了一句那是我的初吻……\n\n直接就是大冷场，左航耳朵慢慢变红了，第一下没反应过来以为是太冷了，差点抬手捂上了！！左航说也是他的，这个能不能叫双赢？我说我负责我肯定负责的，左航说负责听起来很勉强他可以当没发生。\n\n怎么可能当没发生？！我承认我冲动了，但是还好冲动了，我说哪里勉强我喜欢你啊！！！我发誓这是我为数不多让左航说不上话的胜利结算时刻🥺左航静默了很久，他说即使要背着全世界也没关系吗？\n\n我脑子里莫名其妙就开始放一分钟恋人，好吧也唱出来了，但是左航终于笑了，左航说那就从这一分钟开始做恋人吧！！！！！！\n\n呃，然后我激动地把左航甩在那里说我去冷静一下…然后然后然后，哎呀！！！",
+        "time": "刚刚",
+        "folder": "备忘录",
+        "kind": "note",
+        "hidden": true
       }
     ],
     "calendar": [
@@ -1904,30 +1965,6 @@
         }
       },
       {
-        "id": "instagram-reel-02",
-        "title": "Reel 2",
-        "body": "",
-        "sender": "",
-        "kind": "video",
-        "folder": "Reels",
-        "media": "/instagram/reels/reel-02.mp4",
-        "meta": {
-          "cover": "/instagram/reels/reel-02.jpg"
-        }
-      },
-      {
-        "id": "instagram-reel-01",
-        "title": "Reel 1",
-        "body": "",
-        "sender": "",
-        "kind": "video",
-        "folder": "Reels",
-        "media": "/instagram/reels/reel-01.mp4",
-        "meta": {
-          "cover": "/instagram/reels/reel-01.jpg"
-        }
-      },
-      {
         "id": "instagram-reel-04",
         "title": "Reel 4",
         "body": "",
@@ -2041,7 +2078,7 @@
         "avatar": "/instagram/avatar.jpg",
         "meta": {
           "profile": "true",
-          "username": "Notbobo",
+          "username": "Dogmomo",
           "followers": "333",
           "following": "0",
           "displayName": "404NOTFound"
@@ -2057,7 +2094,7 @@
         "body": "你们真的亲到了？",
         "hidden": true,
         "read": false,
-        "time": "",
+        "time": "今天",
         "meta": {
           "interlude": "true",
           "replyText": "我想是的吧...完蛋了呀😭",
@@ -2091,7 +2128,7 @@
           "interlude": "true",
           "replyText": "我不知道，他不理我怎么办？",
           "replyId": "interlude-su-2-reply",
-          "autoType": "true"
+          "autoType": "false"
         }
       },
       {
@@ -2120,7 +2157,7 @@
           "interlude": "true",
           "replyText": "我试试！",
           "replyId": "interlude-su-3-reply",
-          "autoType": "true"
+          "autoType": "false"
         }
       },
       {
@@ -2144,7 +2181,7 @@
         "body": "刚刚大家给你打掩护了，什么情况...",
         "hidden": true,
         "read": false,
-        "time": "",
+        "time": "今天",
         "meta": {
           "interlude": "true",
           "replyText": "就是你看到的...是你想的那样...",
@@ -2186,7 +2223,7 @@
         "body": "这个烧麦蒸得厉害",
         "hidden": true,
         "read": false,
-        "time": "",
+        "time": "今天",
         "meta": {
           "interlude": "true",
           "replyText": "我说我不是故意的你信吗",
@@ -2219,13 +2256,135 @@
         "meta": {
           "interlude": "true"
         }
+      },
+      {
+        "id": "interlude-call-zuo-1",
+        "title": "A左左",
+        "sender": "A左左",
+        "avatar": "/wechat/contacts/zuo-hang.jpg",
+        "body": "干嘛",
+        "hidden": true,
+        "read": false,
+        "time": "",
+        "meta": {
+          "interlude": "true",
+          "pinned": "true",
+          "replyId": "call-unsent-draft",
+          "replyText": "左航，我们可以聊一聊吗",
+          "eraseFirst": "我有话对你说",
+          "draftOnly": "true",
+          "autoType": "false"
+        }
+      },
+      {
+        "id": "interlude-call-zuo-2",
+        "title": "A左左",
+        "sender": "A左左",
+        "avatar": "/wechat/contacts/zuo-hang.jpg",
+        "body": "这么久都在输入中？开门聊一聊。",
+        "hidden": true,
+        "read": false,
+        "time": "",
+        "meta": {
+          "interlude": "true",
+          "pinned": "true",
+          "cancelDraft": "call-unsent-draft"
+        }
+      },
+      {
+        "id": "interlude-phone-mom",
+        "title": "妈咪",
+        "sender": "妈咪",
+        "avatar": "/wechat/contacts/mom.jpg",
+        "body": "怎么啦宝贝？",
+        "time": "",
+        "read": false,
+        "hidden": true,
+        "meta": {
+          "interlude": "true"
+        }
+      },
+      {
+        "id": "interlude-phone-su",
+        "title": "苏新皓",
+        "sender": "苏新皓",
+        "avatar": "/wechat/contacts/su-xinhao.jpg",
+        "body": "咋啦咋啦找我干啥？",
+        "time": "",
+        "read": false,
+        "hidden": true,
+        "meta": {
+          "interlude": "true"
+        }
+      },
+      {
+        "id": "interlude-phone-zhixin",
+        "title": "朱志鑫",
+        "sender": "朱志鑫",
+        "avatar": "/wechat/contacts/zhu-zhixin.jpg",
+        "body": "？",
+        "time": "",
+        "read": false,
+        "hidden": true,
+        "meta": {
+          "interlude": "true"
+        }
+      },
+      {
+        "id": "interlude-phone-zeyu",
+        "title": "张泽禹",
+        "sender": "张泽禹",
+        "avatar": "/wechat/contacts/zhang-zeyu.jpg",
+        "body": "同在一个屋檐下还要浪费话费？",
+        "time": "",
+        "read": false,
+        "hidden": true,
+        "meta": {
+          "interlude": "true"
+        }
+      },
+      {
+        "id": "interlude-phone-junhao",
+        "title": "张峻豪",
+        "sender": "张峻豪",
+        "avatar": "/wechat/contacts/zhang-junhao.jpg",
+        "body": "咋了bro说话！",
+        "time": "",
+        "read": false,
+        "hidden": true,
+        "meta": {
+          "interlude": "true"
+        }
       }
     ]
   },
   "variables": {
     "interludeEnabled": true,
     "noteReady": false,
-    "phoneUnlocked": false
+    "phoneUnlocked": false,
+    "resumeFromRevision": 43,
+    "catCallRinging": false,
+    "firstCatCallEnded": false,
+    "meetReady": false,
+    "meetAccepted": false,
+    "meetBlackout": false,
+    "finalNoteReady": false,
+    "phoneFirstEnded-mom": false,
+    "phoneFirstDialed-mom": false,
+    "phoneAutoEnded-mom": false,
+    "phoneFirstEnded-su": false,
+    "phoneFirstDialed-su": false,
+    "phoneAutoEnded-su": false,
+    "phoneFirstEnded-zhixin": false,
+    "phoneFirstDialed-zhixin": false,
+    "phoneAutoEnded-zhixin": false,
+    "phoneFirstEnded-zeyu": false,
+    "phoneFirstDialed-zeyu": false,
+    "phoneAutoEnded-zeyu": false,
+    "phoneFirstEnded-junhao": false,
+    "phoneFirstDialed-junhao": false,
+    "phoneAutoEnded-junhao": false,
+    "phoneRepeatExpired": false
   },
   "events": [
     {
@@ -2290,12 +2449,9 @@
           "value": true
         }
       ],
-      "actions": [
-        {
-          "type": "variable",
-          "key": "noteReady",
-          "value": true
-        }
+      "actions": [],
+      "next": [
+        "interlude-ready-delay"
       ]
     },
     {
@@ -2358,7 +2514,7 @@
       "label": "interlude-zhu-delay",
       "once": true,
       "type": "delay",
-      "delayMs": 30000,
+      "delayMs": 25000,
       "actions": [
         {
           "type": "unlock",
@@ -2375,7 +2531,7 @@
       "label": "interlude-zhang-delay",
       "once": true,
       "type": "delay",
-      "delayMs": 30000,
+      "delayMs": 20000,
       "actions": [
         {
           "type": "unlock",
@@ -2423,7 +2579,7 @@
       "label": "interlude-su-1-reply-delay",
       "once": true,
       "type": "delay",
-      "delayMs": 3000,
+      "delayMs": 4000,
       "actions": [
         {
           "type": "unlock",
@@ -2471,7 +2627,7 @@
       "label": "interlude-su-2-reply-delay",
       "once": true,
       "type": "delay",
-      "delayMs": 3000,
+      "delayMs": 4000,
       "actions": [
         {
           "type": "unlock",
@@ -2556,7 +2712,7 @@
       "label": "interlude-zhu-1-reply-delay",
       "once": true,
       "type": "delay",
-      "delayMs": 10000,
+      "delayMs": 4000,
       "actions": [
         {
           "type": "unlock",
@@ -2604,11 +2760,845 @@
       "label": "interlude-zhang-1-reply-delay",
       "once": true,
       "type": "delay",
-      "delayMs": 10000,
+      "delayMs": 4000,
       "actions": [
         {
           "type": "unlock",
           "key": "interlude-zhang-2",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "phone-cat-dial",
+      "label": "phone-cat-dial",
+      "once": false,
+      "event": "phoneDial",
+      "target": "cat",
+      "conditions": [
+        {
+          "key": "phoneUnlocked",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "firstCatCallEnded",
+          "op": "eq",
+          "value": false
+        },
+        {
+          "key": "catCallRinging",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "actions": [
+        {
+          "type": "variable",
+          "key": "catCallRinging",
+          "value": true
+        }
+      ],
+      "next": [
+        "phone-cat-end"
+      ]
+    },
+    {
+      "id": "phone-cat-end",
+      "label": "phone-cat-end",
+      "once": false,
+      "type": "delay",
+      "delayMs": 6000,
+      "conditions": [
+        {
+          "key": "catCallRinging",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "firstCatCallEnded",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "actions": [
+        {
+          "type": "variable",
+          "key": "catCallRinging",
+          "value": false
+        },
+        {
+          "type": "variable",
+          "key": "firstCatCallEnded",
+          "value": true
+        }
+      ],
+      "next": [
+        "phone-cat-message-delay"
+      ]
+    },
+    {
+      "id": "phone-cat-message-delay",
+      "label": "phone-cat-message-delay",
+      "once": true,
+      "type": "delay",
+      "delayMs": 3000,
+      "conditions": [
+        {
+          "key": "firstCatCallEnded",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "interlude-call-zuo-1",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "phone-draft-complete",
+      "label": "phone-draft-complete",
+      "once": true,
+      "event": "draftComplete",
+      "target": "call-unsent-draft",
+      "conditions": [
+        {
+          "key": "firstCatCallEnded",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "unlocked:interlude-call-zuo-1",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "read:interlude-call-zuo-1",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "next": [
+        "phone-meet-message-delay"
+      ]
+    },
+    {
+      "id": "phone-meet-message-delay",
+      "label": "phone-meet-message-delay",
+      "once": true,
+      "type": "delay",
+      "delayMs": 2000,
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "interlude-call-zuo-2",
+          "value": true
+        },
+        {
+          "type": "variable",
+          "key": "meetReady",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "phone-meet-consent",
+      "label": "phone-meet-consent",
+      "once": true,
+      "event": "meetConsent",
+      "target": "left",
+      "conditions": [
+        {
+          "key": "meetReady",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "unlocked:interlude-call-zuo-2",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "actions": [
+        {
+          "type": "variable",
+          "key": "meetAccepted",
+          "value": true
+        },
+        {
+          "type": "variable",
+          "key": "meetBlackout",
+          "value": true
+        }
+      ],
+      "next": [
+        "phone-meet-blackout"
+      ]
+    },
+    {
+      "id": "phone-meet-blackout",
+      "label": "phone-meet-blackout",
+      "once": true,
+      "type": "delay",
+      "delayMs": 2000,
+      "conditions": [
+        {
+          "key": "meetAccepted",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "actions": [
+        {
+          "type": "variable",
+          "key": "meetBlackout",
+          "value": false
+        },
+        {
+          "type": "unlock",
+          "key": "interlude-happy-note",
+          "value": true
+        },
+        {
+          "type": "variable",
+          "key": "finalNoteReady",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "interlude-ready-delay",
+      "label": "读完备忘录后等待两秒",
+      "type": "delay",
+      "delayMs": 2000,
+      "once": true,
+      "actions": [
+        {
+          "type": "variable",
+          "key": "noteReady",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "phone-first-mom",
+      "label": "phone-first-mom",
+      "once": true,
+      "event": "phoneDial",
+      "target": "mom",
+      "conditions": [
+        {
+          "key": "phoneUnlocked",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "phoneFirstEnded-mom",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "actions": [
+        {
+          "type": "variable",
+          "key": "phoneFirstDialed-mom",
+          "value": true
+        }
+      ],
+      "next": [
+        "phone-auto-mom"
+      ]
+    },
+    {
+      "id": "phone-auto-mom",
+      "label": "phone-auto-mom",
+      "once": true,
+      "type": "delay",
+      "delayMs": 8000,
+      "conditions": [
+        {
+          "key": "ui:phone:activeContactId",
+          "op": "eq",
+          "value": "mom"
+        },
+        {
+          "key": "ui:phone:firstAttempt",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "phoneFirstEnded-mom",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "actions": [
+        {
+          "type": "variable",
+          "key": "phoneAutoEnded-mom",
+          "value": true
+        }
+      ],
+      "next": [
+        "phone-ended-mom"
+      ]
+    },
+    {
+      "id": "phone-ended-mom",
+      "label": "phone-ended-mom",
+      "once": true,
+      "event": "phoneEnded",
+      "target": "mom",
+      "conditions": [
+        {
+          "key": "phoneFirstDialed-mom",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "phoneFirstEnded-mom",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "actions": [
+        {
+          "type": "variable",
+          "key": "phoneFirstEnded-mom",
+          "value": true
+        }
+      ],
+      "next": [
+        "phone-message-mom"
+      ]
+    },
+    {
+      "id": "phone-message-mom",
+      "label": "phone-message-mom",
+      "once": true,
+      "type": "delay",
+      "delayMs": 3000,
+      "conditions": [
+        {
+          "key": "phoneFirstEnded-mom",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "interlude-phone-mom",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "phone-first-su",
+      "label": "phone-first-su",
+      "once": true,
+      "event": "phoneDial",
+      "target": "su",
+      "conditions": [
+        {
+          "key": "phoneUnlocked",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "phoneFirstEnded-su",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "actions": [
+        {
+          "type": "variable",
+          "key": "phoneFirstDialed-su",
+          "value": true
+        }
+      ],
+      "next": [
+        "phone-auto-su"
+      ]
+    },
+    {
+      "id": "phone-auto-su",
+      "label": "phone-auto-su",
+      "once": true,
+      "type": "delay",
+      "delayMs": 8000,
+      "conditions": [
+        {
+          "key": "ui:phone:activeContactId",
+          "op": "eq",
+          "value": "su"
+        },
+        {
+          "key": "ui:phone:firstAttempt",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "phoneFirstEnded-su",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "actions": [
+        {
+          "type": "variable",
+          "key": "phoneAutoEnded-su",
+          "value": true
+        }
+      ],
+      "next": [
+        "phone-ended-su"
+      ]
+    },
+    {
+      "id": "phone-ended-su",
+      "label": "phone-ended-su",
+      "once": true,
+      "event": "phoneEnded",
+      "target": "su",
+      "conditions": [
+        {
+          "key": "phoneFirstDialed-su",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "phoneFirstEnded-su",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "actions": [
+        {
+          "type": "variable",
+          "key": "phoneFirstEnded-su",
+          "value": true
+        }
+      ],
+      "next": [
+        "phone-message-su"
+      ]
+    },
+    {
+      "id": "phone-message-su",
+      "label": "phone-message-su",
+      "once": true,
+      "type": "delay",
+      "delayMs": 2000,
+      "conditions": [
+        {
+          "key": "phoneFirstEnded-su",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "interlude-phone-su",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "phone-first-zhixin",
+      "label": "phone-first-zhixin",
+      "once": true,
+      "event": "phoneDial",
+      "target": "zhixin",
+      "conditions": [
+        {
+          "key": "phoneUnlocked",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "phoneFirstEnded-zhixin",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "actions": [
+        {
+          "type": "variable",
+          "key": "phoneFirstDialed-zhixin",
+          "value": true
+        }
+      ],
+      "next": [
+        "phone-auto-zhixin"
+      ]
+    },
+    {
+      "id": "phone-auto-zhixin",
+      "label": "phone-auto-zhixin",
+      "once": true,
+      "type": "delay",
+      "delayMs": 8000,
+      "conditions": [
+        {
+          "key": "ui:phone:activeContactId",
+          "op": "eq",
+          "value": "zhixin"
+        },
+        {
+          "key": "ui:phone:firstAttempt",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "phoneFirstEnded-zhixin",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "actions": [
+        {
+          "type": "variable",
+          "key": "phoneAutoEnded-zhixin",
+          "value": true
+        }
+      ],
+      "next": [
+        "phone-ended-zhixin"
+      ]
+    },
+    {
+      "id": "phone-ended-zhixin",
+      "label": "phone-ended-zhixin",
+      "once": true,
+      "event": "phoneEnded",
+      "target": "zhixin",
+      "conditions": [
+        {
+          "key": "phoneFirstDialed-zhixin",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "phoneFirstEnded-zhixin",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "actions": [
+        {
+          "type": "variable",
+          "key": "phoneFirstEnded-zhixin",
+          "value": true
+        }
+      ],
+      "next": [
+        "phone-message-zhixin"
+      ]
+    },
+    {
+      "id": "phone-message-zhixin",
+      "label": "phone-message-zhixin",
+      "once": true,
+      "type": "delay",
+      "delayMs": 2000,
+      "conditions": [
+        {
+          "key": "phoneFirstEnded-zhixin",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "interlude-phone-zhixin",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "phone-first-zeyu",
+      "label": "phone-first-zeyu",
+      "once": true,
+      "event": "phoneDial",
+      "target": "zeyu",
+      "conditions": [
+        {
+          "key": "phoneUnlocked",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "phoneFirstEnded-zeyu",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "actions": [
+        {
+          "type": "variable",
+          "key": "phoneFirstDialed-zeyu",
+          "value": true
+        }
+      ],
+      "next": [
+        "phone-auto-zeyu"
+      ]
+    },
+    {
+      "id": "phone-auto-zeyu",
+      "label": "phone-auto-zeyu",
+      "once": true,
+      "type": "delay",
+      "delayMs": 8000,
+      "conditions": [
+        {
+          "key": "ui:phone:activeContactId",
+          "op": "eq",
+          "value": "zeyu"
+        },
+        {
+          "key": "ui:phone:firstAttempt",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "phoneFirstEnded-zeyu",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "actions": [
+        {
+          "type": "variable",
+          "key": "phoneAutoEnded-zeyu",
+          "value": true
+        }
+      ],
+      "next": [
+        "phone-ended-zeyu"
+      ]
+    },
+    {
+      "id": "phone-ended-zeyu",
+      "label": "phone-ended-zeyu",
+      "once": true,
+      "event": "phoneEnded",
+      "target": "zeyu",
+      "conditions": [
+        {
+          "key": "phoneFirstDialed-zeyu",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "phoneFirstEnded-zeyu",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "actions": [
+        {
+          "type": "variable",
+          "key": "phoneFirstEnded-zeyu",
+          "value": true
+        }
+      ],
+      "next": [
+        "phone-message-zeyu"
+      ]
+    },
+    {
+      "id": "phone-message-zeyu",
+      "label": "phone-message-zeyu",
+      "once": true,
+      "type": "delay",
+      "delayMs": 2000,
+      "conditions": [
+        {
+          "key": "phoneFirstEnded-zeyu",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "interlude-phone-zeyu",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "phone-first-junhao",
+      "label": "phone-first-junhao",
+      "once": true,
+      "event": "phoneDial",
+      "target": "junhao",
+      "conditions": [
+        {
+          "key": "phoneUnlocked",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "phoneFirstEnded-junhao",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "actions": [
+        {
+          "type": "variable",
+          "key": "phoneFirstDialed-junhao",
+          "value": true
+        }
+      ],
+      "next": [
+        "phone-auto-junhao"
+      ]
+    },
+    {
+      "id": "phone-auto-junhao",
+      "label": "phone-auto-junhao",
+      "once": true,
+      "type": "delay",
+      "delayMs": 8000,
+      "conditions": [
+        {
+          "key": "ui:phone:activeContactId",
+          "op": "eq",
+          "value": "junhao"
+        },
+        {
+          "key": "ui:phone:firstAttempt",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "phoneFirstEnded-junhao",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "actions": [
+        {
+          "type": "variable",
+          "key": "phoneAutoEnded-junhao",
+          "value": true
+        }
+      ],
+      "next": [
+        "phone-ended-junhao"
+      ]
+    },
+    {
+      "id": "phone-ended-junhao",
+      "label": "phone-ended-junhao",
+      "once": true,
+      "event": "phoneEnded",
+      "target": "junhao",
+      "conditions": [
+        {
+          "key": "phoneFirstDialed-junhao",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "phoneFirstEnded-junhao",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "actions": [
+        {
+          "type": "variable",
+          "key": "phoneFirstEnded-junhao",
+          "value": true
+        }
+      ],
+      "next": [
+        "phone-message-junhao"
+      ]
+    },
+    {
+      "id": "phone-message-junhao",
+      "label": "phone-message-junhao",
+      "once": true,
+      "type": "delay",
+      "delayMs": 2000,
+      "conditions": [
+        {
+          "key": "phoneFirstEnded-junhao",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "interlude-phone-junhao",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "phone-repeat-start",
+      "label": "phone-repeat-start",
+      "once": false,
+      "event": "phoneDial",
+      "target": "repeat",
+      "conditions": [
+        {
+          "key": "phoneUnlocked",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "ui:phone:firstAttempt",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "actions": [
+        {
+          "type": "variable",
+          "key": "phoneRepeatExpired",
+          "value": false
+        }
+      ],
+      "next": [
+        "phone-repeat-end"
+      ]
+    },
+    {
+      "id": "phone-repeat-end",
+      "label": "phone-repeat-end",
+      "once": false,
+      "type": "delay",
+      "delayMs": 30000,
+      "conditions": [
+        {
+          "key": "ui:phone:firstAttempt",
+          "op": "eq",
+          "value": false
+        },
+        {
+          "key": "ui:phone:activeName",
+          "op": "neq",
+          "value": ""
+        }
+      ],
+      "actions": [
+        {
+          "type": "variable",
+          "key": "phoneRepeatExpired",
           "value": true
         }
       ]
@@ -2663,6 +3653,9 @@
           "target": "notes-pinned-2024-08-29"
         },
         {
+          "advanceMs": 2000
+        },
+        {
           "event": "storyConsent",
           "target": "interlude-note"
         },
@@ -2682,7 +3675,7 @@
           "target": "interlude-su-1-reply"
         },
         {
-          "advanceMs": 3000
+          "advanceMs": 4000
         },
         {
           "event": "read",
@@ -2693,7 +3686,7 @@
           "target": "interlude-su-2-reply"
         },
         {
-          "advanceMs": 3000
+          "advanceMs": 4000
         },
         {
           "event": "read",
@@ -2715,7 +3708,7 @@
           "target": "interlude-zhu-1-reply"
         },
         {
-          "advanceMs": 10000
+          "advanceMs": 4000
         },
         {
           "event": "read",
@@ -2730,7 +3723,7 @@
           "target": "interlude-zhang-1-reply"
         },
         {
-          "advanceMs": 10000
+          "advanceMs": 4000
         },
         {
           "event": "read",
@@ -2742,6 +3735,357 @@
         "interlude-su-3-reply",
         "interlude-zhu-2",
         "interlude-zhang-2"
+      ]
+    },
+    {
+      "name": "首次呼叫左航、输入删除和见面后备忘录",
+      "steps": [
+        {
+          "event": "read",
+          "target": "notes-2026-04-12"
+        },
+        {
+          "event": "read",
+          "target": "notes-2026-02-01"
+        },
+        {
+          "event": "read",
+          "target": "notes-2026-01-01"
+        },
+        {
+          "event": "read",
+          "target": "notes-2025-07-13"
+        },
+        {
+          "event": "read",
+          "target": "notes-2025-05-22"
+        },
+        {
+          "event": "read",
+          "target": "notes-2025-02-11"
+        },
+        {
+          "event": "read",
+          "target": "notes-2024-12-30"
+        },
+        {
+          "event": "read",
+          "target": "notes-2024-09-14"
+        },
+        {
+          "event": "read",
+          "target": "notes-2024-08-26"
+        },
+        {
+          "event": "read",
+          "target": "notes-pinned-2026-08-29"
+        },
+        {
+          "event": "read",
+          "target": "notes-pinned-2024-08-29"
+        },
+        {
+          "advanceMs": 2000
+        },
+        {
+          "event": "storyConsent",
+          "target": "interlude-note"
+        },
+        {
+          "event": "read",
+          "target": "interlude-note"
+        },
+        {
+          "advanceMs": 11000
+        },
+        {
+          "event": "read",
+          "target": "interlude-su-1"
+        },
+        {
+          "event": "send",
+          "target": "interlude-su-1-reply"
+        },
+        {
+          "advanceMs": 4000
+        },
+        {
+          "event": "read",
+          "target": "interlude-su-2"
+        },
+        {
+          "event": "send",
+          "target": "interlude-su-2-reply"
+        },
+        {
+          "advanceMs": 4000
+        },
+        {
+          "event": "read",
+          "target": "interlude-su-3"
+        },
+        {
+          "event": "send",
+          "target": "interlude-su-3-reply"
+        },
+        {
+          "advanceMs": 60000
+        },
+        {
+          "event": "read",
+          "target": "interlude-zhu-1"
+        },
+        {
+          "event": "send",
+          "target": "interlude-zhu-1-reply"
+        },
+        {
+          "advanceMs": 4000
+        },
+        {
+          "event": "read",
+          "target": "interlude-zhu-2"
+        },
+        {
+          "event": "read",
+          "target": "interlude-zhang-1"
+        },
+        {
+          "event": "send",
+          "target": "interlude-zhang-1-reply"
+        },
+        {
+          "advanceMs": 4000
+        },
+        {
+          "event": "read",
+          "target": "interlude-zhang-2"
+        },
+        {
+          "event": "phoneDial",
+          "target": "cat"
+        },
+        {
+          "advanceMs": 6000
+        },
+        {
+          "advanceMs": 3000
+        },
+        {
+          "event": "read",
+          "target": "interlude-call-zuo-1"
+        },
+        {
+          "event": "draftComplete",
+          "target": "call-unsent-draft"
+        },
+        {
+          "advanceMs": 2000
+        },
+        {
+          "event": "meetConsent",
+          "target": "left"
+        },
+        {
+          "advanceMs": 2000
+        },
+        {
+          "event": "read",
+          "target": "interlude-happy-note"
+        }
+      ],
+      "expectUnlocked": [
+        "interlude-call-zuo-1",
+        "interlude-call-zuo-2",
+        "interlude-happy-note"
+      ]
+    },
+    {
+      "name": "五位联系人首次通话后仅收到一次微信消息",
+      "steps": [
+        {
+          "event": "read",
+          "target": "notes-2026-04-12"
+        },
+        {
+          "event": "read",
+          "target": "notes-2026-02-01"
+        },
+        {
+          "event": "read",
+          "target": "notes-2026-01-01"
+        },
+        {
+          "event": "read",
+          "target": "notes-2025-07-13"
+        },
+        {
+          "event": "read",
+          "target": "notes-2025-05-22"
+        },
+        {
+          "event": "read",
+          "target": "notes-2025-02-11"
+        },
+        {
+          "event": "read",
+          "target": "notes-2024-12-30"
+        },
+        {
+          "event": "read",
+          "target": "notes-2024-09-14"
+        },
+        {
+          "event": "read",
+          "target": "notes-2024-08-26"
+        },
+        {
+          "event": "read",
+          "target": "notes-pinned-2026-08-29"
+        },
+        {
+          "event": "read",
+          "target": "notes-pinned-2024-08-29"
+        },
+        {
+          "advanceMs": 2000
+        },
+        {
+          "event": "storyConsent",
+          "target": "interlude-note"
+        },
+        {
+          "event": "read",
+          "target": "interlude-note"
+        },
+        {
+          "advanceMs": 11000
+        },
+        {
+          "event": "read",
+          "target": "interlude-su-1"
+        },
+        {
+          "event": "send",
+          "target": "interlude-su-1-reply"
+        },
+        {
+          "advanceMs": 4000
+        },
+        {
+          "event": "read",
+          "target": "interlude-su-2"
+        },
+        {
+          "event": "send",
+          "target": "interlude-su-2-reply"
+        },
+        {
+          "advanceMs": 4000
+        },
+        {
+          "event": "read",
+          "target": "interlude-su-3"
+        },
+        {
+          "event": "send",
+          "target": "interlude-su-3-reply"
+        },
+        {
+          "advanceMs": 60000
+        },
+        {
+          "event": "read",
+          "target": "interlude-zhu-1"
+        },
+        {
+          "event": "send",
+          "target": "interlude-zhu-1-reply"
+        },
+        {
+          "advanceMs": 4000
+        },
+        {
+          "event": "read",
+          "target": "interlude-zhu-2"
+        },
+        {
+          "event": "read",
+          "target": "interlude-zhang-1"
+        },
+        {
+          "event": "send",
+          "target": "interlude-zhang-1-reply"
+        },
+        {
+          "advanceMs": 4000
+        },
+        {
+          "event": "read",
+          "target": "interlude-zhang-2"
+        },
+        {
+          "event": "phoneDial",
+          "target": "mom"
+        },
+        {
+          "event": "phoneEnded",
+          "target": "mom"
+        },
+        {
+          "advanceMs": 3000
+        },
+        {
+          "event": "phoneDial",
+          "target": "su"
+        },
+        {
+          "event": "phoneEnded",
+          "target": "su"
+        },
+        {
+          "advanceMs": 2000
+        },
+        {
+          "event": "phoneDial",
+          "target": "zhixin"
+        },
+        {
+          "event": "phoneEnded",
+          "target": "zhixin"
+        },
+        {
+          "advanceMs": 2000
+        },
+        {
+          "event": "phoneDial",
+          "target": "zeyu"
+        },
+        {
+          "event": "phoneEnded",
+          "target": "zeyu"
+        },
+        {
+          "advanceMs": 2000
+        },
+        {
+          "event": "phoneDial",
+          "target": "junhao"
+        },
+        {
+          "event": "phoneEnded",
+          "target": "junhao"
+        },
+        {
+          "advanceMs": 2000
+        }
+      ],
+      "expectUnlocked": [
+        "interlude-phone-mom",
+        "interlude-phone-su",
+        "interlude-phone-zhixin",
+        "interlude-phone-zeyu",
+        "interlude-phone-junhao"
       ]
     }
   ]

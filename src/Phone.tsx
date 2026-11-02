@@ -1,3 +1,5 @@
+import { PhoneCallContext, StoryPhoneApp, usePhoneCalls } from "./StoryPhone";
+import { resumePhoneStory } from "./phoneCalls";
 import { MessageBanner, useStoryRoute, type StoryRoute } from "./Interlude";
 import { photoSequence } from "./ios/photoNavigation";
 import { AppHomeButton } from "./ios/AppHomeButton";
@@ -203,11 +205,20 @@ function PhoneRuntime({
   const s = external ?? own;
   const runtimeRef = useRef(s);
   runtimeRef.current = s;
+  const clockAt = useRef(performance.now());
   const update = (next: Runtime) => {
     runtimeRef.current = next;
     setOwn(next);
     onRuntime?.(next);
   };
+  const currentRuntime = () => {
+    const now = performance.now();
+    const next = advance(work,runtimeRef.current,Math.max(0,now-clockAt.current));
+    clockAt.current = now;
+    runtimeRef.current = next;
+    return next;
+  };
+  const phoneCalls = usePhoneCalls(work, s, runtimeRef, update, currentRuntime);
   useEffect(() => {
     let active = true;
     if (creator || external) return;
@@ -215,8 +226,8 @@ function PhoneRuntime({
       .get(work.id)
       .then((saved) => {
         if (!active) return;
-        if (saved && saved.state.revision === work.updatedAt)
-          setOwn(saved.state);
+        if (saved && resumePhoneStory(work, saved.state))
+          setOwn(resumePhoneStory(work, saved.state)!);
         else {
           setOwn(dispatch(work, initialRuntime(work), "start"));
           if (saved) setLoadError("作品已更新，已开始新的进度。");
@@ -240,9 +251,12 @@ function PhoneRuntime({
   }, [own, creator, work.id, external, ready]);
   useEffect(() => {
     if (creator || !ready) return;
+    clockAt.current = performance.now();
     const interval = setInterval(() => {
       const previous = runtimeRef.current;
-      const next = advance(work, previous, 1000);
+      const now = performance.now();
+      const next = advance(work, previous,Math.max(0,now-clockAt.current));
+      clockAt.current = now;
       runtimeRef.current = next;
       const changed =
         next.time !== previous.time ||
@@ -252,11 +266,11 @@ function PhoneRuntime({
         Math.floor((next.elapsedMs ?? 0) / 5000) !==
           Math.floor((previous.elapsedMs ?? 0) / 5000);
       if (changed) update(next);
-    }, 1000);
+    }, 250);
     return () => clearInterval(interval);
   }, [creator, ready, work.id, work.updatedAt]);
   const event = (event: string, target: string) => {
-    if (!creator) update(dispatch(work, runtimeRef.current, event, target));
+    if (!creator) update(dispatch(work, currentRuntime(), event, target));
   };
   const captureApp = () => {
     if (!app) return;
@@ -290,6 +304,10 @@ function PhoneRuntime({
     if (!creator && id === "phone" && runtimeRef.current.variables.interludeEnabled && !runtimeRef.current.variables.phoneUnlocked) return;
     if (!work.apps.some((a) => a.id === id && a.installed)) return;
     setStoryRoute(undefined);
+    if (id === "instagram" && work.id === "phone-a-story") {
+      const current = runtimeRef.current;
+      update({...current,ui:{...current.ui,instagram:{...current.ui?.instagram,mymyTab:"个人主页"}}});
+    }
     setApp(id);
     setKeyboard(false);
     setRecent((v) => [id, ...v.filter((a) => a !== id)].slice(0, 8));
@@ -299,6 +317,14 @@ function PhoneRuntime({
     event("openApp", id);
   };
   const storyUnread = [...(work.data.wechat ?? []), ...(s.messages.wechat ?? [])].filter(i => i.meta.interlude === "true" && !i.outgoing && !i.read && visible(i,s) && !s.read.includes(i.id)).sort((a,b) => s.unlocked.indexOf(a.id) - s.unlocked.indexOf(b.id));
+  useEffect(() => {
+    if (creator) return;
+    if (s.variables.meetReady && !s.variables.meetAccepted) { setKeyboard(false); setScriptDraft(null); }
+    if (s.variables.finalNoteReady && !s.read.includes("interlude-happy-note")) {
+      setKeyboard(false); setScriptDraft(null); setApp("notes"); setFolder(""); setPanel("");
+      setStoryRoute({serial:Date.now(),app:"notes",note:"interlude-happy-note"});
+    }
+  }, [creator, s.variables.meetReady, s.variables.meetAccepted, s.variables.finalNoteReady, s.read]);
   const installedApps = work.apps.filter((a) => a.installed);
   const apps = installedApps.filter((a) => a.visible);
   const unlock = (pin = "") => {
@@ -353,6 +379,7 @@ function PhoneRuntime({
       style={{ "--phone-scale": deviceScale } as CSSProperties}
       className={`phone-shell ios18 ${work.phone.theme === "dark" ? "dark-phone" : ""}`}
     >
+      <PhoneCallContext.Provider value={phoneCalls.context}>
       <KeyboardContext.Provider value={setKeyboard}>
       <ScriptKeyboardContext.Provider value={setScriptDraft}>
         <div
@@ -482,6 +509,7 @@ function PhoneRuntime({
                 <AppContent
                   route={storyRoute}
                   onThreadChange={setActiveChat}
+                  onStoryDraft={(id) => event("draftComplete", id)}
                   onStorySend={(id) => event("send", id)}
                   app={plugin}
                   name={
@@ -809,9 +837,12 @@ function PhoneRuntime({
               </div>
             </div>
           )}
+          {phoneCalls.overlay}
           {keyboard && <DeviceKeyboard scriptedText={scriptDraft ?? undefined} close={() => setKeyboard(false)} />}
           {!creator && <MessageBanner message={storyUnread.filter(i => app !== "wechat" || activeChat !== i.title).at(-1)} open={(item) => { open("wechat"); setStoryRoute({serial:Date.now(),app:"wechat",thread:item.title}); }} />}
           {!creator && !locked && s.variables.noteReady && !s.unlocked.includes("interlude-note") && <div className="story-modal-shade"><div className="story-modal" role="dialog" aria-modal="true" aria-label="新的备忘录"><p>您已解锁一条新的备忘录，是否查看？</p><button onClick={() => { event("storyConsent", "interlude-note"); open("notes"); setStoryRoute({serial:Date.now(),app:"notes",note:"interlude-note"}); }}>是</button></div></div>}
+          {!creator && s.variables.meetReady && !s.variables.meetAccepted && <div className="story-modal-shade"><div className="story-modal" role="dialog" aria-modal="true" aria-label="与左航聊一聊"><p>与左航聊一聊？</p><button onClick={() => {setKeyboard(false);setScriptDraft(null);event("meetConsent","left");}}>是</button></div></div>}
+          {!creator && s.variables.meetBlackout && <div className="story-blackout" role="status" aria-label="正在与左航聊一聊" />}
           {loadError && (
             <button className="runtime-error" onClick={() => setLoadError("")}>
               {loadError}
@@ -834,6 +865,7 @@ function PhoneRuntime({
         </div>
       </ScriptKeyboardContext.Provider>
       </KeyboardContext.Provider>
+      </PhoneCallContext.Provider>
     </div>
   );
 }
@@ -898,6 +930,7 @@ function AppContent({
   route,
   onThreadChange,
   onStorySend,
+  onStoryDraft,
   app,
   name,
   items,
@@ -914,6 +947,7 @@ function AppContent({
   route?: StoryRoute;
   onThreadChange?: (name: string) => void;
   onStorySend?: (id: string) => void;
+  onStoryDraft?: (id: string) => void;
   app: AppPlugin;
   name: string;
   items: Item[];
@@ -1049,6 +1083,8 @@ function AppContent({
     return <WeatherApp />;
   if (app.id === "clock" && work.id === "phone-a-story" && !creator)
     return <BeijingClockApp />;
+  if (app.id === "phone" && work.id === "phone-a-story" && !creator)
+    return <div className="catalog-slot"><StoryPhoneApp contacts={shown} /></div>;
   if (Skin)
     return (
       <>
@@ -1058,6 +1094,7 @@ function AppContent({
               arrivalIds={state.unlocked}
               readIds={state.read}
               interlude={!!state.variables.interludeEnabled}
+              onStoryDraft={onStoryDraft}
               onStorySend={onStorySend}
               appId={app.id}
               owner={work.phone.owner}

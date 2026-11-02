@@ -19,3 +19,15 @@
 .ios18 .keyboard-open .app-screen:has(.scripted-compose) { padding-bottom:358px; }
 .ios18 .keyboard-open .app-screen .catalog-slot:has(.scripted-compose) > * { border-bottom-width:0; }
 .ios18 .wechat-ui .scripted-compose .story-send { flex:0 0 auto; width:auto; min-width:56px; }
+/* One draft field above the keyboard, without a duplicated keyboard draft row. */
+.ios18 .device-keyboard[data-scripted="true"] .keyboard-draft {display:none;}
+.ios18 .keyboard-open:has(.device-keyboard[data-scripted="true"]) .app-screen:has(.scripted-compose) {padding-bottom:312px;}
+.ios18 :is(.native-notes .catalog-scroll,.native-note-paper) {scrollbar-width:none;}
+.ios18 :is(.native-notes .catalog-scroll,.native-note-paper)::-webkit-scrollbar {display:none;}
+.ios18 .story-banner {left:8px;right:8px;background:#e6e8f0f2;border-radius:21px;}
+.ios18 .story-banner-open {align-items:flex-start;gap:11px;padding:15px 13px;}
+.ios18 .story-banner-open .story-wechat-symbol {width:39px;height:39px;object-fit:cover;padding:0;border-radius:9px;background:#07c160;flex:none;}
+.ios18 .story-banner-content {display:flex;flex:1;min-width:0;flex-direction:column;gap:5px;line-height:1.4;font-size:15px;}
+.ios18 .story-banner-content strong {font-size:17px;font-weight:700;}
+.ios18 .story-banner-content > span {overflow-wrap:anywhere;}
+.ios18 .story-banner-open > time {flex:none;color:#5f626a;font-size:12px;line-height:22px;}

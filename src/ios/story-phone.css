@@ -1,0 +1,291 @@
+.ios18 .story-phone-app {
+  background: #f2f2f7;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: #111;
+}
+.ios18 .story-phone-app > .app-nav {
+  justify-content: center;
+  flex: none;
+  min-height: 44px;
+}
+.ios18 .story-phone-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  scrollbar-width: none;
+  padding: 10px 16px 20px;
+}
+.ios18 .story-phone-scroll::-webkit-scrollbar {
+  display: none;
+}
+.ios18 .story-phone-scroll h1 {
+  font-size: 32px;
+  margin: 8px 0 18px;
+  letter-spacing: -1px;
+}
+.ios18 .story-phone-search {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: #e4e4e9;
+  border-radius: 10px;
+  padding: 9px 10px;
+  margin-bottom: 20px;
+  color: #888;
+}
+.ios18 .story-phone-search input {
+  border: 0;
+  background: none;
+  outline: 0;
+  color: #111;
+  font-size: 16px;
+  min-width: 0;
+  width: 100%;
+}
+.ios18 :is(.story-phone-contacts, .story-phone-recents) {
+  background: white;
+  border-radius: 13px;
+  overflow: hidden;
+}
+.ios18 :is(.story-phone-contacts, .story-phone-recents) > button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  justify-content: flex-start;
+  background: #fff;
+  color: #111;
+  border: 0;
+  padding: 13px 12px;
+  min-height: 66px;
+  font-size: 17px;
+}
+.ios18 :is(.story-phone-contacts, .story-phone-recents) > button + button {
+  border-top: 1px solid #ededf0;
+}
+.ios18 .story-phone-contacts button > svg {
+  margin-left: auto;
+  color: #31ad54;
+}
+.ios18 .phone-letter-avatar {
+  display: grid;
+  place-items: center;
+  background: #a4a7ae;
+  color: #fff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  font-size: 23px;
+}
+.ios18 .story-phone-recents button > span:nth-child(2) {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.ios18 .story-phone-recents :is(small, time) {
+  font-size: 12px;
+  color: #8e8e93;
+}
+.ios18 .phone-no-calls {
+  text-align: center;
+  padding: 70px 0;
+  color: #999;
+  font-size: 16px;
+}
+.ios18 .story-phone-app .catalog-tabs {
+  flex: none;
+  background: #fbfbfddd;
+}
+.ios18 .story-phone-app .catalog-tabs .selected {
+  color: #30af54;
+}
+.ios18 .phone-outgoing {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  color: #fff;
+  background: linear-gradient(155deg, #656d7b, #343940 58%, #171a1e);
+  padding: 110px 35px 65px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ios18 .phone-call-person {
+  text-align: center;
+  width: 100%;
+}
+.ios18 .phone-call-person .phone-letter-avatar {
+  width: 98px;
+  height: 98px;
+  margin: 0 auto 18px;
+  border: 3px solid #ffffff18;
+  background: #ffffff45;
+  font-size: 47px;
+}
+.ios18 .phone-call-person h1 {
+  font-size: 29px;
+  line-height: 1.25;
+  margin: 0 0 10px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.ios18 .phone-call-person p {
+  color: #ffffffb0;
+  font-size: 17px;
+  margin: 0;
+}
+.ios18 .phone-call-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  gap: 28px 22px;
+  margin-top: auto;
+}
+.ios18 .phone-call-actions button {
+  background: none;
+  border: 0;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  padding: 0;
+  white-space: nowrap;
+}
+.ios18 .phone-call-actions button:disabled {
+  opacity: 1;
+}
+.ios18 .phone-call-actions button > span {
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #ffffff30;
+  width: 70px;
+  height: 70px;
+}
+.ios18 .phone-call-actions svg {
+  width: 28px;
+  height: 28px;
+}
+.ios18 .phone-call-actions button[aria-pressed="true"] > span {
+  background: #fff;
+  color: #333;
+}
+.ios18 .phone-call-actions .phone-end > span {
+  background: #f04c3b;
+}
+.ios18 .phone-end svg {
+  transform: rotate(135deg);
+  fill: currentColor;
+}
+.ios18 .phone-audio-retry {
+  margin-top: 16px;
+  color: white;
+  background: #ffffff20;
+  padding: 8px 15px;
+  border-radius: 20px;
+  border: 0;
+}
+.ios18 .phone-record-notice {
+  position: absolute;
+  bottom: 43px;
+  left: 16px;
+  right: 16px;
+  background: #fffffff0;
+  color: #111;
+  font-size: 13px;
+  padding: 12px 16px;
+  border-radius: 13px;
+  box-shadow: 0 4px 20px #0002;
+  z-index: 104;
+  text-align: center;
+}
+.ios18 .phone-screen:has(.phone-outgoing) .status-bar {
+  z-index: 101;
+  background: transparent !important;
+  color: #fff !important;
+  pointer-events: none;
+}
+.ios18
+  .phone-screen:has(.phone-outgoing)
+  .status-bar
+  :is(.status-time, .signals) {
+  color: #fff !important;
+}
+.ios18 .phone-screen:has(.phone-outgoing) .home-indicator {
+  z-index: 102;
+  background: transparent;
+}
+.ios18 .story-blackout {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  z-index: 300;
+}
+.ios18 :is(.story-phone-dialpad, .phone-call-keypad) {
+  text-align: center;
+}
+.ios18 :is(.story-phone-dialpad, .phone-call-keypad) > div {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.ios18 :is(.story-phone-dialpad, .phone-call-keypad) output {
+  display: block;
+  min-height: 45px;
+  padding: 8px;
+  font-size: 24px;
+}
+.ios18 :is(.story-phone-dialpad, .phone-call-keypad) > div > button {
+  border: 0;
+  border-radius: 50%;
+  font-size: 25px;
+  width: 60px;
+  height: 60px;
+  justify-self: center;
+}
+.ios18 .phone-call-keypad {
+  position: absolute;
+  top: 305px;
+  left: 50px;
+  right: 50px;
+  bottom: 290px;
+  background: #3c424d;
+  z-index: 1;
+  border-radius: 15px;
+  padding: 12px;
+  overflow: auto;
+}
+.ios18 .phone-call-keypad > div > button {
+  width: 40px;
+  height: 40px;
+  background: #ffffff20;
+  color: white;
+  font-size: 20px;
+}
+.ios18 .phone-call-keypad output {
+  font-size: 16px;
+  min-height: 25px;
+}
+.ios18 .story-phone-dialpad > button {
+  border: 0;
+  padding: 13px;
+  margin: 16px 10px;
+  background: transparent;
+}
+.ios18 .story-phone-dialpad > .phone-dial-green {
+  border-radius: 50%;
+  background: #30bd51;
+  color: #fff;
+}
+
+.ios18 .phone-screen:has(.phone-outgoing) .home-indicator:after {
+  background: #fff;
+}
