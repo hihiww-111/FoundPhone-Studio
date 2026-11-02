@@ -1,8 +1,9 @@
+import { ScriptedReply } from "./Interlude";
 import { wechatContacts } from "./wechatContacts";
 import "./ios/wechat-contacts.css";
 import { NativeComposer } from "./DeviceSystem";
 import { useSkinState } from "./skinState";
-import { Fragment, useLayoutEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   ChevronLeft,
   Plus,
@@ -34,6 +35,10 @@ import {
 } from "lucide-react";
 import { safeMedia, type Item, type UiValue } from "./schema";
 export type SkinProps = {
+  readIds?: string[];
+  arrivalIds?: string[];
+  onStorySend?: (id: string) => void;
+  interlude?: boolean;
   ui?: Record<string, UiValue>;
   onUi?: (key: string, value: UiValue) => void;
   appId?: string;
@@ -107,10 +112,12 @@ function MessageList({
     const box = transcript.current;
     const bottom = () => { box.scrollTop = box.scrollHeight; };
     bottom();
+    const resize = new ResizeObserver(bottom);
+    resize.observe(box);
     const loadingImages = Array.from(box.querySelectorAll("img")).filter(img => !img.complete);
     loadingImages.forEach(img => img.addEventListener("load", bottom, {once: true}));
-    return () => loadingImages.forEach(img => img.removeEventListener("load", bottom));
-  }, [startAtEnd]);
+    return () => { resize.disconnect(); loadingImages.forEach(img => img.removeEventListener("load", bottom)); };
+  }, [startAtEnd, items.length]);
   return (
     <div ref={transcript} className={`skin-messages ${whatsapp ? "wa-wallpaper" : ""}`}>
       {items.map((i, index) => (
@@ -185,18 +192,26 @@ export function WeChatSkin(p: SkinProps) {
     p.onThread(thread);
     p.onRead(thread);
   };
-  const [readThreads, setReadThreads] = useSkinState<string[]>(
+  const [, setReadThreads] = useSkinState<string[]>(
     p,
     "readThreads",
     [],
   );
+  const unread = (i: Item) => !i.outgoing && !i.read && !p.readIds?.includes(i.id);
+  const threadItems = p.items.filter(i => i.title === p.thread).sort((a,b) => Number(a.meta.interlude === "true") - Number(b.meta.interlude === "true"));
+  const reply = threadItems.find(i => !i.outgoing && i.meta.replyId && p.readIds?.includes(i.id) && !p.items.some(out => out.id === i.meta.replyId));
+  const unreadHere = threadItems.filter(i => i.meta.interlude === "true" && unread(i)).map(i => i.id).join(",");
+  useEffect(() => {
+    if (p.creator || !p.thread || !unreadHere) return;
+    unreadHere.split(",").forEach(p.onRead);
+  }, [unreadHere, p.thread, p.creator, p.onRead]);
   const conversations = [
     ...new Set(
       p.items
-        .filter((i) => !["朋友圈", "我"].includes(i.folder))
+        .filter((i) => !["朋友圈", "我"].includes(i.folder) && i.meta.interlude !== "true")
         .map((i) => i.title),
     ),
-  ].reverse().sort((a,b) => Number(p.items.some(i=>i.title===b && i.meta.pinned==="true")) - Number(p.items.some(i=>i.title===a && i.meta.pinned==="true")));
+  ].reverse().sort((a,b) => Number(p.items.some(i=>i.title===b && i.meta.pinned==="true")) - Number(p.items.some(i=>i.title===a && i.meta.pinned==="true")) || Math.max(-1,...p.items.filter(i=>i.title===b && i.meta.interlude === "true").map(i=>p.arrivalIds?.indexOf(i.id) ?? -1)) - Math.max(-1,...p.items.filter(i=>i.title===a && i.meta.interlude === "true").map(i=>p.arrivalIds?.indexOf(i.id) ?? -1)));
   const contacts = wechatContacts(p.items, p.owner);
   const shownContacts = contacts.filter(c => c.name.toLowerCase().includes(contactQuery.toLowerCase()));
   const contact = contacts.find(c => c.name === selectedContact);
@@ -315,14 +330,14 @@ export function WeChatSkin(p: SkinProps) {
         <>
           <MessageList
             key={p.thread}
-            startAtEnd={chatAtEnd}
-            items={p.items.filter((i) => i.title === p.thread)}
+            startAtEnd={chatAtEnd || threadItems.some(i => i.meta.interlude === "true")}
+            items={threadItems}
             ownerAvatar="/wechat/avatar.jpg"
             creator={p.creator}
             onItem={p.onItem}
             onRead={p.onRead}
           />
-          <Compose creator={p.creator} onAdd={p.onAdd} />
+          {p.interlude && !p.creator ? <ScriptedReply key={reply?.id || "waiting"} item={reply} send={p.onStorySend} /> : <Compose creator={p.creator} onAdd={p.onAdd} />}
         </>
       ) : moments ? (
         <div className="wx-moments">
@@ -376,7 +391,7 @@ export function WeChatSkin(p: SkinProps) {
                     ),
                 )
                 .map((t) => {
-                  const list = p.items.filter((i) => i.title === t),
+                  const list = p.items.filter((i) => i.title === t).sort((a,b) => Number(a.meta.interlude === "true") - Number(b.meta.interlude === "true")),
                     last = list.at(-1)!;
                   return (
                     <button
@@ -389,10 +404,9 @@ export function WeChatSkin(p: SkinProps) {
                     >
                       <span className="wx-chat-avatar">
                         <Avatar name={t} src={contacts.find(c=>c.name===t)?.avatar || last.avatar} />
-                        {!readThreads.includes(t) &&
-                          list.some((i) => !i.read) && (
+                        {list.some(unread) && (
                             <b className="wx-unread">
-                              {list.filter((i) => !i.read).length}
+                              {list.filter(unread).length}
                             </b>
                           )}
                       </span>
@@ -516,7 +530,7 @@ export function WeChatSkin(p: SkinProps) {
               onClick={() => setTab(t.label)}
             >
               <t.icon size={21} />
-              <span>{t.label}</span>
+              <span>{t.label}{t.label === "微信" && p.items.filter(unread).length > 0 && <b className="wx-tab-unread">{p.items.filter(unread).length}</b>}</span>
             </button>
           ))}
         </nav>

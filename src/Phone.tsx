@@ -1,3 +1,4 @@
+import { MessageBanner, useStoryRoute, type StoryRoute } from "./Interlude";
 import { photoSequence } from "./ios/photoNavigation";
 import { AppHomeButton } from "./ios/AppHomeButton";
 import { MusicPlaybackProvider } from "./MusicPlayback";
@@ -25,6 +26,7 @@ import {
   ControlCenter,
   DeviceKeyboard,
   KeyboardContext,
+  ScriptKeyboardContext,
   NativeSettings,
 } from "./DeviceSystem";
 import { AppArtwork, hasNativeArtwork } from "./AppArtwork";
@@ -145,6 +147,9 @@ function PhoneRuntime({
   const [pinOpen, setPinOpen] = useState(false);
   const [quickCamera, setQuickCamera] = useState(false);
   const [keyboard, setKeyboard] = useState(false);
+  const [scriptDraft, setScriptDraft] = useState<string | null>(null);
+  const [storyRoute, setStoryRoute] = useState<StoryRoute>();
+  const [activeChat, setActiveChat] = useState("");
   const [recent, setRecent] = useState<string[]>([]);
   const appSnapshots = useRef(new Map<string, HTMLElement>());
   const [banner, setBanner] = useState("");
@@ -282,7 +287,9 @@ function PhoneRuntime({
     setPanel("");
   };
   const open = (id: string) => {
+    if (!creator && id === "phone" && runtimeRef.current.variables.interludeEnabled && !runtimeRef.current.variables.phoneUnlocked) return;
     if (!work.apps.some((a) => a.id === id && a.installed)) return;
+    setStoryRoute(undefined);
     setApp(id);
     setKeyboard(false);
     setRecent((v) => [id, ...v.filter((a) => a !== id)].slice(0, 8));
@@ -291,6 +298,7 @@ function PhoneRuntime({
     onOpen?.(id);
     event("openApp", id);
   };
+  const storyUnread = [...(work.data.wechat ?? []), ...(s.messages.wechat ?? [])].filter(i => i.meta.interlude === "true" && !i.outgoing && !i.read && visible(i,s) && !s.read.includes(i.id)).sort((a,b) => s.unlocked.indexOf(a.id) - s.unlocked.indexOf(b.id));
   const installedApps = work.apps.filter((a) => a.installed);
   const apps = installedApps.filter((a) => a.visible);
   const unlock = (pin = "") => {
@@ -346,6 +354,7 @@ function PhoneRuntime({
       className={`phone-shell ios18 ${work.phone.theme === "dark" ? "dark-phone" : ""}`}
     >
       <KeyboardContext.Provider value={setKeyboard}>
+      <ScriptKeyboardContext.Provider value={setScriptDraft}>
         <div
           className={`phone-screen wallpaper-${work.phone.wallpaper} ${locked ? "is-locked" : ""} ${app ? "in-app" : ""} ${keyboard ? "keyboard-open" : ""}`}
           style={{ background: `center / cover no-repeat url("${locked ? "/wallpapers/lock.jpg" : "/wallpapers/home.jpg"}")` }}
@@ -471,6 +480,9 @@ function PhoneRuntime({
               >
                 <AppHomeButton onHome={returnHome} />
                 <AppContent
+                  route={storyRoute}
+                  onThreadChange={setActiveChat}
+                  onStorySend={(id) => event("send", id)}
                   app={plugin}
                   name={
                     work.apps.find((a) => a.id === app)?.name ?? plugin.name
@@ -511,6 +523,7 @@ function PhoneRuntime({
                 key={
                   "home-" + homeRequest + (app === "appstore" ? "store" : "")
                 }
+                blockedApps={!creator && s.variables.interludeEnabled && !s.variables.phoneUnlocked ? ["phone"] : []}
                 storeOpen={app === "appstore"}
                 closeStore={returnHome}
                 work={work}
@@ -523,7 +536,7 @@ function PhoneRuntime({
                 search={() => setPanel("search")}
                 time={displayTime}
                 icon={(a, small) => (
-                  <AppIcon
+                  <span className="story-icon-wrap"><AppIcon
                     key={a.id}
                     id={a.id}
                     name={small ? undefined : a.name}
@@ -531,7 +544,7 @@ function PhoneRuntime({
                     custom={a.icon}
                     date={s.date || work.phone.date}
                     time={s.time}
-                  />
+                  />{a.id === "wechat" && storyUnread.length > 0 && <b className="story-app-badge">{storyUnread.length}</b>}</span>
                 )}
                 clearApp={(id) =>
                   update({
@@ -796,7 +809,9 @@ function PhoneRuntime({
               </div>
             </div>
           )}
-          {keyboard && <DeviceKeyboard close={() => setKeyboard(false)} />}
+          {keyboard && <DeviceKeyboard scriptedText={scriptDraft ?? undefined} close={() => setKeyboard(false)} />}
+          {!creator && <MessageBanner message={storyUnread.filter(i => app !== "wechat" || activeChat !== i.title).at(-1)} open={(item) => { open("wechat"); setStoryRoute({serial:Date.now(),app:"wechat",thread:item.title}); }} />}
+          {!creator && !locked && s.variables.noteReady && !s.unlocked.includes("interlude-note") && <div className="story-modal-shade"><div className="story-modal" role="dialog" aria-modal="true" aria-label="新的备忘录"><p>您已解锁一条新的备忘录，是否查看？</p><button onClick={() => { event("storyConsent", "interlude-note"); open("notes"); setStoryRoute({serial:Date.now(),app:"notes",note:"interlude-note"}); }}>是</button></div></div>}
           {loadError && (
             <button className="runtime-error" onClick={() => setLoadError("")}>
               {loadError}
@@ -817,6 +832,7 @@ function PhoneRuntime({
           <div className="screen-dimmer" />
           <div className="hardware-reflection" />
         </div>
+      </ScriptKeyboardContext.Provider>
       </KeyboardContext.Provider>
     </div>
   );
@@ -879,6 +895,9 @@ function Media({ item }: { item: Item }) {
   );
 }
 function AppContent({
+  route,
+  onThreadChange,
+  onStorySend,
   app,
   name,
   items,
@@ -892,6 +911,9 @@ function AppContent({
   onUi,
   work,
 }: {
+  route?: StoryRoute;
+  onThreadChange?: (name: string) => void;
+  onStorySend?: (id: string) => void;
   app: AppPlugin;
   name: string;
   items: Item[];
@@ -908,6 +930,8 @@ function AppContent({
   const [detail, setDetail] = useState<Item | null>(null);
   const [photoIds, setPhotoIds] = useState<string[]>([]);
   const [thread, setThread] = useState("");
+  useStoryRoute(route, app.id, items, onRead, setDetail, setThread);
+  useEffect(() => { onThreadChange?.(thread); }, [thread, onThreadChange]);
   const [tab, setTab] = useState(app.tabs[0]);
   const [q, setQ] = useState("");
   const [pw, setPw] = useState("");
@@ -1031,6 +1055,10 @@ function AppContent({
         <div className="catalog-slot" hidden={!!detail}>
           <Suspense fallback={<div className="catalog-loading">正在打开…</div>}>
             <Skin
+              arrivalIds={state.unlocked}
+              readIds={state.read}
+              interlude={!!state.variables.interludeEnabled}
+              onStorySend={onStorySend}
               appId={app.id}
               owner={work.phone.owner}
               virtualTime={state.time}

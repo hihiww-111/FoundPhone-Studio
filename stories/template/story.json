@@ -3,7 +3,7 @@
   "id": "phone-a-story",
   "title": "张极的手机",
   "description": "人A的互动手机故事，第一阶段：锁屏与桌面配置。",
-  "revision": 42,
+  "revision": 43,
   "phone": {
     "owner": "张极",
     "date": "2026-10-25",
@@ -1474,6 +1474,15 @@
         "folder": "备忘录",
         "favorite": true,
         "meta": {}
+      },
+      {
+        "id": "interlude-note",
+        "title": "我亲了左航",
+        "body": "这一切都怪游戏，两个人一起蒙着眼猜东西，本来就有很大的风险啊，亲到了也不能怪我吧😭如果左航再也不理我了怎么办？\n\n虽然只是轻轻蹭到了嘴侧，但没准是脸呢？全世界安静的那一瞬，从蒙着的缝隙往外看，左航这一次没有抬手擦的动作，上一次亲了手还洗手呢，是不是他也没有很反感？\n\n喜欢真的让人变胆小鬼，如果和左航说其实我喜欢你，会不会真的就不理我了？\n\n一辈子的好朋友听起来其实也很好了。",
+        "time": "三小时前",
+        "kind": "note",
+        "folder": "备忘录",
+        "hidden": true
       }
     ],
     "calendar": [
@@ -2038,9 +2047,702 @@
           "displayName": "404NOTFound"
         }
       }
+    ],
+    "wechat": [
+      {
+        "id": "interlude-su-1",
+        "title": "苏新皓",
+        "sender": "苏新皓",
+        "avatar": "/wechat/contacts/su-xinhao.jpg",
+        "body": "你们真的亲到了？",
+        "hidden": true,
+        "read": false,
+        "time": "",
+        "meta": {
+          "interlude": "true",
+          "replyText": "我想是的吧...完蛋了呀😭",
+          "replyId": "interlude-su-1-reply",
+          "autoType": "false"
+        }
+      },
+      {
+        "id": "interlude-su-1-reply",
+        "title": "苏新皓",
+        "sender": "张极",
+        "body": "我想是的吧...完蛋了呀😭",
+        "hidden": true,
+        "read": true,
+        "outgoing": true,
+        "time": "",
+        "meta": {
+          "interlude": "true"
+        }
+      },
+      {
+        "id": "interlude-su-2",
+        "title": "苏新皓",
+        "sender": "苏新皓",
+        "avatar": "/wechat/contacts/su-xinhao.jpg",
+        "body": "你现在想怎么办？告诉左航你喜欢他",
+        "hidden": true,
+        "read": false,
+        "time": "",
+        "meta": {
+          "interlude": "true",
+          "replyText": "我不知道，他不理我怎么办？",
+          "replyId": "interlude-su-2-reply",
+          "autoType": "true"
+        }
+      },
+      {
+        "id": "interlude-su-2-reply",
+        "title": "苏新皓",
+        "sender": "张极",
+        "body": "我不知道，他不理我怎么办？",
+        "hidden": true,
+        "read": true,
+        "outgoing": true,
+        "time": "",
+        "meta": {
+          "interlude": "true"
+        }
+      },
+      {
+        "id": "interlude-su-3",
+        "title": "苏新皓",
+        "sender": "苏新皓",
+        "avatar": "/wechat/contacts/su-xinhao.jpg",
+        "body": "不敢见面的话，打个电话试试？",
+        "hidden": true,
+        "read": false,
+        "time": "",
+        "meta": {
+          "interlude": "true",
+          "replyText": "我试试！",
+          "replyId": "interlude-su-3-reply",
+          "autoType": "true"
+        }
+      },
+      {
+        "id": "interlude-su-3-reply",
+        "title": "苏新皓",
+        "sender": "张极",
+        "body": "我试试！",
+        "hidden": true,
+        "read": true,
+        "outgoing": true,
+        "time": "",
+        "meta": {
+          "interlude": "true"
+        }
+      },
+      {
+        "id": "interlude-zhu-1",
+        "title": "朱志鑫",
+        "sender": "朱志鑫",
+        "avatar": "/wechat/contacts/zhu-zhixin.jpg",
+        "body": "刚刚大家给你打掩护了，什么情况...",
+        "hidden": true,
+        "read": false,
+        "time": "",
+        "meta": {
+          "interlude": "true",
+          "replyText": "就是你看到的...是你想的那样...",
+          "replyId": "interlude-zhu-1-reply",
+          "autoType": "false"
+        }
+      },
+      {
+        "id": "interlude-zhu-1-reply",
+        "title": "朱志鑫",
+        "sender": "张极",
+        "body": "就是你看到的...是你想的那样...",
+        "hidden": true,
+        "read": true,
+        "outgoing": true,
+        "time": "",
+        "meta": {
+          "interlude": "true"
+        }
+      },
+      {
+        "id": "interlude-zhu-2",
+        "title": "朱志鑫",
+        "sender": "朱志鑫",
+        "avatar": "/wechat/contacts/zhu-zhixin.jpg",
+        "body": "这波无敌了兄弟",
+        "hidden": true,
+        "read": false,
+        "time": "",
+        "meta": {
+          "interlude": "true"
+        }
+      },
+      {
+        "id": "interlude-zhang-1",
+        "title": "张泽禹",
+        "sender": "张泽禹",
+        "avatar": "/wechat/contacts/zhang-zeyu.jpg",
+        "body": "这个烧麦蒸得厉害",
+        "hidden": true,
+        "read": false,
+        "time": "",
+        "meta": {
+          "interlude": "true",
+          "replyText": "我说我不是故意的你信吗",
+          "replyId": "interlude-zhang-1-reply",
+          "autoType": "false"
+        }
+      },
+      {
+        "id": "interlude-zhang-1-reply",
+        "title": "张泽禹",
+        "sender": "张极",
+        "body": "我说我不是故意的你信吗",
+        "hidden": true,
+        "read": true,
+        "outgoing": true,
+        "time": "",
+        "meta": {
+          "interlude": "true"
+        }
+      },
+      {
+        "id": "interlude-zhang-2",
+        "title": "张泽禹",
+        "sender": "张泽禹",
+        "avatar": "/wechat/contacts/zhang-zeyu.jpg",
+        "body": "你自己加油吧，左航那边我帮不了你，没有胆量现在过去替你美言几句",
+        "hidden": true,
+        "read": false,
+        "time": "",
+        "meta": {
+          "interlude": "true"
+        }
+      }
     ]
   },
-  "variables": {},
-  "events": [],
-  "tests": []
+  "variables": {
+    "interludeEnabled": true,
+    "noteReady": false,
+    "phoneUnlocked": false
+  },
+  "events": [
+    {
+      "id": "interlude-ready",
+      "label": "interlude-ready",
+      "once": true,
+      "event": "read",
+      "conditions": [
+        {
+          "key": "read:notes-2026-04-12",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "read:notes-2026-02-01",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "read:notes-2026-01-01",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "read:notes-2025-07-13",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "read:notes-2025-05-22",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "read:notes-2025-02-11",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "read:notes-2024-12-30",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "read:notes-2024-09-14",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "read:notes-2024-08-26",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "read:notes-pinned-2026-08-29",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "read:notes-pinned-2024-08-29",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "actions": [
+        {
+          "type": "variable",
+          "key": "noteReady",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "interlude-consent",
+      "label": "interlude-consent",
+      "once": true,
+      "event": "storyConsent",
+      "target": "interlude-note",
+      "conditions": [
+        {
+          "key": "noteReady",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "interlude-note",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "interlude-start",
+      "label": "interlude-start",
+      "once": true,
+      "event": "read",
+      "target": "interlude-note",
+      "conditions": [
+        {
+          "key": "unlocked:interlude-note",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "next": [
+        "interlude-su-delay"
+      ]
+    },
+    {
+      "id": "interlude-su-delay",
+      "label": "interlude-su-delay",
+      "once": true,
+      "type": "delay",
+      "delayMs": 11000,
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "interlude-su-1",
+          "value": true
+        }
+      ],
+      "next": [
+        "interlude-zhu-delay"
+      ]
+    },
+    {
+      "id": "interlude-zhu-delay",
+      "label": "interlude-zhu-delay",
+      "once": true,
+      "type": "delay",
+      "delayMs": 30000,
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "interlude-zhu-1",
+          "value": true
+        }
+      ],
+      "next": [
+        "interlude-zhang-delay"
+      ]
+    },
+    {
+      "id": "interlude-zhang-delay",
+      "label": "interlude-zhang-delay",
+      "once": true,
+      "type": "delay",
+      "delayMs": 30000,
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "interlude-zhang-1",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "interlude-su-1-reply-send",
+      "label": "interlude-su-1-reply-send",
+      "once": true,
+      "event": "send",
+      "target": "interlude-su-1-reply",
+      "conditions": [
+        {
+          "key": "unlocked:interlude-su-1",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "read:interlude-su-1",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "unlocked:interlude-su-1-reply",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "interlude-su-1-reply",
+          "value": true
+        }
+      ],
+      "next": [
+        "interlude-su-1-reply-delay"
+      ]
+    },
+    {
+      "id": "interlude-su-1-reply-delay",
+      "label": "interlude-su-1-reply-delay",
+      "once": true,
+      "type": "delay",
+      "delayMs": 3000,
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "interlude-su-2",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "interlude-su-2-reply-send",
+      "label": "interlude-su-2-reply-send",
+      "once": true,
+      "event": "send",
+      "target": "interlude-su-2-reply",
+      "conditions": [
+        {
+          "key": "unlocked:interlude-su-2",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "read:interlude-su-2",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "unlocked:interlude-su-2-reply",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "interlude-su-2-reply",
+          "value": true
+        }
+      ],
+      "next": [
+        "interlude-su-2-reply-delay"
+      ]
+    },
+    {
+      "id": "interlude-su-2-reply-delay",
+      "label": "interlude-su-2-reply-delay",
+      "once": true,
+      "type": "delay",
+      "delayMs": 3000,
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "interlude-su-3",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "interlude-su-3-reply-send",
+      "label": "interlude-su-3-reply-send",
+      "once": true,
+      "event": "send",
+      "target": "interlude-su-3-reply",
+      "conditions": [
+        {
+          "key": "unlocked:interlude-su-3",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "read:interlude-su-3",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "unlocked:interlude-su-3-reply",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "interlude-su-3-reply",
+          "value": true
+        },
+        {
+          "type": "variable",
+          "key": "phoneUnlocked",
+          "value": true
+        }
+      ],
+      "next": []
+    },
+    {
+      "id": "interlude-zhu-1-reply-send",
+      "label": "interlude-zhu-1-reply-send",
+      "once": true,
+      "event": "send",
+      "target": "interlude-zhu-1-reply",
+      "conditions": [
+        {
+          "key": "unlocked:interlude-zhu-1",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "read:interlude-zhu-1",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "unlocked:interlude-zhu-1-reply",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "interlude-zhu-1-reply",
+          "value": true
+        }
+      ],
+      "next": [
+        "interlude-zhu-1-reply-delay"
+      ]
+    },
+    {
+      "id": "interlude-zhu-1-reply-delay",
+      "label": "interlude-zhu-1-reply-delay",
+      "once": true,
+      "type": "delay",
+      "delayMs": 10000,
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "interlude-zhu-2",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "interlude-zhang-1-reply-send",
+      "label": "interlude-zhang-1-reply-send",
+      "once": true,
+      "event": "send",
+      "target": "interlude-zhang-1-reply",
+      "conditions": [
+        {
+          "key": "unlocked:interlude-zhang-1",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "read:interlude-zhang-1",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "unlocked:interlude-zhang-1-reply",
+          "op": "eq",
+          "value": false
+        }
+      ],
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "interlude-zhang-1-reply",
+          "value": true
+        }
+      ],
+      "next": [
+        "interlude-zhang-1-reply-delay"
+      ]
+    },
+    {
+      "id": "interlude-zhang-1-reply-delay",
+      "label": "interlude-zhang-1-reply-delay",
+      "once": true,
+      "type": "delay",
+      "delayMs": 10000,
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "interlude-zhang-2",
+          "value": true
+        }
+      ]
+    }
+  ],
+  "tests": [
+    {
+      "name": "读完备忘录并完成三人微信互动",
+      "steps": [
+        {
+          "event": "read",
+          "target": "notes-2026-04-12"
+        },
+        {
+          "event": "read",
+          "target": "notes-2026-02-01"
+        },
+        {
+          "event": "read",
+          "target": "notes-2026-01-01"
+        },
+        {
+          "event": "read",
+          "target": "notes-2025-07-13"
+        },
+        {
+          "event": "read",
+          "target": "notes-2025-05-22"
+        },
+        {
+          "event": "read",
+          "target": "notes-2025-02-11"
+        },
+        {
+          "event": "read",
+          "target": "notes-2024-12-30"
+        },
+        {
+          "event": "read",
+          "target": "notes-2024-09-14"
+        },
+        {
+          "event": "read",
+          "target": "notes-2024-08-26"
+        },
+        {
+          "event": "read",
+          "target": "notes-pinned-2026-08-29"
+        },
+        {
+          "event": "read",
+          "target": "notes-pinned-2024-08-29"
+        },
+        {
+          "event": "storyConsent",
+          "target": "interlude-note"
+        },
+        {
+          "event": "read",
+          "target": "interlude-note"
+        },
+        {
+          "advanceMs": 11000
+        },
+        {
+          "event": "read",
+          "target": "interlude-su-1"
+        },
+        {
+          "event": "send",
+          "target": "interlude-su-1-reply"
+        },
+        {
+          "advanceMs": 3000
+        },
+        {
+          "event": "read",
+          "target": "interlude-su-2"
+        },
+        {
+          "event": "send",
+          "target": "interlude-su-2-reply"
+        },
+        {
+          "advanceMs": 3000
+        },
+        {
+          "event": "read",
+          "target": "interlude-su-3"
+        },
+        {
+          "event": "send",
+          "target": "interlude-su-3-reply"
+        },
+        {
+          "advanceMs": 60000
+        },
+        {
+          "event": "read",
+          "target": "interlude-zhu-1"
+        },
+        {
+          "event": "send",
+          "target": "interlude-zhu-1-reply"
+        },
+        {
+          "advanceMs": 10000
+        },
+        {
+          "event": "read",
+          "target": "interlude-zhu-2"
+        },
+        {
+          "event": "read",
+          "target": "interlude-zhang-1"
+        },
+        {
+          "event": "send",
+          "target": "interlude-zhang-1-reply"
+        },
+        {
+          "advanceMs": 10000
+        },
+        {
+          "event": "read",
+          "target": "interlude-zhang-2"
+        }
+      ],
+      "expectUnlocked": [
+        "interlude-note",
+        "interlude-su-3-reply",
+        "interlude-zhu-2",
+        "interlude-zhang-2"
+      ]
+    }
+  ]
 }

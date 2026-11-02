@@ -32,6 +32,7 @@ import {
 } from "./layout";
 type Props = {
   work: Work;
+  blockedApps?: string[];
   storeOpen?: boolean;
   closeStore?: () => void;
   layout: DeviceLayout;
@@ -485,6 +486,7 @@ export function HomeLauncher(p: Props) {
       className={"launcher-cell " + (entry.widget ? "launcher-widget" : "")}
       data-home-key={dock ? "dock:" + entry.key : entry.key}
       data-app-id={entry.app?.id}
+      disabled={!!entry.app && p.blockedApps?.includes(entry.app.id)}
       aria-label={
         entry.app
           ? "打开" + entry.app.name

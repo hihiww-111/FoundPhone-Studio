@@ -90,7 +90,7 @@ export const storySchema = z
               password: z.string().optional(),
             }),
           ),
-          ending: z.string(),
+          ending: z.string().optional(),
           expectUnlocked: z.array(z.string()).default([]),
         }),
       )

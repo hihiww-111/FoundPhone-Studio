@@ -40,6 +40,7 @@ import {
 import { motion } from "motion/react";
 import type { Work } from "./schema";
 export const KeyboardContext = createContext<(open: boolean) => void>(() => {});
+export const ScriptKeyboardContext = createContext<(draft: string | null) => void>(() => {});
 export function NativeComposer({
   creator,
   onAdd,
@@ -404,7 +405,7 @@ export function ControlCenter({
     </motion.div>
   );
 }
-export function DeviceKeyboard({ close }: { close: () => void }) {
+export function DeviceKeyboard({ close, scriptedText }: { close: () => void; scriptedText?: string }) {
   const [value, setValue] = useState(""),
     [shift, setShift] = useState(false),
     [numbers, setNumbers] = useState(false);
@@ -412,9 +413,10 @@ export function DeviceKeyboard({ close }: { close: () => void }) {
     <div className="device-keyboard" role="dialog" aria-label="屏幕键盘">
       <div className="keyboard-draft">
         <input
-          autoFocus
+          autoFocus={scriptedText === undefined}
+          readOnly={scriptedText !== undefined}
           aria-label="消息草稿"
-          value={value}
+          value={scriptedText ?? value}
           onChange={(e) => setValue(e.target.value)}
           placeholder="输入消息"
         />
