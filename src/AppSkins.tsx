@@ -1,6 +1,8 @@
+import { wechatContacts } from "./wechatContacts";
+import "./ios/wechat-contacts.css";
 import { NativeComposer } from "./DeviceSystem";
 import { useSkinState } from "./skinState";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import {
   ChevronLeft,
   Plus,
@@ -26,7 +28,6 @@ import {
   CheckCheck,
   AtSign,
   Star,
-  Music,
   Image as ImageIcon,
   Layers,
   ShoppingBag,
@@ -59,7 +60,7 @@ function Avatar({
 }) {
   return (
     <span className={`skin-avatar ${round ? "round" : ""}`}>
-      {safeMedia(src)?.startsWith("data:image/") ? (
+      {safeMedia(src) && !/\.(mp3|mp4|mov)$/i.test(src) ? (
         <img src={safeMedia(src)} alt="" />
       ) : (
         name.slice(0, 1)
@@ -89,17 +90,20 @@ function MessageList({
   onItem,
   onRead,
   whatsapp = false,
+  ownerAvatar = "",
 }: {
   items: Item[];
   creator: boolean;
   onItem: (i: Item) => void;
   onRead: (id: string) => void;
   whatsapp?: boolean;
+  ownerAvatar?: string;
 }) {
   return (
     <div className={`skin-messages ${whatsapp ? "wa-wallpaper" : ""}`}>
-      <div className="skin-date">{items[0]?.time.slice(0, 10)}</div>
-      {items.map((i) => (
+      {items.map((i, index) => (
+        <Fragment key={i.id}>
+        {(index === 0 || i.time.slice(0,10) !== items[index-1].time.slice(0,10)) && <div className="skin-date">{i.time.slice(0,10).replace(/^(\d{4})-(\d{2})-(\d{2})$/, (_,y,m,d)=>`${y}年${Number(m)}月${Number(d)}日`)}</div>}
         <div
           key={i.id}
           className={`skin-message ${i.outgoing ? "outgoing" : ""}`}
@@ -122,12 +126,13 @@ function MessageList({
               i.body
             )}
             <small className={whatsapp ? undefined : "wx-message-time"}>
-              {i.time.slice(-5)}{" "}
+              {/\d{2}:\d{2}/.exec(i.time)?.[0] || ""}{" "}
               {whatsapp && i.outgoing && <CheckCheck size={11} />}
             </small>
           </button>
-          {!whatsapp && i.outgoing && <Avatar name={i.sender} src={i.avatar} />}
+          {!whatsapp && i.outgoing && <Avatar name={i.sender} src={ownerAvatar || i.avatar} />}
         </div>
+        </Fragment>
       ))}
     </div>
   );
@@ -157,7 +162,9 @@ export function WeChatSkin(p: SkinProps) {
     [moments, setMoments] = useState(false),
     [menu, setMenu] = useState(false),
     [searchOpen, setSearchOpen] = useState(false),
-    [utility, setUtility] = useState("");
+    [utility, setUtility] = useState(""),
+    [contactQuery, setContactQuery] = useState(""),
+    [selectedContact, setSelectedContact] = useState("");
   const [readThreads, setReadThreads] = useSkinState<string[]>(
     p,
     "readThreads",
@@ -170,9 +177,10 @@ export function WeChatSkin(p: SkinProps) {
         .map((i) => i.title),
     ),
   ];
-  const contacts = [
-    ...new Set(p.items.map((i) => i.sender).filter((s) => s !== "我")),
-  ];
+  const contacts = wechatContacts(p.items, p.owner);
+  const shownContacts = contacts.filter(c => c.name.toLowerCase().includes(contactQuery.toLowerCase()));
+  const contact = contacts.find(c => c.name === selectedContact);
+  const contactSections = [...new Set(shownContacts.map(c => c.initial))];
   const posts = p.items.filter(
     (i) => i.folder === "朋友圈" || i.kind === "post",
   );
@@ -183,12 +191,14 @@ export function WeChatSkin(p: SkinProps) {
       data-thread={!!p.thread}
       data-moments={moments}
       data-utility={!!utility}
+      data-contact={!!contact}
     >
       <div className="app-nav wx-nav">
         <button
-          aria-label={utility || p.thread || moments ? "返回" : "收藏"}
+          disabled={tab === "我" && !utility && !p.thread && !moments}
+          aria-label={contact || utility || p.thread || moments ? "返回" : "收藏"}
           onClick={() =>
-            utility
+            contact ? setSelectedContact("") : utility
               ? setUtility("")
               : p.thread
                 ? p.onThread("")
@@ -197,18 +207,19 @@ export function WeChatSkin(p: SkinProps) {
                   : setUtility("收藏")
           }
         >
-          {utility || p.thread || moments ? (
+          {contact || utility || p.thread || moments ? (
             <ChevronLeft size={22} />
           ) : (
             <Star size={22} />
           )}
         </button>
         <strong>
-          {utility ||
+          {(contact ? "详细资料" : "") || utility ||
             p.thread ||
             (moments ? "朋友圈" : tab === "微信" ? p.name : tab)}
         </strong>
         <button
+          disabled={tab === "我" && !utility && !p.thread && !moments}
           aria-label={
             p.creator ? "新增内容" : p.thread ? "聊天详情" : "微信菜单"
           }
@@ -239,7 +250,12 @@ export function WeChatSkin(p: SkinProps) {
           ))}
         </div>
       )}
-      {utility ? (
+      {contact ? (
+        <div className="skin-scroll wx-contact-detail">
+          <section className="wx-contact-identity"><Avatar name={contact.name} src={contact.avatar}/><h1>{contact.name}</h1></section>
+          <button className="wx-send-message" onClick={() => { p.onThread(contact.thread); p.onRead(contact.thread); setSelectedContact(""); setTab("微信"); }}><MessageCircle size={20}/>发消息</button>
+        </div>
+      ) : utility ? (
         <div className="skin-scroll wx-utility">
           {utility === "聊天信息" && (
             <div className="wx-members">
@@ -279,6 +295,7 @@ export function WeChatSkin(p: SkinProps) {
         <>
           <MessageList
             items={p.items.filter((i) => i.title === p.thread)}
+            ownerAvatar="/wechat/avatar.jpg"
             creator={p.creator}
             onItem={p.onItem}
             onRead={p.onRead}
@@ -350,7 +367,7 @@ export function WeChatSkin(p: SkinProps) {
                       }}
                     >
                       <span className="wx-chat-avatar">
-                        <Avatar name={t} src={last.avatar} />
+                        <Avatar name={t} src={contacts.find(c=>c.name===t)?.avatar || last.avatar} />
                         {!readThreads.includes(t) &&
                           list.some((i) => !i.read) && (
                             <b className="wx-unread">
@@ -362,41 +379,27 @@ export function WeChatSkin(p: SkinProps) {
                         <strong>{t}</strong>
                         <p>{last.body}</p>
                       </div>
-                      <time>{last.time.slice(-5)}</time>
+                      <time>{/\d{2}:\d{2}/.exec(last.time)?.[0] || last.time.slice(5,10).replace("-","/")}</time>
                     </button>
                   );
                 })}
               {!conversations.length && <p className="skin-empty">暂无聊天</p>}
             </>
           ) : tab === "通讯录" ? (
-            <>
-              <div className="wx-section-label">联系人</div>
-              {contacts.map((c) => (
-                <button
-                  key={c}
-                  className="wx-contact"
-                  onClick={() => {
-                    const item = p.items.find((i) => i.sender === c);
-                    if (item) {
-                      p.onThread(item.title);
-                      p.onRead(item.title);
-                    }
-                  }}
-                >
-                  <Avatar
-                    name={c}
-                    src={p.items.find((i) => i.sender === c)?.avatar}
-                  />
-                  {c}
-                </button>
-              ))}
-            </>
+            <div className="wx-address-book">
+              <label className="wx-contact-search"><Search size={18}/><input aria-label="搜索联系人" placeholder="搜索" value={contactQuery} onChange={e=>setContactQuery(e.target.value)}/></label>
+              {!contactQuery && <div className="wx-address-shortcuts">{[
+                [User,"新的朋友","#ff9e32"], [MessageCircle,"仅聊天的朋友","#ff9e32"], [Users,"群聊","#07c160"], [Bookmark,"公众号","#168bea"], [Layers,"服务号","#10aeef"], [MessageCircle,"企业微信联系人","#2c87cf"],
+              ].map(([Icon,label,color])=>{const Glyph=Icon as typeof User;return <button key={String(label)} disabled><span style={{background:String(color)}}><Glyph size={25}/></span><strong>{String(label)}</strong></button>;})}</div>}
+              {contactSections.map(letter=><section id={`wx-address-${letter}`} key={letter}><h2>{letter}</h2>{shownContacts.filter(c=>c.initial===letter).map(c=><button key={c.name} className="wx-contact" onClick={()=>setSelectedContact(c.name)}><Avatar name={c.name} src={c.avatar}/><span>{c.name}</span></button>)}</section>)}
+              {!shownContacts.length && <p className="skin-empty">暂无联系人</p>}
+              <p className="wx-contact-count">{shownContacts.length} 位联系人</p>
+              <nav className="wx-address-index" aria-label="联系人索引">{contactSections.map(letter=><button key={letter} onClick={()=>document.getElementById(`wx-address-${letter}`)?.scrollIntoView({block:"start"})}>{letter}</button>)}</nav>
+            </div>
           ) : tab === "发现" ? (
             <div className="wx-discover-groups">
               {[
                 [Camera, "朋友圈", "#26a958"],
-                [Play, "视频号", "#fa9d3b"],
-                [Music, "听一听", "#fa5151"],
               ].map(([Icon, label, color]) => {
                 const Glyph = Icon as typeof Camera;
                 return (
@@ -419,13 +422,13 @@ export function WeChatSkin(p: SkinProps) {
           ) : (
             <>
               <div className="wx-profile">
-                <Avatar name={p.owner || "机主"} />
+                <span className="skin-avatar"><img src="/wechat/avatar.jpg" alt="JI的微信头像" /></span>
                 <div>
-                  <h2>{p.owner || "机主"}</h2>
-                  <small>微信号：未设置</small>
+                  <h2>JI</h2>
+                  <small>微信号：JeremyIsHere</small>
                   <button
                     className="wx-profile-status"
-                    onClick={() => setUtility("状态")}
+                    disabled
                   >
                     ＋ 状态
                   </button>
@@ -446,11 +449,7 @@ export function WeChatSkin(p: SkinProps) {
                     <button
                       key={String(label)}
                       className="wx-discovery"
-                      onClick={() =>
-                        label === "朋友圈"
-                          ? setMoments(true)
-                          : setUtility(String(label))
-                      }
+                      disabled
                     >
                       <Glyph size={22} style={{ color: String(color) }} />
                       {String(label)}
@@ -465,7 +464,7 @@ export function WeChatSkin(p: SkinProps) {
                   <button
                     className="wx-discovery"
                     key={i.id}
-                    onClick={() => p.onItem(i)}
+                    disabled
                   >
                     <User size={18} />
                     {i.title}
@@ -481,7 +480,7 @@ export function WeChatSkin(p: SkinProps) {
           )}
         </div>
       )}
-      {!p.thread && !moments && !utility && (
+      {!p.thread && !moments && !utility && !contact && (
         <nav className="wx-bottom">
           {[
             { label: "微信", icon: MessageCircle },

@@ -1045,3 +1045,8 @@
 .ios18 .redbook-ui .redbook-masonry > button { border-radius: 16px; background: #fff; box-shadow: 0 3px 12px #1d27380a; overflow: hidden; }
 .ios18 .redbook-ui .redbook-masonry > button > strong { font-size: 14px; line-height: 1.5; padding: 10px 10px 4px; }
 .ios18 .redbook-ui .redbook-masonry > button > div:last-child { padding: 8px 10px 12px; color: #8b8b93; }
+
+.ios18 .wechat-ui[data-tab="我"] :is(.wx-profile-status, .wx-discovery, .wx-nav > button):disabled {
+  opacity: 1;
+  cursor: default;
+}

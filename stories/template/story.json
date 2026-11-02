@@ -3,7 +3,7 @@
   "id": "phone-a-story",
   "title": "张极的手机",
   "description": "人A的互动手机故事，第一阶段：锁屏与桌面配置。",
-  "revision": 37,
+  "revision": 38,
   "phone": {
     "owner": "张极",
     "date": "2026-10-25",
@@ -31,42 +31,85 @@
   ],
   "contacts": [
     {
-      "id": "test-contact",
-      "name": "测试联系人",
+      "id": "zhang-junhao",
+      "name": "张峻豪",
+      "avatar": "/wechat/contacts/zhang-junhao.jpg",
       "phone": "",
-      "bio": "这是一条测试内容。"
+      "bio": ""
     }
   ],
   "chats": [
     {
-      "id": "test-chat-messages",
-      "app": "messages",
-      "title": "测试会话",
-      "participants": [
-        "owner",
-        "test-contact"
-      ],
-      "messages": [
-        {
-          "id": "test-message-messages",
-          "body": "这是一条测试消息。",
-          "senderId": "test-contact"
-        }
-      ]
-    },
-    {
-      "id": "test-chat-wechat",
+      "id": "wechat-zhang-junhao",
       "app": "wechat",
-      "title": "测试会话",
+      "title": "张峻豪",
       "participants": [
         "owner",
-        "test-contact"
+        "zhang-junhao"
       ],
       "messages": [
         {
-          "id": "test-message-wechat",
-          "body": "这是一条测试消息。",
-          "senderId": "test-contact"
+          "id": "wechat-zjh-20260502-01",
+          "senderId": "owner",
+          "body": "有什么适合送给鼓手的礼物？",
+          "time": "2026-05-02",
+          "read": true
+        },
+        {
+          "id": "wechat-zjh-20260502-02",
+          "senderId": "zhang-junhao",
+          "body": "这么贴心要送我东西了？",
+          "time": "2026-05-02",
+          "read": true
+        },
+        {
+          "id": "wechat-zjh-20260502-03",
+          "senderId": "owner",
+          "body": "你想得美🙃",
+          "time": "2026-05-02",
+          "read": true
+        },
+        {
+          "id": "wechat-zjh-20260502-04",
+          "senderId": "zhang-junhao",
+          "body": "送左航啊你要？",
+          "time": "2026-05-02",
+          "read": true
+        },
+        {
+          "id": "wechat-zjh-20260502-05",
+          "senderId": "owner",
+          "body": "有这么明显？？？",
+          "time": "2026-05-02",
+          "read": true
+        },
+        {
+          "id": "wechat-zjh-20260502-06",
+          "senderId": "zhang-junhao",
+          "body": "需要我装作不知道然后等你说吗",
+          "time": "2026-05-02",
+          "read": true
+        },
+        {
+          "id": "wechat-zjh-20260502-07",
+          "senderId": "owner",
+          "body": "我认真的！",
+          "time": "2026-05-02",
+          "read": true
+        },
+        {
+          "id": "wechat-zjh-20260502-08",
+          "senderId": "zhang-junhao",
+          "body": "左航应该不需要鼓棒吧最近，你换个方向呗感觉送这个也太没新意太不惊喜了you know",
+          "time": "2026-05-02",
+          "read": true
+        },
+        {
+          "id": "wechat-zjh-20260502-09",
+          "senderId": "owner",
+          "body": "我再想想🤔",
+          "time": "2026-05-02",
+          "read": true
         }
       ]
     }

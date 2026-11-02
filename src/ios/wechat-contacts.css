@@ -1,0 +1,21 @@
+.ios18 .wechat-ui[data-tab="通讯录"] > .skin-scroll { position: relative; }
+.ios18 .wx-address-book { background: #fff; min-height: 100%; padding-bottom: 25px; }
+.ios18 .wx-contact-search { display: flex; align-items: center; gap: 8px; background: #ededed; padding: 10px 12px; }
+.ios18 .wx-contact-search > svg { color: #aaa; }
+.ios18 .wx-contact-search input { background: #fff; border: 0; border-radius: 7px; width: 100%; height: 34px; padding: 0 12px; font: inherit; outline: none; }
+.ios18 .wx-address-shortcuts > button { display: flex; align-items: center; gap: 13px; width: 100%; padding: 9px 16px; background: #fff; opacity: 1; color: #111; border: 0; text-align: left; cursor: default; }
+.ios18 .wx-address-shortcuts > button > span { display: grid; place-items: center; width: 40px; height: 40px; color: #fff; border-radius: 5px; flex: none; }
+.ios18 .wx-address-shortcuts strong { flex: 1; font-size: 16px; font-weight: 500; }
+.ios18 .wx-address-book section > h2 { background: #ededed; color: #888; font-size: 13px; padding: 6px 16px; font-weight: 500; margin: 0; }
+.ios18 .wx-address-book .wx-contact { gap: 13px; padding: 10px 26px 10px 16px; font-size: 16px; min-height: 60px; border: 0; width: 100%; background: #fff; text-align: left; }
+.ios18 .wx-address-book .wx-contact .skin-avatar { width: 40px; height: 40px; border-radius: 5px; flex: none; }
+.ios18 .wx-contact-count { text-align: center; padding: 18px; color: #999; font-size: 13px; }
+.ios18 .wx-address-index { position: fixed; right: 4px; top: 220px; bottom: 110px; display: flex; flex-direction: column; justify-content: center; gap: 3px; }
+.ios18 .wx-address-index button { background: none; border: 0; padding: 2px 3px; font-size: 10px; font-weight: 600; color: #777; }
+.ios18 .wx-contact-detail { background: #ededed; }
+.ios18 .wx-contact-identity { display: flex; align-items: center; gap: 20px; background: #fff; padding: 28px 22px 36px; }
+.ios18 .wx-contact-identity .skin-avatar { width: 70px; height: 70px; border-radius: 8px; flex: none; }
+.ios18 .wx-contact-identity h1 { font-size: 23px; font-weight: 600; margin: 0; overflow-wrap: anywhere; }
+.ios18 .wx-send-message { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; margin-top: 12px; padding: 18px; color: #576b95; background: #fff; border: 0; font-size: 17px; font-weight: 600; }
+.ios18 .wechat-ui[data-contact="true"] .wx-nav > button:last-child { visibility: hidden; }
+.ios18 .wechat-ui[data-contact="true"][data-thread="false"][data-moments="false"][data-utility="false"] .wx-nav > button:first-child { visibility: visible; }
