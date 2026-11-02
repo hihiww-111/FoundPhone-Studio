@@ -1,5 +1,5 @@
 import { dispatch } from "./engine";
-import type { Runtime, Work } from "./schema";
+import { initialRuntime, type Runtime, type Work } from "./schema";
 export type CallRecord = {
   id: string;
   name: string;
@@ -24,13 +24,18 @@ export function callRecords(state: Runtime): CallRecord[] {
     }
   });
 }
+export function phoneIsUnlocked(state: Runtime): boolean {
+  return Boolean(state.variables.phoneUnlocked) &&
+    state.unlocked.includes("interlude-su-3-reply") &&
+    state.completed.includes("interlude-su-3-reply-send");
+}
 export function startPhoneCall(
   work: Work,
   state: Runtime,
   name: string,
   id: string,
 ): Runtime {
-  if (!state.variables.phoneUnlocked || state.ui?.phone?.activeName)
+  if (!phoneIsUnlocked(state) || state.ui?.phone?.activeName)
     return state;
   const record: CallRecord = { id, name, time: state.time, status: "正在呼叫" };
   const code =
@@ -101,37 +106,19 @@ export function endPhoneCall(
     ? dispatch(work, next, "phoneEnded", String(phone.activeContactId))
     : next;
 }
-/** Additive story revisions explicitly opt into retaining the previous progress. */
-export function resumePhoneStory(
-  work: Work,
-  saved: Runtime,
-): Runtime | undefined {
-  if (saved.revision === work.updatedAt) return saved;
-  if (
-    work.id !== "phone-a-story" ||
-    saved.revision !== work.variables.resumeFromRevision
-  )
-    return undefined;
-  const oldDelays: Record<string, number> = {
-    "interlude-zhu-delay": 30000,
-    "interlude-zhang-delay": 30000,
-    "interlude-su-1-reply-delay": 3000,
-    "interlude-su-2-reply-delay": 3000,
-    "interlude-zhu-1-reply-delay": 10000,
-    "interlude-zhang-1-reply-delay": 10000,
-  };
-  const scheduled = saved.scheduled?.map((timer) => {
-    const delay = work.nodes.find((n) => n.id === timer.nodeId)?.delayMs;
-    return oldDelays[timer.nodeId] && delay !== undefined
-      ? { ...timer, due: timer.due + delay - oldDelays[timer.nodeId] }
-      : timer;
-  });
-  return {
-    ...saved,
-    scheduled,
-    revision: work.updatedAt,
-    variables: { ...work.variables, ...saved.variables },
-  };
+/** Reset incompatible narrative saves once, retaining unrelated App preferences. */
+export function resumePhoneStory(work: Work, saved: Runtime): Runtime | undefined {
+  if (work.id !== "phone-a-story")
+    return saved.revision === work.updatedAt ? saved : undefined;
+  const compatible = saved.revision === work.updatedAt &&
+    saved.variables.storyGateVersion === work.variables.storyGateVersion &&
+    (!saved.variables.phoneUnlocked || phoneIsUnlocked(saved));
+  if (compatible) return saved;
+  const fresh = dispatch(work, initialRuntime(work), "start");
+  fresh.ui = Object.fromEntries(Object.entries(saved.ui ?? {}).filter(
+    ([app]) => app !== "phone" && app !== "wechat" && app !== "notes",
+  ));
+  return fresh;
 }
 export function firstContactGlyph(name: string): string {
   if (typeof Intl.Segmenter === "function") {

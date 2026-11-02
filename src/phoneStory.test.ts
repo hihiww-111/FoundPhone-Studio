@@ -9,6 +9,7 @@ import {
   endPhoneCall,
   firstContactGlyph,
   resumePhoneStory,
+  phoneIsUnlocked,
   startPhoneCall,
 } from "./phoneCalls";
 import { draftSequence } from "./draftSequence";
@@ -16,6 +17,8 @@ const { work } = compileStory(source);
 function callable() {
   const s = initialRuntime(work);
   s.variables.phoneUnlocked = true;
+  s.unlocked = ["interlude-su-3-reply"];
+  s.completed = ["interlude-su-3-reply-send"];
   return s;
 }
 function firstMessage() {
@@ -138,19 +141,28 @@ describe("Phone continuation", () => {
     expect(frames[12]).toBe("左");
     expect(frames.at(-1)).toBe(second);
   });
-  it("keeps the previous revision's unlocked Phone and reads when applying the additive update", () => {
+  it("resets old narrative progress and timers while retaining Instagram preferences", () => {
     const saved = callable();
-    saved.revision = Number(work.variables.resumeFromRevision);
+    saved.revision = 44;
     saved.read = ["interlude-note"];
-    saved.unlocked = ["interlude-su-3-reply"];
-    delete saved.variables.meetReady;
-    const migrated = resumePhoneStory(work, saved)!;
-    expect(migrated.revision).toBe(work.updatedAt);
-    expect(migrated.variables.phoneUnlocked).toBe(true);
-    expect(migrated.variables.meetReady).toBe(false);
-    expect(migrated.read).toEqual(saved.read);
-    expect(migrated.unlocked).toEqual(saved.unlocked);
-    expect(resumePhoneStory(work, { ...saved, revision: 1 })).toBeUndefined();
+    saved.scheduled = [{ nodeId: "interlude-su-delay", due: 100 }];
+    saved.ui = { instagram: { displayName: "404NOTFound" }, phone: { activeName: "妈咪" } };
+    const restored = resumePhoneStory(work, saved)!;
+    expect(phoneIsUnlocked(restored)).toBe(false);
+    expect(restored.read).toEqual([]);
+    expect(restored.unlocked).not.toContain("interlude-note");
+    expect(restored.scheduled).not.toContainEqual(saved.scheduled[0]);
+    expect(restored.ui?.instagram).toEqual(saved.ui.instagram);
+    expect(restored.ui?.phone).toBeUndefined();
+    expect(restored.variables.noteReady).toBe(false);
+  });
+  it("resumes compatible progress but refuses a forged phone flag", () => {
+    const saved = callable();
+    expect(resumePhoneStory(work, saved)).toBe(saved);
+    saved.completed = [];
+    expect(phoneIsUnlocked(saved)).toBe(false);
+    expect(startPhoneCall(work, saved, CAT_CONTACT, "blocked")).toBe(saved);
+    expect(resumePhoneStory(work, saved)?.variables.phoneUnlocked).toBe(false);
   });
 });
 

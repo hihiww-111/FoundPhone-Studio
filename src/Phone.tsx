@@ -1,5 +1,5 @@
 import { PhoneCallContext, StoryPhoneApp, usePhoneCalls } from "./StoryPhone";
-import { resumePhoneStory } from "./phoneCalls";
+import { phoneIsUnlocked, resumePhoneStory } from "./phoneCalls";
 import { MessageBanner, useStoryRoute, type StoryRoute } from "./Interlude";
 import { photoSequence } from "./ios/photoNavigation";
 import { AppHomeButton } from "./ios/AppHomeButton";
@@ -301,7 +301,7 @@ function PhoneRuntime({
     setPanel("");
   };
   const open = (id: string) => {
-    if (!creator && id === "phone" && runtimeRef.current.variables.interludeEnabled && !runtimeRef.current.variables.phoneUnlocked) return;
+    if (!creator && id === "phone" && runtimeRef.current.variables.interludeEnabled && !phoneIsUnlocked(runtimeRef.current)) return;
     if (!work.apps.some((a) => a.id === id && a.installed)) return;
     setStoryRoute(undefined);
     if (id === "instagram" && work.id === "phone-a-story") {
@@ -551,7 +551,7 @@ function PhoneRuntime({
                 key={
                   "home-" + homeRequest + (app === "appstore" ? "store" : "")
                 }
-                blockedApps={!creator && s.variables.interludeEnabled && !s.variables.phoneUnlocked ? ["phone"] : []}
+                blockedApps={!creator && s.variables.interludeEnabled && !phoneIsUnlocked(s) ? ["phone"] : []}
                 storeOpen={app === "appstore"}
                 closeStore={returnHome}
                 work={work}

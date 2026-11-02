@@ -24,4 +24,4 @@
 
 中途互动的 `tests` 路径可省略 `ending`，通过 `expectUnlocked` 验证阶段内容；有结局的路径仍需声明 `ending`，每个 ending 节点仍必须被测试覆盖。模板中的 `interlude` 消息元数据只提供声明式草稿文字和回复 ID，实际发送及计时由事件引擎控制。
 
-模板电话续篇使用 `phoneDial`、`draftComplete`、`meetConsent` 事件串联；未完成阅读与草稿动画不触发下一步。`draftOnly` 消息草稿不能发送，`eraseFirst` 是必须先输入再逐字删除的文本，`cancelDraft` 在后续来信到达时终止该草稿。`resumeFromRevision` 仅允许明确指定的前一版本存档进行增量迁移。
+模板电话续篇使用 `phoneDial`、`draftComplete`、`meetConsent` 事件串联；未完成阅读与草稿动画不触发下一步。`draftOnly` 消息草稿不能发送，`eraseFirst` 是必须先输入再逐字删除的文本，`cancelDraft` 在后续来信到达时终止该草稿。`storyGateVersion` 标记剧情存档兼容性；不兼容版本重置剧情和计时任务，保留非剧情 App 界面设置。电话还需校验实际发送“我试试！”的完成记录。
