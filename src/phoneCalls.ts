@@ -110,10 +110,25 @@ export function endPhoneCall(
 export function resumePhoneStory(work: Work, saved: Runtime): Runtime | undefined {
   if (work.id !== "phone-a-story")
     return saved.revision === work.updatedAt ? saved : undefined;
-  const compatible = saved.revision === work.updatedAt &&
+  const compatible = (saved.revision === work.updatedAt || saved.revision === 45) &&
     saved.variables.storyGateVersion === work.variables.storyGateVersion &&
     (!saved.variables.phoneUnlocked || phoneIsUnlocked(saved));
-  if (compatible) return saved;
+  if (compatible) {
+    if (saved.revision === work.updatedAt) return saved;
+    const next = structuredClone(saved);
+    next.revision = work.updatedAt;
+    next.variables = { ...work.variables, ...saved.variables };
+    const changes: Record<string, number> = {
+      "interlude-zhu-delay": -5000, "interlude-zhang-delay": -10000,
+      "interlude-zhu-1-reply-delay": -2000, "interlude-zhang-1-reply-delay": -2000,
+    };
+    next.scheduled = next.scheduled?.map(t => ({...t, due: Math.max(next.elapsedMs ?? 0, t.due + (changes[t.nodeId] ?? 0))}));
+    if (next.unlocked.includes("interlude-happy-note")) {
+      next.scheduled = [...(next.scheduled ?? []), {nodeId:"phone-calm-message-delay", due:(next.elapsedMs ?? 0) + 40000}];
+      if (next.read.includes("interlude-happy-note")) next.variables.finalNoteExitReady = true;
+    }
+    return next;
+  }
   const fresh = dispatch(work, initialRuntime(work), "start");
   fresh.ui = Object.fromEntries(Object.entries(saved.ui ?? {}).filter(
     ([app]) => app !== "phone" && app !== "wechat" && app !== "notes",

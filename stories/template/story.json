@@ -3,7 +3,7 @@
   "id": "phone-a-story",
   "title": "张极的手机",
   "description": "人A的互动手机故事，第一阶段：锁屏与桌面配置。",
-  "revision": 45,
+  "revision": 46,
   "phone": {
     "owner": "张极",
     "date": "2026-10-25",
@@ -2355,6 +2355,20 @@
         "meta": {
           "interlude": "true"
         }
+      },
+      {
+        "id": "interlude-call-zuo-3",
+        "title": "A左左",
+        "sender": "A左左",
+        "avatar": "/wechat/contacts/zuo-hang.jpg",
+        "body": "冷静好了吗？",
+        "hidden": true,
+        "read": false,
+        "time": "",
+        "meta": {
+          "interlude": "true",
+          "pinned": "true"
+        }
       }
     ]
   },
@@ -2384,7 +2398,8 @@
     "phoneFirstEnded-junhao": false,
     "phoneFirstDialed-junhao": false,
     "phoneAutoEnded-junhao": false,
-    "phoneRepeatExpired": false
+    "phoneRepeatExpired": false,
+    "finalNoteExitReady": false
   },
   "events": [
     {
@@ -2514,7 +2529,7 @@
       "label": "interlude-zhu-delay",
       "once": true,
       "type": "delay",
-      "delayMs": 25000,
+      "delayMs": 20000,
       "actions": [
         {
           "type": "unlock",
@@ -2531,7 +2546,7 @@
       "label": "interlude-zhang-delay",
       "once": true,
       "type": "delay",
-      "delayMs": 20000,
+      "delayMs": 10000,
       "actions": [
         {
           "type": "unlock",
@@ -2712,7 +2727,7 @@
       "label": "interlude-zhu-1-reply-delay",
       "once": true,
       "type": "delay",
-      "delayMs": 4000,
+      "delayMs": 2000,
       "actions": [
         {
           "type": "unlock",
@@ -2760,7 +2775,7 @@
       "label": "interlude-zhang-1-reply-delay",
       "once": true,
       "type": "delay",
-      "delayMs": 4000,
+      "delayMs": 2000,
       "actions": [
         {
           "type": "unlock",
@@ -2896,12 +2911,10 @@
           "type": "unlock",
           "key": "interlude-call-zuo-2",
           "value": true
-        },
-        {
-          "type": "variable",
-          "key": "meetReady",
-          "value": true
         }
+      ],
+      "next": [
+        "phone-meet-popup-delay"
       ]
     },
     {
@@ -2967,6 +2980,9 @@
           "key": "finalNoteReady",
           "value": true
         }
+      ],
+      "next": [
+        "phone-calm-message-delay"
       ]
     },
     {
@@ -3602,6 +3618,65 @@
           "value": true
         }
       ]
+    },
+    {
+      "id": "phone-meet-popup-delay",
+      "label": "左航消息后两秒显示见面弹窗",
+      "once": true,
+      "type": "delay",
+      "delayMs": 2000,
+      "actions": [
+        {
+          "type": "variable",
+          "key": "meetReady",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "phone-calm-message-delay",
+      "label": "结局备忘录解锁40秒后左航来信",
+      "once": true,
+      "type": "delay",
+      "delayMs": 40000,
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "interlude-call-zuo-3",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "phone-happy-read",
+      "label": "阅读结局备忘录",
+      "once": true,
+      "event": "read",
+      "target": "interlude-happy-note",
+      "conditions": [
+        {
+          "key": "unlocked:interlude-happy-note",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "next": [
+        "phone-happy-exit-delay"
+      ]
+    },
+    {
+      "id": "phone-happy-exit-delay",
+      "label": "阅读20秒后可退出",
+      "once": true,
+      "type": "delay",
+      "delayMs": 20000,
+      "actions": [
+        {
+          "type": "variable",
+          "key": "finalNoteExitReady",
+          "value": true
+        }
+      ]
     }
   ],
   "tests": [
@@ -3883,6 +3958,9 @@
           "advanceMs": 2000
         },
         {
+          "advanceMs": 2000
+        },
+        {
           "event": "meetConsent",
           "target": "left"
         },
@@ -3892,12 +3970,19 @@
         {
           "event": "read",
           "target": "interlude-happy-note"
+        },
+        {
+          "advanceMs": 20000
+        },
+        {
+          "advanceMs": 20000
         }
       ],
       "expectUnlocked": [
         "interlude-call-zuo-1",
         "interlude-call-zuo-2",
-        "interlude-happy-note"
+        "interlude-happy-note",
+        "interlude-call-zuo-3"
       ]
     },
     {

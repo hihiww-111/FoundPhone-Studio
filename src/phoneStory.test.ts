@@ -99,6 +99,11 @@ describe("Phone continuation", () => {
     s = advance(work, s, 1999);
     expect(s.variables.meetReady).toBe(false);
     s = advance(work, s, 1);
+    expect(s.unlocked).toContain("interlude-call-zuo-2");
+    expect(s.variables.meetReady).toBe(false);
+    s = advance(work, s, 1999);
+    expect(s.variables.meetReady).toBe(false);
+    s = advance(work, s, 1);
     expect(s.variables.meetReady).toBe(true);
     s = advance(work, s, 10000);
     expect(s.unlocked).not.toContain("interlude-happy-note");
@@ -108,6 +113,16 @@ describe("Phone continuation", () => {
     expect(s.variables.meetBlackout).toBe(true);
     s = advance(work, s, 1);
     expect(s.variables.meetBlackout).toBe(false);
+    s = dispatch(work, s, "read", "interlude-happy-note");
+    s = advance(work, s, 19999);
+    expect(s.variables.finalNoteExitReady).toBe(false);
+    s = advance(work, s, 1);
+    expect(s.variables.finalNoteExitReady).toBe(true);
+    s = advance(work, s, 19999);
+    expect(s.unlocked).not.toContain("interlude-call-zuo-3");
+    s = advance(work, s, 1);
+    expect(s.unlocked).toContain("interlude-call-zuo-3");
+    expect(s.read).not.toContain("interlude-call-zuo-3");
     expect(
       visible(
         work.data.notes.find((i) => i.id === "interlude-happy-note")!,
@@ -155,6 +170,16 @@ describe("Phone continuation", () => {
     expect(restored.ui?.instagram).toEqual(saved.ui.instagram);
     expect(restored.ui?.phone).toBeUndefined();
     expect(restored.variables.noteReady).toBe(false);
+  });
+  it("migrates revision 45 timers without resetting valid progress", () => {
+    const saved = callable();
+    saved.revision = 45;
+    saved.elapsedMs = 10000;
+    saved.scheduled = [{nodeId:"interlude-zhu-delay", due:30000}];
+    const restored = resumePhoneStory(work, saved)!;
+    expect(phoneIsUnlocked(restored)).toBe(true);
+    expect(restored.revision).toBe(work.updatedAt);
+    expect(restored.scheduled).toEqual([{nodeId:"interlude-zhu-delay",due:25000}]);
   });
   it("resumes compatible progress but refuses a forged phone flag", () => {
     const saved = callable();

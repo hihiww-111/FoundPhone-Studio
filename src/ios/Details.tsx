@@ -30,7 +30,9 @@ export function NativeDetail({
   back,
   photos = [],
   onPhoto,
+  exitReady = true,
 }: {
+  exitReady?: boolean;
   app: string;
   item: Item;
   back: () => void;
@@ -69,7 +71,7 @@ export function NativeDetail({
         <header className={`app-nav ${app === "photos" ? "photos-nav" : "safari-nav"}`}><strong>{app === "photos" ? "相册" : "浏览器"}</strong></header>
       ) : (
       <header className="app-nav">
-        <button aria-label="返回" onClick={back}>
+        <button aria-label="返回" onClick={back} disabled={!exitReady}>
           <ChevronLeft size={24} />
           {name}
         </button>
@@ -147,9 +149,10 @@ export function NativeDetail({
             <time>{item.time.slice(0, 10).replace(/^(\d{4})-(\d{2})-(\d{2})$/, (_, y, m, d) => `${y}年${Number(m)}月${Number(d)}日`)}</time>
             <h1>{item.title}</h1>
             <RichText value={item.richText} fallback={item.body} />
+            {item.id === "interlude-happy-note" && exitReady && <button className="native-blue" onClick={back}>退出阅读</button>}
           </div>
           <footer className="native-detail-toolbar">
-            <button aria-label="返回文件夹" onClick={back}>
+            <button aria-label="返回文件夹" onClick={back} disabled={!exitReady}>
               <Folder />
             </button>
             <span />

@@ -28,15 +28,15 @@ describe("memo and WeChat interlude", () => {
     s = advance(work,s,1); expect(s.variables.noteReady).toBe(true);
     expect(visible(work.data.notes.find(i=>i.id==="interlude-note")!,s)).toBe(false);
   });
-  it("schedules notifications at 11, 36 and 56 seconds without duplicate reads restarting them", () => {
+  it("schedules notifications at 11, 31 and 41 seconds without duplicate reads restarting them", () => {
     let s = begin();
     s = dispatch(work,s,"read","interlude-note");
     expect(s.scheduled).toHaveLength(1);
     s = advance(work,s,10999); expect(s.unlocked).not.toContain("interlude-su-1");
     s = advance(work,s,1); expect(s.unlocked).toContain("interlude-su-1");
-    s = advance(work,s,24999); expect(s.unlocked).not.toContain("interlude-zhu-1");
+    s = advance(work,s,19999); expect(s.unlocked).not.toContain("interlude-zhu-1");
     s = advance(work,s,1); expect(s.unlocked).toContain("interlude-zhu-1");
-    s = advance(work,s,20000); expect(s.unlocked).toContain("interlude-zhang-1");
+    s = advance(work,s,10000); expect(s.unlocked).toContain("interlude-zhang-1");
   });
   it("requires reading and manual sends, persists pending timers, and unlocks Phone only on the final send", () => {
     let s = advance(work,begin(),11000);
@@ -56,13 +56,13 @@ describe("memo and WeChat interlude", () => {
     }
     expect(s.variables.phoneUnlocked).toBe(true);
   });
-  it("delays the other two replies for four seconds and records independent unread messages", () => {
-    let s=advance(work,begin(),56000);
+  it("delays the other two replies for two seconds and records independent unread messages", () => {
+    let s=advance(work,begin(),41000);
     for(const code of ["zhu","zhang"]) {
       s=dispatch(work,s,"read",`interlude-${code}-1`);
       s=dispatch(work,s,"send",`interlude-${code}-1-reply`);
     }
-    s=advance(work,s,3999);
+    s=advance(work,s,1999);
     expect(s.unlocked).not.toContain("interlude-zhu-2");
     s=advance(work,s,1);
     for(const code of ["zhu","zhang"]) {

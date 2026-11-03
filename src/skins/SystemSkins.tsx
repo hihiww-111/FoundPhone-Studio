@@ -382,10 +382,13 @@ export function SafariSkin(p: Props) {
     </div>
   );
 }
+export function noteTimeRank(time: string): number {
+  return time === "刚刚" ? 2 : time === "三小时前" ? 1 : 0;
+}
 export function NotesSkin(p: Props) {
   const { q, setQ, items } = useContent(p, "备忘录");
   const [folders, setFolders] = useState(false);
-  const list = [...items].sort((a, b) => b.time.localeCompare(a.time));
+  const list = [...items].sort((a, b) => noteTimeRank(b.time) - noteTimeRank(a.time) || b.time.localeCompare(a.time));
   const sections = [
     { label: "📌 置顶", notes: list.filter((i) => i.favorite) },
     { label: "备忘录", notes: list.filter((i) => !i.favorite) },
