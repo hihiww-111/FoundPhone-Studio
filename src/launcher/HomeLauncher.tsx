@@ -32,6 +32,7 @@ import {
 } from "./layout";
 type Props = {
   work: Work;
+  restricted?: boolean;
   blockedApps?: string[];
   storeOpen?: boolean;
   closeStore?: () => void;
@@ -111,6 +112,7 @@ function WidgetFace({
 }: {
   widget: Widget;
   work: Work;
+  restricted?: boolean;
   time: string;
 }) {
   const date = new Date((work.phone.date || "2026-10-25") + "T12:00:00Z");
@@ -659,10 +661,10 @@ export function HomeLauncher(p: Props) {
             ))}
           </div>
         )}
-        <button className="home-search" onClick={p.search}>
+        {!p.restricted && <button className="home-search" onClick={p.search}>
           <Search size={12} />
           搜索
-        </button>
+        </button>}
       </div>
       <div data-drop-zone="dock">
         <AppDock>
@@ -681,7 +683,7 @@ export function HomeLauncher(p: Props) {
           {error || p.error}
         </button>
       )}
-      {sheet && (
+      {sheet && !(p.restricted && sheet === "library") && (
         <div
           className={"launcher-sheet " + (p.storeOpen ? "storefront" : "")}
           onPointerDown={(e) => e.stopPropagation()}

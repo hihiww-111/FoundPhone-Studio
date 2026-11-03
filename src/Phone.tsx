@@ -304,7 +304,9 @@ function PhoneRuntime({
     setFolder("");
     setPanel("");
   };
+  const restricted = !creator && work.id === "phone-a-story";
   const open = (id: string) => {
+    if (restricted && id === "appstore") return;
     if (!creator && id === "phone" && runtimeRef.current.variables.interludeEnabled && !phoneIsUnlocked(runtimeRef.current)) return;
     if (!work.apps.some((a) => a.id === id && a.installed)) return;
     setStoryRoute(undefined);
@@ -567,7 +569,8 @@ function PhoneRuntime({
                   "home-" + homeRequest + (app === "appstore" ? "store" : "")
                 }
                 blockedApps={!creator && s.variables.interludeEnabled && !phoneIsUnlocked(s) ? ["phone"] : []}
-                storeOpen={app === "appstore"}
+                restricted={restricted}
+                storeOpen={!restricted && app === "appstore"}
                 closeStore={returnHome}
                 work={work}
                 layout={deviceLayout.layout}
@@ -576,7 +579,7 @@ function PhoneRuntime({
                 error={deviceLayout.error}
                 open={open}
                 onFolder={setFolder}
-                search={() => setPanel("search")}
+                search={() => { if (!restricted) setPanel("search"); }}
                 time={displayTime}
                 icon={(a, small) => (
                   <span className="story-icon-wrap"><AppIcon
@@ -652,7 +655,7 @@ function PhoneRuntime({
                     <p>没有新通知</p>
                   )}
                 </>
-              ) : panel === "search" ? (
+              ) : panel === "search" && !restricted ? (
                 <>
                   <h2>搜索 App</h2>
                   <AppSearch apps={installedApps} open={open} />
@@ -840,14 +843,14 @@ function PhoneRuntime({
                 >
                   打开 App
                 </button>
-                <button
+{!restricted && <button
                   onClick={() => {
                     setContextApp("");
-                    setPanel("search");
+                    if (!restricted) setPanel("search");
                   }}
                 >
                   在 App 库中查看
-                </button>
+                </button>}
                 <button onClick={() => setContextApp("")}>取消</button>
               </div>
             </div>

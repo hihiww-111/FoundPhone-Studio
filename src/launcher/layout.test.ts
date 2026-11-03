@@ -4,6 +4,7 @@ import blank from "../../stories/blank/story.json";
 import { compileStory } from "../story-engine/compiler";
 import {
   defaultLayout,
+  restrictStoryApps,
   ensureAppStore,
   validateLayout,
   packHome,
@@ -138,4 +139,15 @@ it("migrates preview folders once while preserving custom folders and widgets", 
   expect(
     validateLayout(migrated, w).apps.find((a) => a.id === "wechat")!.folder,
   ).toBe("作者新建文件夹");
+});
+
+it("blocks App Store and previously installed extras in the story", () => {
+  const w = compileStory(phoneStory).work;
+  const l = defaultLayout(w);
+  l.apps.forEach(a => { a.installed = true; a.visible = true; });
+  const allowed = new Set(w.apps.filter(a => a.installed && a.id !== "appstore").map(a => a.id));
+  const result = restrictStoryApps(l, w);
+  expect(result.apps.filter(a => a.installed).every(a => allowed.has(a.id))).toBe(true);
+  expect(result.apps.find(a => a.id === "appstore")?.installed).toBe(false);
+  expect(result.apps.find(a => a.id === "wechat")?.installed).toBe(true);
 });

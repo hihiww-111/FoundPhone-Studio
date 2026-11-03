@@ -190,6 +190,11 @@ export function validateLayout(raw: unknown, input: Work) {
   }
   return layout;
 }
+export function restrictStoryApps(layout: DeviceLayout, authored: Work): DeviceLayout {
+  if (authored.id !== "phone-a-story") return layout;
+  const allowed = new Set(authored.apps.filter(a => a.installed && a.id !== "appstore").map(a => a.id));
+  return { ...layout, apps: layout.apps.map(a => allowed.has(a.id) ? a : { ...a, installed: false, visible: false, dock: false }) };
+}
 export function useDeviceLayout(authored: Work, creator = false) {
   const base = useMemo(() => ensureAppStore(authored), [authored]);
   const key = "foundphone-layout-v1:" + base.id;
@@ -204,7 +209,10 @@ export function useDeviceLayout(authored: Work, creator = false) {
       }
     }),
     [error, setError] = useState("");
-  const layout = stored.workId === base.id ? stored : defaultLayout(base);
+  const layout = useMemo(() => {
+    const current = stored.workId === base.id ? stored : defaultLayout(base);
+    return creator ? current : restrictStoryApps(current, authored);
+  }, [stored, base, creator, authored]);
   useEffect(() => {
     if (creator) return;
     try {
