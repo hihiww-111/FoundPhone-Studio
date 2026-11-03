@@ -1,4 +1,4 @@
-# Same-name story/media files must revalidate after a deployment.
+# HTML and story updates revalidate; the service worker warms versioned resources.
 /*
   Cache-Control: public, max-age=0, must-revalidate
   X-Content-Type-Options: nosniff
@@ -12,3 +12,13 @@
 
 /manifest.webmanifest
   Cache-Control: no-cache
+
+# Allow short browser reuse even before the service worker takes control.
+/*.jpg
+  Cache-Control: public, max-age=3600
+
+/*.png
+  Cache-Control: public, max-age=3600
+
+/*.webp
+  Cache-Control: public, max-age=3600

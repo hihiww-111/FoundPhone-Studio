@@ -20,11 +20,20 @@ export default defineConfig(({ command }) => ({
       },
       workbox: {
         clientsClaim: true,
-        // Keep first-visit downloads limited to the application shell.
-        // Story JSON and media load only when requested by the UI.
-        globPatterns: ["index.html", "registerSW.js", "assets/index-*.{js,css}", "icon.svg"],
+        // Warm App modules, story data and images in the background.
+        // Audio/video stay click-to-load to avoid downloading the whole music library.
+        globPatterns: ["**/*.{js,css,html,svg,json,png,jpg,jpeg,webp}"],
         globIgnores: ["**/workbox-*.js"],
         cleanupOutdatedCaches: true,
+        runtimeCaching: [{
+          urlPattern: ({ request, sameOrigin }) => sameOrigin && request.destination === "image",
+          handler: "StaleWhileRevalidate",
+          options: {
+            cacheName: "phone-images-v2",
+            expiration: { maxEntries: 300, maxAgeSeconds: 7 * 24 * 60 * 60 },
+            cacheableResponse: { statuses: [200] },
+          },
+        }],
         maximumFileSizeToCacheInBytes: 4000000,
       },
     }),
