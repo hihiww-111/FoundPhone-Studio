@@ -47,7 +47,7 @@ describe("Moments and love reveal",()=>{
   expect(restored.unlocked).toContain("wechat-moment-08");
   expect(libraryPhotos([makeItem({folder:"已隐藏"})])).toEqual([]);
   const hidden=work.data.photos.filter(i=>i.folder==="已隐藏");
-  expect(hidden).toHaveLength(2);
+  expect(hidden).toHaveLength(3);
   expect(libraryPhotos(work.data.photos).some(i=>hidden.some(h=>h.id===i.id))).toBe(false);
  });
 });

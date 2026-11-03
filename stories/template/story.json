@@ -3,7 +3,7 @@
   "id": "phone-a-story",
   "title": "张极的手机",
   "description": "人A的互动手机故事，第一阶段：锁屏与桌面配置。",
-  "revision": 49,
+  "revision": 50,
   "phone": {
     "owner": "张极",
     "date": "2026-10-25",
@@ -1335,6 +1335,17 @@
         "body": "",
         "kind": "image",
         "media": "/photos/hidden/photo-02.jpg",
+        "folder": "已隐藏",
+        "meta": {
+          "albumOnly": "true"
+        }
+      },
+      {
+        "id": "hidden-photo-03",
+        "title": "已隐藏 03",
+        "body": "",
+        "kind": "image",
+        "media": "/photos/hidden/photo-03.jpg",
         "folder": "已隐藏",
         "meta": {
           "albumOnly": "true"
