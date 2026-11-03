@@ -1,0 +1,20 @@
+import { expect, it } from "vitest";
+import { compileStory } from "./story-engine/compiler";
+import { initialRuntime } from "./schema";
+import { lockedNotePreview } from "./notePreview";
+import source from "../stories/template/story.json";
+it("shows only a locked title until consent unlocks the note", () => {
+  const { work } = compileStory(source);
+  const state = initialRuntime(work);
+  const item = work.data.notes.find(i => i.id === "interlude-note")!;
+  const preview = lockedNotePreview(item, state, work.id)!;
+  expect(preview.title).toBe("我亲了左航");
+  expect(preview.body).toBe("");
+  expect(preview.time).toBe("");
+  expect(preview.meta.lockedPreview).toBe("true");
+  expect(item.body).not.toBe("");
+  state.variables.noteReady = true;
+  expect(lockedNotePreview(item, state, work.id)).not.toBeNull();
+  state.unlocked.push(item.id);
+  expect(lockedNotePreview(item, state, work.id)).toBeNull();
+});

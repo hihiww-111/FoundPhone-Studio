@@ -1,3 +1,4 @@
+import { lockedNotePreview } from "./notePreview";
 import { readWechatThread } from "./wechatRead";
 import { loveRevealed, storyWallpaper } from "./storyPresentation";
 import { allChatsFree, sendFreeReply } from "./freeReply";
@@ -1003,7 +1004,8 @@ function AppContent({
   const [pwError, setPwError] = useState("");
   const [likes, setLikes] = useState<string[]>([]);
   const shown = items
-    .filter((i) => creator || visible(i, state))
+    .filter((i) => creator || visible(i, state) || (app.id === "notes" && !!lockedNotePreview(i, state, work.id)))
+    .map(i => !creator && app.id === "notes" ? lockedNotePreview(i, state, work.id) ?? i : i)
     .filter((i) => creator || app.id !== "photos" || i.folder !== "已隐藏" || loveRevealed(state))
     .filter((i) =>
       (i.title + i.body + i.sender).toLowerCase().includes(q.toLowerCase()),
@@ -1015,6 +1017,7 @@ function AppContent({
         ? shown
         : shown.filter((i) => i.folder === tab);
   const read = (i: Item, sequence?: string[]) => {
+    if (!creator && i.meta.lockedPreview === "true") return;
     if (creator) {
       onEdit(i);
       return;
