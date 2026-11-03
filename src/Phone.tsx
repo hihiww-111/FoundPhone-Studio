@@ -1,3 +1,4 @@
+import { sendFreeReply } from "./freeReply";
 import { PhoneCallContext, StoryPhoneApp, usePhoneCalls } from "./StoryPhone";
 import { phoneIsUnlocked, resumePhoneStory } from "./phoneCalls";
 import { MessageBanner, useStoryRoute, type StoryRoute } from "./Interlude";
@@ -511,6 +512,7 @@ function PhoneRuntime({
                   onThreadChange={setActiveChat}
                   onStoryDraft={(id) => event("draftComplete", id)}
                   onStorySend={(id) => event("send", id)}
+                  onFreeSend={(text) => update(sendFreeReply(work, currentRuntime(), text))}
                   app={plugin}
                   name={
                     work.apps.find((a) => a.id === app)?.name ?? plugin.name
@@ -930,6 +932,7 @@ function AppContent({
   route,
   onThreadChange,
   onStorySend,
+  onFreeSend,
   onStoryDraft,
   app,
   name,
@@ -947,6 +950,7 @@ function AppContent({
   route?: StoryRoute;
   onThreadChange?: (name: string) => void;
   onStorySend?: (id: string) => void;
+  onFreeSend?: (text: string) => void;
   onStoryDraft?: (id: string) => void;
   app: AppPlugin;
   name: string;
@@ -1096,6 +1100,7 @@ function AppContent({
               interlude={!!state.variables.interludeEnabled}
               onStoryDraft={onStoryDraft}
               onStorySend={onStorySend}
+              onFreeSend={onFreeSend}
               appId={app.id}
               owner={work.phone.owner}
               virtualTime={state.time}

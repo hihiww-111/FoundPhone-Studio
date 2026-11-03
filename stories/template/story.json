@@ -3,7 +3,7 @@
   "id": "phone-a-story",
   "title": "张极的手机",
   "description": "人A的互动手机故事，第一阶段：锁屏与桌面配置。",
-  "revision": 46,
+  "revision": 47,
   "phone": {
     "owner": "张极",
     "date": "2026-10-25",
@@ -2367,6 +2367,86 @@
         "time": "",
         "meta": {
           "interlude": "true",
+          "pinned": "true",
+          "replyId": "interlude-calm-reply",
+          "replyText": "报告！冷静完毕"
+        }
+      },
+      {
+        "id": "interlude-calm-reply",
+        "title": "A左左",
+        "sender": "JI",
+        "avatar": "/wechat/avatar.jpg",
+        "body": "报告！冷静完毕",
+        "hidden": true,
+        "read": true,
+        "outgoing": true,
+        "time": "",
+        "meta": {
+          "interlude": "true",
+          "pinned": "true"
+        }
+      },
+      {
+        "id": "interlude-secret",
+        "title": "A左左",
+        "sender": "A左左",
+        "avatar": "/wechat/contacts/zuo-hang.jpg",
+        "body": "我不是和你开玩笑的，再告诉你一件事吧，很久之前的那个秘密，不知道你还记不记得，是你亲我的时候我也有感觉。",
+        "hidden": true,
+        "read": false,
+        "outgoing": false,
+        "time": "",
+        "meta": {
+          "interlude": "true",
+          "pinned": "true",
+          "replyId": "interlude-lovers-reply",
+          "replyText": "左航，现在不是恋人未满的关系了对吗😭"
+        }
+      },
+      {
+        "id": "interlude-lovers-reply",
+        "title": "A左左",
+        "sender": "JI",
+        "avatar": "/wechat/avatar.jpg",
+        "body": "左航，现在不是恋人未满的关系了对吗😭",
+        "hidden": true,
+        "read": true,
+        "outgoing": true,
+        "time": "",
+        "meta": {
+          "interlude": "true",
+          "pinned": "true"
+        }
+      },
+      {
+        "id": "interlude-love-open",
+        "title": "A左左",
+        "sender": "A左左",
+        "avatar": "/wechat/contacts/zuo-hang.jpg",
+        "body": "是爱你说得出口。",
+        "hidden": true,
+        "read": false,
+        "outgoing": false,
+        "time": "",
+        "meta": {
+          "interlude": "true",
+          "pinned": "true",
+          "freeReply": "true"
+        }
+      },
+      {
+        "id": "interlude-love-final",
+        "title": "A左左",
+        "sender": "A左左",
+        "avatar": "/wechat/contacts/zuo-hang.jpg",
+        "body": "我爱你。",
+        "hidden": true,
+        "read": false,
+        "outgoing": false,
+        "time": "",
+        "meta": {
+          "interlude": "true",
           "pinned": "true"
         }
       }
@@ -3677,6 +3757,128 @@
           "value": true
         }
       ]
+    },
+    {
+      "id": "phone-calm-send",
+      "label": "左航续篇手动发送",
+      "once": true,
+      "event": "send",
+      "target": "interlude-calm-reply",
+      "conditions": [
+        {
+          "key": "unlocked:interlude-call-zuo-3",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "read:interlude-call-zuo-3",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "interlude-calm-reply",
+          "value": true
+        }
+      ],
+      "next": [
+        "phone-calm-delay"
+      ]
+    },
+    {
+      "id": "phone-calm-delay",
+      "label": "左航续篇回复等待",
+      "once": true,
+      "type": "delay",
+      "delayMs": 5000,
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "interlude-secret",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "phone-lovers-send",
+      "label": "左航续篇手动发送",
+      "once": true,
+      "event": "send",
+      "target": "interlude-lovers-reply",
+      "conditions": [
+        {
+          "key": "unlocked:interlude-secret",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "read:interlude-secret",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "interlude-lovers-reply",
+          "value": true
+        }
+      ],
+      "next": [
+        "phone-lovers-delay"
+      ]
+    },
+    {
+      "id": "phone-lovers-delay",
+      "label": "左航续篇回复等待",
+      "once": true,
+      "type": "delay",
+      "delayMs": 3000,
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "interlude-love-open",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": "phone-free-love-send",
+      "label": "自由发送喜欢或爱后回复",
+      "once": true,
+      "event": "freeLove",
+      "target": "A左左",
+      "conditions": [
+        {
+          "key": "unlocked:interlude-love-open",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "read:interlude-love-open",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "next": [
+        "phone-free-love-delay"
+      ]
+    },
+    {
+      "id": "phone-free-love-delay",
+      "label": "两秒后我爱你",
+      "once": true,
+      "type": "delay",
+      "delayMs": 2000,
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "interlude-love-final",
+          "value": true
+        }
+      ]
     }
   ],
   "tests": [
@@ -3976,13 +4178,47 @@
         },
         {
           "advanceMs": 20000
+        },
+        {
+          "event": "read",
+          "target": "interlude-call-zuo-3"
+        },
+        {
+          "event": "send",
+          "target": "interlude-calm-reply"
+        },
+        {
+          "advanceMs": 5000
+        },
+        {
+          "event": "read",
+          "target": "interlude-secret"
+        },
+        {
+          "event": "send",
+          "target": "interlude-lovers-reply"
+        },
+        {
+          "advanceMs": 3000
+        },
+        {
+          "event": "read",
+          "target": "interlude-love-open"
+        },
+        {
+          "event": "freeLove",
+          "target": "A左左"
+        },
+        {
+          "advanceMs": 2000
         }
       ],
       "expectUnlocked": [
         "interlude-call-zuo-1",
         "interlude-call-zuo-2",
         "interlude-happy-note",
-        "interlude-call-zuo-3"
+        "interlude-call-zuo-3",
+        "interlude-love-final"
       ]
     },
     {

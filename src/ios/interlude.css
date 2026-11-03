@@ -31,3 +31,5 @@
 .ios18 .story-banner-content strong {font-size:17px;font-weight:700;}
 .ios18 .story-banner-content > span {overflow-wrap:anywhere;}
 .ios18 .story-banner-open > time {flex:none;color:#5f626a;font-size:12px;line-height:22px;}
+
+.ios18 .free-compose .native-compose-field::placeholder { color: #aaa; opacity: 1; }

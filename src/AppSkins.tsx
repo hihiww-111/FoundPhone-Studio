@@ -1,4 +1,4 @@
-import { ScriptedReply } from "./Interlude";
+import { FreeReply, ScriptedReply } from "./Interlude";
 import { wechatContacts } from "./wechatContacts";
 import "./ios/wechat-contacts.css";
 import { NativeComposer } from "./DeviceSystem";
@@ -38,6 +38,7 @@ export type SkinProps = {
   readIds?: string[];
   arrivalIds?: string[];
   onStorySend?: (id: string) => void;
+  onFreeSend?: (text: string) => void;
   onStoryDraft?: (id: string) => void;
   interlude?: boolean;
   ui?: Record<string, UiValue>;
@@ -199,8 +200,9 @@ export function WeChatSkin(p: SkinProps) {
     [],
   );
   const unread = (i: Item) => !i.outgoing && !i.read && !p.readIds?.includes(i.id);
-  const threadItems = p.items.filter(i => i.title === p.thread).sort((a,b) => Number(a.meta.interlude === "true") - Number(b.meta.interlude === "true"));
+  const threadItems = p.items.filter(i => i.title === p.thread).sort((a,b) => Number(a.meta.interlude === "true") - Number(b.meta.interlude === "true") || (a.meta.interlude === "true" ? (p.arrivalIds?.indexOf(a.id) ?? -1) - (p.arrivalIds?.indexOf(b.id) ?? -1) : 0));
   const reply = threadItems.find(i => !i.outgoing && i.meta.replyId && !threadItems.some(next => next.meta.cancelDraft === i.meta.replyId) && p.readIds?.includes(i.id) && !p.items.some(out => out.id === i.meta.replyId));
+  const freeReply = threadItems.some(i => i.meta.freeReply === "true" && p.readIds?.includes(i.id));
   const unreadHere = threadItems.filter(i => i.meta.interlude === "true" && unread(i)).map(i => i.id).join(",");
   useEffect(() => {
     if (p.creator || !p.thread || !unreadHere) return;
@@ -338,7 +340,7 @@ export function WeChatSkin(p: SkinProps) {
             onItem={p.onItem}
             onRead={p.onRead}
           />
-          {p.interlude && !p.creator ? <ScriptedReply key={reply?.id || "waiting"} item={reply} send={p.onStorySend} complete={p.onStoryDraft} /> : <Compose creator={p.creator} onAdd={p.onAdd} />}
+          {p.interlude && !p.creator ? freeReply ? <FreeReply send={p.onFreeSend} /> : <ScriptedReply key={reply?.id || "waiting"} item={reply} send={p.onStorySend} complete={p.onStoryDraft} /> : <Compose creator={p.creator} onAdd={p.onAdd} />}
         </>
       ) : moments ? (
         <div className="wx-moments">
