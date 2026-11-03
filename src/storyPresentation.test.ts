@@ -19,7 +19,7 @@ describe("Moments and love reveal",()=>{
   const posts=()=>momentsPosts(work.data.wechat.filter(i=>visible(i,s)));
   expect(posts().map(i=>i.id)).toEqual([6,5,4,3,2,1].map(n=>`wechat-moment-0${n}`));
   expect(loveRevealed(s)).toBe(false);
-  expect(storyWallpaper(s,true)).toBe("/wallpapers/before-love.jpg");
+  expect(storyWallpaper(s,true)).toBe("/wallpapers/lock.jpg");
   expect(storyWallpaper(s,false)).toBe("/wallpapers/before-love.jpg");
   s.unlocked.push("interlude-secret");
   s=dispatch(work,s,"read","interlude-secret");

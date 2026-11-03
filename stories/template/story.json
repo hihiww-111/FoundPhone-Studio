@@ -3,7 +3,7 @@
   "id": "phone-a-story",
   "title": "张极的手机",
   "description": "人A的互动手机故事，第一阶段：锁屏与桌面配置。",
-  "revision": 50,
+  "revision": 51,
   "phone": {
     "owner": "张极",
     "date": "2026-10-25",
@@ -1848,6 +1848,13 @@
         "sender": "测试用户",
         "kind": "text",
         "meta": {}
+      },
+      {
+        "id": "lock-left-birthday",
+        "title": "Left的生日🎂",
+        "body": "2006年5月22日 星期一",
+        "kind": "text",
+        "hidden": true
       }
     ],
     "redbook": [

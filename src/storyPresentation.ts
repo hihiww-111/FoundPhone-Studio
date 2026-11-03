@@ -3,7 +3,7 @@ export function loveRevealed(state: Runtime): boolean {
   return state.unlocked.includes("interlude-love-open");
 }
 export function storyWallpaper(state: Runtime, locked: boolean): string {
-  return loveRevealed(state) ? locked ? "/wallpapers/lock.jpg" : "/wallpapers/home.jpg" : "/wallpapers/before-love.jpg";
+  return locked ? "/wallpapers/lock.jpg" : loveRevealed(state) ? "/wallpapers/home.jpg" : "/wallpapers/before-love.jpg";
 }
 export function momentsPosts(items: Item[]): Item[] {
   return items.filter(i => i.folder === "朋友圈" || i.kind === "post")

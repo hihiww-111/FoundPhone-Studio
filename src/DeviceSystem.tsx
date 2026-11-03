@@ -82,6 +82,7 @@ export function DeviceLock({
   onCamera: () => void;
   onLight: () => void;
 }) {
+  const birthday = work.data.settings?.find(item => item.id === "lock-left-birthday");
   const [code, setCode] = useState("");
   useEffect(() => {
     if (error) setCode("");
@@ -126,6 +127,10 @@ export function DeviceLock({
             <h1>{time}</h1>
           </div>
           <div className="lock-notifications">
+            {birthday && <div className="lock-birthday-notice" role="note" aria-label="生日提醒">
+              <div><strong>{birthday.title}</strong><p>{birthday.body}</p></div>
+              <small>现在</small>
+            </div>}
             {work.phone.notifications && (
               <SystemNotifications
                 compact

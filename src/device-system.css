@@ -1324,3 +1324,13 @@
   grid-template-rows: repeat(6, 99px);
   grid-auto-rows: 99px;
 }
+
+.ios18 .lock-birthday-notice {
+  display: flex; align-items: center; gap: 10px; padding: 12px 14px;
+  border-radius: 22px; color: #111; background: #d6d6d6d9;
+  backdrop-filter: blur(30px) saturate(1.4); margin-bottom: 8px;
+}
+.ios18 .lock-birthday-notice > div { flex: 1; min-width: 0; text-align: left; }
+.ios18 .lock-birthday-notice strong { font-size: 15px; font-weight: 650; }
+.ios18 .lock-birthday-notice p { font-size: 14px; margin: 2px 0 0; line-height: 1.35; }
+.ios18 .lock-birthday-notice small { align-self: flex-start; color: #666; font-size: 12px; }
