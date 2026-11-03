@@ -33,3 +33,26 @@
 .ios18 .story-banner-open > time {flex:none;color:#5f626a;font-size:12px;line-height:22px;}
 
 .ios18 .free-compose .native-compose-field::placeholder { color: #aaa; opacity: 1; }
+
+.ios18 .wx-moments { scrollbar-width:none; background:#fff; }
+.ios18 .wx-moments::-webkit-scrollbar { display:none; }
+.ios18 .wx-moment-cover { position:relative; height:240px; background:#000; margin-bottom:52px; }
+.ios18 .wx-cover-camera { position:absolute; right:20px; top:16px; color:white; }
+.ios18 .wx-moment-identity { position:absolute; right:16px; bottom:-24px; display:flex; gap:14px; align-items:center; color:white; }
+.ios18 .wx-moment-identity strong { font-size:22px; margin-bottom:20px; }
+.ios18 .wx-moment-identity img { width:72px; height:72px; border-radius:9px; object-fit:cover; }
+.ios18 .wx-moment-post { background:#fff; gap:12px; padding:20px 18px; border:0; border-bottom:1px solid #eee; }
+.ios18 .wx-moment-post > .skin-avatar { width:42px; height:42px; flex:none; border-radius:5px; overflow:hidden; }
+.ios18 .wx-moment-post > .skin-avatar img { margin:0; height:100%; object-fit:cover; }
+.ios18 .wx-moment-post strong { font-size:16px; }
+.ios18 .wx-moment-post p { font-size:15px; line-height:1.6; margin:4px 0 12px; }
+.ios18 .wx-moment-post small { font-size:12px; }
+.ios18 .wx-moment-feedback { background:#f3f3f5; padding:7px 10px; color:#61769a; border-radius:4px; margin-top:10px; }
+.ios18 .wx-moment-feedback p { font-size:13px; margin:3px 0; }
+.ios18 .wechat-ui[data-moments="true"] { border-top-color:#000; }
+.ios18 .wechat-ui[data-moments="true"] .wx-nav { background:#000; color:#fff; border:0; }
+.ios18 .wechat-ui[data-moments="true"] .wx-nav > strong { visibility:hidden; }
+.ios18 .phone-screen:has(.wechat-ui[data-moments="true"]) .status-bar { color:#fff !important; }
+.ios18 .app-screen:has(.wechat-ui[data-moments="true"]) .app-home-button { color:#fff; }
+.phone-shell.ios18 .app-screen > .catalog-slot > .wechat-ui[data-moments="true"] { background:#000; border-bottom-color:#fff; }
+.phone-shell.ios18 .wechat-ui[data-moments="true"] .wx-nav button { color:#fff; }

@@ -253,14 +253,14 @@ export function StoryPhoneApp({ contacts }: { contacts: Item[] }) {
         <strong>电话</strong>
       </header>
       <div className="story-phone-scroll">
-        <h1>{tab}</h1>
+        {tab !== "拨号键盘" && <h1>{tab}</h1>}
         {tab === "拨号键盘" ? (
           <div className="story-phone-dialpad">
-            <output>{digits || "输入号码"}</output>
+            <output>{digits}</output>
             <div>
               {Array.from("123456789*0#").map((d) => (
                 <button key={d} onClick={() => setDigits((v) => v + d)}>
-                  {d}
+                  <span>{d}</span><small>{({"2":"ABC","3":"DEF","4":"GHI","5":"JKL","6":"MNO","7":"PQRS","8":"TUV","9":"WXYZ","0":"+"} as Record<string,string>)[d] || " "}</small>
                 </button>
               ))}
             </div>
@@ -272,7 +272,7 @@ export function StoryPhoneApp({ contacts }: { contacts: Item[] }) {
             >
               <Phone />
             </button>
-            <button onClick={() => setDigits((v) => v.slice(0, -1))}>
+            <button className="phone-dial-delete" onClick={() => setDigits((v) => v.slice(0, -1))}>
               删除
             </button>
           </div>

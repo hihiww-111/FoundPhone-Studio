@@ -289,3 +289,17 @@
 .ios18 .phone-screen:has(.phone-outgoing) .home-indicator:after {
   background: #fff;
 }
+
+.ios18 .story-phone-app, .ios18 .story-phone-app .app-nav, .ios18 .story-phone-app .catalog-tabs { background:#fff; }
+.ios18 .story-phone-app > .app-nav { position:relative; border:0; }
+.ios18 .story-phone-app > .app-nav strong { position:absolute; left:50%; transform:translateX(-50%); font-size:18px; }
+.ios18 .story-phone-app .catalog-tabs { border:0; }
+.ios18 .story-phone-app .story-phone-dialpad { position:relative; width:100%; max-width:300px; margin:0 auto; padding:12px 10px 30px; }
+.ios18 .story-phone-dialpad > div { gap:14px 24px; }
+.ios18 .story-phone-dialpad > div > button { width:100%; height:auto; aspect-ratio:1; border:0; border-radius:50%; background:#e9e9eb; color:#111; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0; }
+.ios18 .story-phone-dialpad > div > button span { font-size:32px; line-height:1; font-weight:400; }
+.ios18 .story-phone-dialpad > div > button small { font-size:9px; letter-spacing:2px; margin-top:3px; }
+.ios18 .story-phone-dialpad output { min-height:64px; padding:8px 0 18px; }
+.ios18 .story-phone-dialpad > .phone-dial-green { width:72px; height:72px; border:0; display:grid; place-items:center; margin:24px auto 0; background:#2dc653; }
+.ios18 .story-phone-dialpad > .phone-dial-delete { position:absolute; right:0; bottom:54px; background:none; color:#888; font-size:13px; }
+.phone-shell.ios18 .app-screen > .catalog-slot > .story-phone-app { background:#fff; }

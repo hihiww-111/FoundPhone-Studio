@@ -110,7 +110,7 @@ export function endPhoneCall(
 export function resumePhoneStory(work: Work, saved: Runtime): Runtime | undefined {
   if (work.id !== "phone-a-story")
     return saved.revision === work.updatedAt ? saved : undefined;
-  const compatible = (saved.revision === work.updatedAt || [45, 46].includes(saved.revision)) &&
+  const compatible = (saved.revision === work.updatedAt || [45, 46, 47].includes(saved.revision)) &&
     saved.variables.storyGateVersion === work.variables.storyGateVersion &&
     (!saved.variables.phoneUnlocked || phoneIsUnlocked(saved));
   if (compatible) {

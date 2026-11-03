@@ -59,14 +59,36 @@ const phoneAWidgets: Widget[] = [
 ];
 function phoneAApps(apps: AppConfig[], work: Work) {
   return isPhoneA(work)
-    ? apps.map((a) => a.id === "appstore" || a.id === "contacts"
+    ? apps.map((a) => a.id === "appstore" || a.id === "contacts" || a.id === "messages"
       ? { ...a, visible: false, dock: false, folder: "" }
       : a)
     : apps;
 }
+function phoneALayout(layout: DeviceLayout, work: Work) {
+  if (!isPhoneA(work) || layout.previewLayoutRevision >= 2) return layout;
+  const move: Record<string,string> = {phone:"settings", settings:"files", files:"phone"};
+  const old = structuredClone(layout.apps);
+  layout.apps = layout.apps.map(app => {
+    const source = Object.keys(move).find(id => move[id] === app.id);
+    const slot = old.find(a => a.id === source);
+    return slot ? {...app, dock:slot.dock, folder:slot.folder} : app;
+  });
+  layout.apps.sort((a,b) => {
+    const before = (id:string) => old.findIndex(x => x.id === (Object.keys(move).find(k=>move[k]===id) ?? id));
+    return before(a.id)-before(b.id);
+  });
+  layout.order = layout.order.map(id => move[id] ?? id);
+  const positions = {...layout.positions};
+  for (const id of Object.keys(move)) delete layout.positions[id];
+  for (const [from,to] of Object.entries(move)) if (positions[from]) layout.positions[to] = positions[from];
+  delete layout.positions.messages;
+  layout.order = layout.order.filter(id=>id!=="messages");
+  layout.previewLayoutRevision = 2;
+  return layout;
+}
 export function defaultLayout(input: Work): DeviceLayout {
   const w = ensureAppStore(input);
-  return {
+  const layout: DeviceLayout = {
     version: 1,
     workId: w.id,
     previewLayoutRevision: w.id === "ui-test-phone-v2" ? 1 : 0,
@@ -85,6 +107,7 @@ export function defaultLayout(input: Work): DeviceLayout {
       "widget-weather-a": { page: 0, x: 2, y: 0 },
     } : {},
   };
+  return phoneALayout(layout, w);
 }
 export function validateLayout(raw: unknown, input: Work) {
   const w = ensureAppStore(input);
@@ -111,6 +134,7 @@ export function validateLayout(raw: unknown, input: Work) {
   }
   if (isPhoneA(w)) {
     layout.apps = phoneAApps(layout.apps, w);
+    phoneALayout(layout, w);
     for (const widget of phoneAWidgets) {
       if (!layout.widgets.some((item) => item.id === widget.id)) layout.widgets.push({ ...widget });
     }

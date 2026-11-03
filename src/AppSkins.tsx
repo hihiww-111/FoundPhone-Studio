@@ -38,7 +38,8 @@ export type SkinProps = {
   readIds?: string[];
   arrivalIds?: string[];
   onStorySend?: (id: string) => void;
-  onFreeSend?: (text: string) => void;
+  onFreeSend?: (text: string, thread: string) => void;
+  allFreeChat?: boolean;
   onStoryDraft?: (id: string) => void;
   interlude?: boolean;
   ui?: Record<string, UiValue>;
@@ -219,6 +220,7 @@ export function WeChatSkin(p: SkinProps) {
   const shownContacts = contacts.filter(c => c.name.toLowerCase().includes(contactQuery.toLowerCase()));
   const contact = contacts.find(c => c.name === selectedContact);
   const contactSections = [...new Set(shownContacts.map(c => c.initial))];
+  const selfName = "JI", selfAvatar = "/wechat/avatar.jpg";
   const posts = p.items.filter(
     (i) => i.folder === "朋友圈" || i.kind === "post",
   );
@@ -267,7 +269,7 @@ export function WeChatSkin(p: SkinProps) {
               : () => (p.thread ? setUtility("聊天信息") : setMenu(!menu))
           }
         >
-          {p.thread ? <MoreHorizontal size={22} /> : <CirclePlus size={22} />}
+          {moments ? <Camera size={22} /> : p.thread ? <MoreHorizontal size={22} /> : <CirclePlus size={22} />}
         </button>
       </div>
       {menu && (
@@ -340,13 +342,12 @@ export function WeChatSkin(p: SkinProps) {
             onItem={p.onItem}
             onRead={p.onRead}
           />
-          {p.interlude && !p.creator ? freeReply ? <FreeReply send={p.onFreeSend} /> : <ScriptedReply key={reply?.id || "waiting"} item={reply} send={p.onStorySend} complete={p.onStoryDraft} /> : <Compose creator={p.creator} onAdd={p.onAdd} />}
+          {p.interlude && !p.creator ? (p.allFreeChat || freeReply) ? <FreeReply blank={p.allFreeChat} send={text => p.onFreeSend?.(text, p.thread)} /> : <ScriptedReply key={reply?.id || "waiting"} item={reply} send={p.onStorySend} complete={p.onStoryDraft} /> : <Compose creator={p.creator} onAdd={p.onAdd} />}
         </>
       ) : moments ? (
         <div className="wx-moments">
           <div className="wx-moment-cover">
-            <Camera size={32} />
-            <span>朋友圈</span>
+            <div className="wx-moment-identity"><strong>{selfName}</strong><img src={selfAvatar} alt={`${selfName}的微信头像`} /></div>
           </div>
           {posts.map((i) => (
             <button
@@ -354,12 +355,13 @@ export function WeChatSkin(p: SkinProps) {
               className="wx-moment-post"
               onClick={() => p.onItem(i)}
             >
-              <Avatar name={i.sender} />
+              <Avatar name={i.sender} src={i.avatar} />
               <div>
                 <strong>{i.sender}</strong>
                 <p>{i.body}</p>
                 {i.media && <ItemMedia item={i} />}
                 <small>{i.time}</small>
+                {(i.meta.likes || i.comments.length > 0) && <div className="wx-moment-feedback">{i.meta.likes && <p>♡ {i.meta.likes}</p>}{i.comments.map((comment,index) => <p key={index}>{comment}</p>)}</div>}
               </div>
             </button>
           ))}
@@ -460,9 +462,9 @@ export function WeChatSkin(p: SkinProps) {
           ) : (
             <>
               <div className="wx-profile">
-                <span className="skin-avatar"><img src="/wechat/avatar.jpg" alt="JI的微信头像" /></span>
+                <span className="skin-avatar"><img src={selfAvatar} alt={`${selfName}的微信头像`} /></span>
                 <div>
-                  <h2>JI</h2>
+                  <h2>{selfName}</h2>
                   <small>微信号：JeremyIsHere</small>
                   <button
                     className="wx-profile-status"

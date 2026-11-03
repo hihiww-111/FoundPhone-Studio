@@ -3,7 +3,7 @@ import source from "../stories/template/story.json";
 import { compileStory } from "./story-engine/compiler";
 import { initialRuntime } from "./schema";
 import { dispatch, advance } from "./engine";
-import { sendFreeReply } from "./freeReply";
+import { allChatsFree, sendFreeReply } from "./freeReply";
 const {work} = compileStory(source);
 describe("Left's confession continuation", () => {
   it("requires reads and manual sends and respects five- and three-second replies", () => {
@@ -25,6 +25,20 @@ describe("Left's confession continuation", () => {
     expect(s.unlocked).not.toContain("interlude-love-open");
     s = advance(work,s,1);
     expect(s.unlocked).toContain("interlude-love-open");
+  });
+  it("opens all six conversations only after reading the ending and friend branches", () => {
+    let s = initialRuntime(work);
+    s.read = ["interlude-love-final", "interlude-zhu-2"];
+    expect(allChatsFree(s)).toBe(false);
+    expect(sendFreeReply(work,s,"你好","妈咪")).toBe(s);
+    s.read.push("interlude-zhang-2");
+    expect(allChatsFree(s)).toBe(true);
+    for (const name of ["A左左","妈咪","苏新皓","张峻豪","张泽禹","朱志鑫"]) {
+      s = sendFreeReply(work,s,"你好",name);
+      expect(s.messages.wechat.at(-1)?.title).toBe(name);
+      expect(s.messages.wechat.at(-1)?.body).toBe("你好");
+    }
+    expect(sendFreeReply(work,s,"你好","未知联系人")).toBe(s);
   });
   it.each(["喜欢你", "我爱你"])("sends %s and replies only once after two seconds", text => {
     let s = initialRuntime(work);

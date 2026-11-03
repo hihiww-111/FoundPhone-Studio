@@ -74,7 +74,7 @@ export function ScriptedReply({
   );
 }
 
-export function FreeReply({ send }: { send?: (text: string) => void }) {
+export function FreeReply({ send, blank = false }: { send?: (text: string) => void; blank?: boolean }) {
   const [text, setText] = useState("");
   return <form className="skin-compose scripted-compose free-compose" onSubmit={e => {
     e.preventDefault();
@@ -82,7 +82,7 @@ export function FreeReply({ send }: { send?: (text: string) => void }) {
     send?.(text);
     setText("");
   }}>
-    <input className="native-compose-field" aria-label="你想对左航说" placeholder="你想对左航说："
+    <input className="native-compose-field" aria-label={blank ? "输入消息" : "你想对左航说"} placeholder={blank ? "" : "你想对左航说："}
       value={text} onChange={e => setText(e.target.value)} />
     <button className="story-send" type="submit" disabled={!text.trim()}>发送</button>
   </form>;
