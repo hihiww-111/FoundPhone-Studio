@@ -1,3 +1,4 @@
+import { readWechatThread } from "./wechatRead";
 import { loveRevealed, storyWallpaper } from "./storyPresentation";
 import { allChatsFree, sendFreeReply } from "./freeReply";
 import { PhoneCallContext, StoryPhoneApp, usePhoneCalls } from "./StoryPhone";
@@ -310,6 +311,7 @@ function PhoneRuntime({
     if (!creator && id === "phone" && runtimeRef.current.variables.interludeEnabled && !phoneIsUnlocked(runtimeRef.current)) return;
     if (!work.apps.some((a) => a.id === id && a.installed)) return;
     setStoryRoute(undefined);
+    setActiveChat("");
     if (id === "instagram" && work.id === "phone-a-story") {
       const current = runtimeRef.current;
       update({...current,ui:{...current.ui,instagram:{...current.ui?.instagram,mymyTab:"个人主页"}}});
@@ -323,6 +325,14 @@ function PhoneRuntime({
     event("openApp", id);
   };
   const storyUnread = [...(work.data.wechat ?? []), ...(s.messages.wechat ?? [])].filter(i => i.meta.interlude === "true" && !i.outgoing && !i.read && visible(i,s) && !s.read.includes(i.id)).sort((a,b) => s.unlocked.indexOf(a.id) - s.unlocked.indexOf(b.id));
+  const unreadThreadKey = storyUnread.map(item => item.id).join("|");
+  useEffect(() => {
+    if (creator || app !== "wechat" || !activeChat) return;
+    const current = currentRuntime();
+    const next = readWechatThread(work, current, activeChat);
+    if (next !== current) update(next);
+  }, [creator, app, activeChat, unreadThreadKey]);
+
   useEffect(() => {
     if (creator) return;
     if (s.variables.meetReady && !s.variables.meetAccepted) { setKeyboard(false); setScriptDraft(null); }
