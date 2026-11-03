@@ -33,7 +33,7 @@ export function PhotoStage({ item, photos, onPhoto }: {
         onPointerUp={(e) => { if (e.pointerType === "mouse") finish(e.clientX, e.clientY); }}
         onPointerCancel={() => { start.current = null; }}
       >
-        {media ? <img src={media} alt={item.title} draggable={false} /> : (
+        {media ? <img decoding="async" src={media} alt={item.title} draggable={false} /> : (
           <div className="native-photo-caption"><h2>{item.title}</h2><p>{item.body}</p></div>
         )}
       </div>

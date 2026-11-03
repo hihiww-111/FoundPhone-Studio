@@ -20,7 +20,7 @@ export function RedbookGallery({title, sources}: {title: string; sources: string
       onPointerDown={e=>{if(e.pointerType!=="mouse") return;start.current={x:e.clientX,y:e.clientY};e.currentTarget.setPointerCapture(e.pointerId);}}
       onPointerUp={e=>{if(e.pointerType==="mouse")finish(e.clientX,e.clientY);}}
       onPointerCancel={()=>{start.current=null;}}>
-      <img src={images[page]} alt={`${title} · ${page+1}/${images.length}`} draggable={false}/>
+      <img decoding="async" src={images[page]} alt={`${title} · ${page+1}/${images.length}`} draggable={false}/>
     </div>
     <nav className="rb-image-dots" aria-label="图片翻页">{images.map((_,i)=><button key={i} aria-label={`查看第${i+1}张图片`} aria-pressed={page===i} onClick={()=>setPage(i)}/>)}<span className="rb-image-count" role="status">{page+1}/{images.length}</span></nav>
   </section>;

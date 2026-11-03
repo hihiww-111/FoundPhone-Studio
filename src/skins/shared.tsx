@@ -96,7 +96,7 @@ export function Avatar({
   return (
     <span className={`catalog-avatar ${round ? "round" : ""}`}>
       {safeMedia(src)?.startsWith("data:image/") ? (
-        <img src={safeMedia(src)} alt="" />
+        <img decoding="async" src={safeMedia(src)} alt="" />
       ) : (
         name.slice(0, 1) || "人"
       )}
@@ -113,9 +113,9 @@ export function Media({
   const src = safeMedia(item.media);
   return src ? (
     item.kind === "audio" ? (
-      <audio className={className} controls src={src} />
+      <audio preload="none" className={className} controls src={src} />
     ) : item.kind === "video" ? (
-      <video
+      <video preload="none"
         className={className}
         controls
         playsInline
@@ -123,7 +123,7 @@ export function Media({
         onClick={(e) => e.stopPropagation()}
       />
     ) : (
-      <img className={className} loading="lazy" alt={item.title} src={src} />
+      <img decoding="async" className={className} loading="lazy" alt={item.title} src={src} />
     )
   ) : (
     <div className={`catalog-art ${className}`}>

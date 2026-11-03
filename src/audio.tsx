@@ -49,7 +49,7 @@ export function AudioPlayer({ p, item }: { p: SkinProps; item: Item }) {
     return () => audio.removeEventListener("loadedmetadata", restore);
   }, [item.id]);
   return (
-    <audio
+    <audio preload="none"
       ref={element}
       controls
       src={safeMedia(item.media)}

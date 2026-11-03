@@ -29,7 +29,7 @@ export function SafariGallery({ title, sources }: { title: string; sources: stri
         onPointerUp={(e) => { if (e.pointerType === "mouse") finish(e.clientX, e.clientY); }}
         onPointerCancel={() => { start.current = null; }}
       >
-        <img src={images[page]} alt={`${title} 第 ${page + 1} 张`} draggable={false} />
+        <img decoding="async" src={images[page]} alt={`${title} 第 ${page + 1} 张`} draggable={false} />
       </div>
       <nav className="safari-gallery-controls" aria-label="图片翻页">
         <button aria-label="上一张" disabled={page === 0} onClick={() => setPage(page - 1)}><ChevronLeft size={22} /></button>

@@ -51,7 +51,7 @@ function Avatar({
   return (
     <span className="ins-avatar">
       {safeMedia(src) || own ? (
-        <img src={safeMedia(src) || "/settings-avatar.jpg"} alt="" />
+        <img decoding="async" src={safeMedia(src) || "/settings-avatar.jpg"} alt="" />
       ) : (
         <span>{name.slice(0, 1)}</span>
       )}
@@ -252,7 +252,7 @@ function PostMedia({ item }: { item: Item }) {
           }}
         >
           {images.map((src, n) => (
-            <img
+            <img decoding="async"
               key={`${n}-${src}`}
               src={src}
               alt={`${item.title} · ${n + 1}/${images.length}`}
@@ -613,7 +613,7 @@ export function InstagramSkin(p: SkinProps) {
           }}
         >
           {instagramThumbnail(i) ? (
-            <img src={instagramThumbnail(i)} alt={i.title} loading="lazy" />
+            <img decoding="async" src={instagramThumbnail(i)} alt={i.title} loading="lazy" />
           ) : (
             <span>{i.kind === "video" ? <Clapperboard /> : <ImageIcon />}</span>
           )}
@@ -1156,7 +1156,7 @@ export function InstagramSkin(p: SkinProps) {
             </button>
           </header>
           {story.kind === "video" && safeMedia(story.media) ? (
-            <video src={safeMedia(story.media)} controls playsInline />
+            <video preload="none" src={safeMedia(story.media)} controls playsInline />
           ) : (
             <PostMedia item={story} />
           )}

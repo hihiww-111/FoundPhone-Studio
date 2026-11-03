@@ -97,7 +97,7 @@ export function AppIcon({
       <span className="app-icon" style={{ background: a.color }}>
         {custom ? (
           safeMedia(custom) ? (
-            <img src={safeMedia(custom)} alt="自定义图标" />
+            <img decoding="async" src={safeMedia(custom)} alt="自定义图标" />
           ) : (
             <span>{custom.slice(0, 2)}</span>
           )
@@ -255,6 +255,8 @@ function PhoneRuntime({
     if (creator || !ready) return;
     clockAt.current = performance.now();
     const interval = setInterval(() => {
+      // Catch up elapsed story time on return without rendering hidden tabs.
+      if (document.hidden) return;
       const previous = runtimeRef.current;
       const now = performance.now();
       const next = advance(work, previous,Math.max(0,now-clockAt.current));
@@ -345,10 +347,20 @@ function PhoneRuntime({
   const [wallClock, setWallClock] = useState(() => new Date());
   useEffect(() => {
     if (creator) return;
-    const tick = () => setWallClock(new Date());
+    const tick = () => {
+      if (document.hidden) return;
+      const now = new Date();
+      setWallClock(previous =>
+        Math.floor(previous.getTime() / 60000) === Math.floor(now.getTime() / 60000)
+          ? previous : now);
+    };
     tick();
     const timer = setInterval(tick, 1000);
-    return () => clearInterval(timer);
+    document.addEventListener("visibilitychange", tick);
+    return () => {
+      clearInterval(timer);
+      document.removeEventListener("visibilitychange", tick);
+    };
   }, [creator]);
   const displayTime = creator
     ? work.phone.time
@@ -697,7 +709,7 @@ function PhoneRuntime({
                     (i) => i.id === s.incomingCall?.target,
                   );
                   return record?.kind === "audio" && safeMedia(record.media) ? (
-                    <audio controls src={safeMedia(record.media)} />
+                    <audio preload="none" controls src={safeMedia(record.media)} />
                   ) : (
                     <p>这是一通虚构来电。</p>
                   );
@@ -907,11 +919,11 @@ function Media({ item }: { item: Item }) {
   const src = safeMedia(item.media);
   return src ? (
     item.kind === "audio" ? (
-      <audio controls src={src} />
+      <audio preload="none" controls src={src} />
     ) : item.kind === "video" ? (
-      <video controls playsInline src={src} />
+      <video preload="none" controls playsInline src={src} />
     ) : (
-      <img loading="lazy" src={src} alt={item.title} />
+      <img decoding="async" loading="lazy" src={src} alt={item.title} />
     )
   ) : (
     <div

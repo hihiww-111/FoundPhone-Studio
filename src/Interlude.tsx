@@ -106,7 +106,7 @@ export function MessageBanner({
   return (
     <div className="story-banner" role="status">
       <button className="story-banner-open" onClick={() => open(message)}>
-        <img
+        <img decoding="async"
           className="story-wechat-symbol"
           src="/icon-assets/wechat.jpg"
           alt="微信"

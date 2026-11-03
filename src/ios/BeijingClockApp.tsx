@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AlarmClock, Globe2, Timer, CircleGauge, Plus, Play, Pause, RotateCcw } from "lucide-react";
+import { AlarmClock, Globe2, Timer, CircleGauge, Plus, Play, Pause } from "lucide-react";
 import "./beijing-clock.css";
 
 type Tab = "world" | "alarm" | "stopwatch" | "timer";

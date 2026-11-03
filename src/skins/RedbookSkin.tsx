@@ -39,7 +39,7 @@ export function RedbookSkin(p: Props) {
         </>}
         <div className="rb-post-grid">
           {list.map(i=><button className="rb-card" key={i.id} onClick={()=>open(i)} aria-label={`查看帖子：${i.title}`}>
-            <img src={safeMedia(meta(i, "thumbnail", i.media))} alt={i.title} loading="lazy"/><strong>{i.title}</strong><div className="rb-card-author"><Avatar name={i.sender}/><span>{i.sender}</span><Heart size={14}/><small>{i.likes || ''}</small></div>
+            <img decoding="async" src={safeMedia(meta(i, "thumbnail", i.media))} alt={i.title} loading="lazy"/><strong>{i.title}</strong><div className="rb-card-author"><Avatar name={i.sender}/><span>{i.sender}</span><Heart size={14}/><small>{i.likes || ''}</small></div>
           </button>)}
         </div>
         {list.length === 0 && <div className="rb-empty"><Bookmark size={28}/><p>{page === '我' ? '还没有收藏的笔记' : '暂时没有笔记'}</p></div>}

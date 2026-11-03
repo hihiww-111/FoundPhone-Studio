@@ -20,7 +20,11 @@ export default defineConfig(({ command }) => ({
       },
       workbox: {
         clientsClaim: true,
-        globPatterns: ["**/*.{js,css,html,svg,json,txt,png,jpg}"],
+        // Keep first-visit downloads limited to the application shell.
+        // Story JSON and media load only when requested by the UI.
+        globPatterns: ["index.html", "registerSW.js", "assets/index-*.{js,css}", "icon.svg"],
+        globIgnores: ["**/workbox-*.js"],
+        cleanupOutdatedCaches: true,
         maximumFileSizeToCacheInBytes: 4000000,
       },
     }),

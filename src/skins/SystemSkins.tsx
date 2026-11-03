@@ -802,7 +802,7 @@ export function MusicSkin(p: Props) {
             {visibleSongs.map((i) => (
               <div className="music-apple-track" key={i.id}>
                 <button type="button" className="music-apple-track-main" onClick={() => chooseSong(i)}>
-                  <span className="music-apple-art">{cover(i) ? <img src={cover(i)} alt="" /> : <Music size={23} />}</span>
+                  <span className="music-apple-art">{cover(i) ? <img decoding="async" loading="lazy" src={cover(i)} alt="" /> : <Music size={23} />}</span>
                   <span className="music-apple-track-copy"><strong>{i.title}</strong><small>{i.sender}{meta(i, "album") && meta(i, "album") !== "🎧" ? ` — ${meta(i, "album")}` : ""}</small></span>
                 </button>
                 <button type="button" className="music-apple-more" aria-label={`${i.title} 更多选项`} onClick={() => setMenuId(menuId === i.id ? "" : i.id)}><MoreHorizontal size={22} /></button>
@@ -817,7 +817,7 @@ export function MusicSkin(p: Props) {
         <>
           <div className="music-apple-mini">
             <button type="button" className="music-apple-mini-info" onClick={() => setExpanded(true)}>
-              <span className="music-apple-art">{cover(song) ? <img src={cover(song)} alt="" /> : <Music size={22} />}</span>
+              <span className="music-apple-art">{cover(song) ? <img decoding="async" src={cover(song)} alt="" /> : <Music size={22} />}</span>
               <strong>{song.title}</strong>
             </button>
             <button type="button" aria-label={playing ? "暂停" : "播放"} onClick={togglePlayback}>{playing ? <Pause size={23} fill="currentColor" /> : <Play size={23} fill="currentColor" />}</button>
@@ -825,7 +825,7 @@ export function MusicSkin(p: Props) {
           </div>
           {expanded && <div className="music-apple-expanded">
             <button type="button" className="music-apple-dismiss" onClick={() => setExpanded(false)}><ChevronLeft size={20} /> 返回播放列表</button>
-            <span className="music-apple-expanded-art">{cover(song) ? <img src={cover(song)} alt="" /> : <Music size={76} />}</span>
+            <span className="music-apple-expanded-art">{cover(song) ? <img decoding="async" src={cover(song)} alt="" /> : <Music size={76} />}</span>
             <h2>{song.title}</h2><p>{song.sender}</p>
             {localAudio ? (
               <div className="music-apple-expanded-controls"><button type="button" onClick={togglePlayback}>{playing ? <Pause size={32} fill="currentColor" /> : <Play size={32} fill="currentColor" />}</button><button type="button" onClick={nextSong}><SkipForward size={32} /></button></div>

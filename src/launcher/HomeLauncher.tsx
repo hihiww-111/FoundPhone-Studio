@@ -118,7 +118,7 @@ function WidgetFace({
   return (
     <div className={"widget-face widget-" + widget.type}>
       {widget.type === "photo" ? (
-        <img className="widget-photo-image" src="/widgets/photo.jpg" alt="桌面固定照片" draggable={false} />
+        <img decoding="async" className="widget-photo-image" src="/widgets/photo.jpg" alt="桌面固定照片" draggable={false} />
       ) : widget.type === "calendar" ? (
         <>
           <span className="widget-red">

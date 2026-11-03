@@ -861,7 +861,7 @@ export function AppArtwork({
     : [9, 41];
   return (
     <span className="original-icon-wrap" data-original-icon={id}>
-      <img
+      <img decoding="async"
         className="app-artwork original-app-artwork"
         src={import.meta.env.BASE_URL + "icon-assets/" + file}
         alt=""

@@ -71,7 +71,7 @@ function Avatar({
   return (
     <span className={`skin-avatar ${round ? "round" : ""}`}>
       {safeMedia(src) && !/\.(mp3|mp4|mov)$/i.test(src) ? (
-        <img src={safeMedia(src)} alt="" />
+        <img decoding="async" src={safeMedia(src)} alt="" />
       ) : (
         name.slice(0, 1)
       )}
@@ -82,11 +82,11 @@ function ItemMedia({ item }: { item: Item }) {
   const src = safeMedia(item.media);
   return src ? (
     item.kind === "audio" ? (
-      <audio controls src={src} />
+      <audio preload="none" controls src={src} />
     ) : item.kind === "video" ? (
-      <video controls playsInline src={src} />
+      <video preload="none" controls playsInline src={src} />
     ) : (
-      <img loading="lazy" alt={item.title} src={src} />
+      <img decoding="async" loading="lazy" alt={item.title} src={src} />
     )
   ) : (
     <div className="skin-photo">
@@ -347,7 +347,7 @@ export function WeChatSkin(p: SkinProps) {
       ) : moments ? (
         <div className="wx-moments">
           <div className="wx-moment-cover">
-            <div className="wx-moment-identity"><strong>{selfName}</strong><img src={selfAvatar} alt={`${selfName}的微信头像`} /></div>
+            <div className="wx-moment-identity"><strong>{selfName}</strong><img decoding="async" src={selfAvatar} alt={`${selfName}的微信头像`} /></div>
           </div>
           {posts.map((i) => (
             <article key={i.id} className="wx-moment-post">
@@ -458,7 +458,7 @@ export function WeChatSkin(p: SkinProps) {
           ) : (
             <>
               <div className="wx-profile">
-                <span className="skin-avatar"><img src={selfAvatar} alt={`${selfName}的微信头像`} /></span>
+                <span className="skin-avatar"><img decoding="async" src={selfAvatar} alt={`${selfName}的微信头像`} /></span>
                 <div>
                   <h2>{selfName}</h2>
                   <small>微信号：JeremyIsHere</small>
