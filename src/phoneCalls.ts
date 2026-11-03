@@ -110,7 +110,7 @@ export function endPhoneCall(
 export function resumePhoneStory(work: Work, saved: Runtime): Runtime | undefined {
   if (work.id !== "phone-a-story")
     return saved.revision === work.updatedAt ? saved : undefined;
-  const compatible = (saved.revision === work.updatedAt || [45, 46, 47].includes(saved.revision)) &&
+  const compatible = (saved.revision === work.updatedAt || [45, 46, 47, 48].includes(saved.revision)) &&
     saved.variables.storyGateVersion === work.variables.storyGateVersion &&
     (!saved.variables.phoneUnlocked || phoneIsUnlocked(saved));
   if (compatible) {
@@ -126,6 +126,9 @@ export function resumePhoneStory(work: Work, saved: Runtime): Runtime | undefine
     if (saved.revision === 45 && next.unlocked.includes("interlude-happy-note")) {
       next.scheduled = [...(next.scheduled ?? []), {nodeId:"phone-calm-message-delay", due:(next.elapsedMs ?? 0) + 40000}];
       if (next.read.includes("interlude-happy-note")) next.variables.finalNoteExitReady = true;
+    }
+    if (next.unlocked.includes("interlude-love-open")) {
+      for (const id of ["wechat-moment-07", "wechat-moment-08"]) if (!next.unlocked.includes(id)) next.unlocked.push(id);
     }
     return next;
   }

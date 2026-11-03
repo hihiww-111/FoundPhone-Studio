@@ -56,3 +56,7 @@
 .ios18 .app-screen:has(.wechat-ui[data-moments="true"]) .app-home-button { color:#fff; }
 .phone-shell.ios18 .app-screen > .catalog-slot > .wechat-ui[data-moments="true"] { background:#000; border-bottom-color:#fff; }
 .phone-shell.ios18 .wechat-ui[data-moments="true"] .wx-nav button { color:#fff; }
+.ios18 .wx-moment-post .wx-moment-feedback p { color:#222; font-size:13px; }
+.ios18 .wx-moment-post .wx-moment-feedback strong { color:#61769a; font-size:13px; font-weight:600; }
+.ios18 .wx-moment-post > div > img { max-height:330px; width:auto; max-width:100%; object-fit:contain; }
+.ios18 .native-photos .photo-more button:disabled { opacity:.35; cursor:default; }

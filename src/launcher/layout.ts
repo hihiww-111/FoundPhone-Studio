@@ -65,7 +65,8 @@ function phoneAApps(apps: AppConfig[], work: Work) {
     : apps;
 }
 function phoneALayout(layout: DeviceLayout, work: Work) {
-  if (!isPhoneA(work) || layout.previewLayoutRevision >= 2) return layout;
+  if (!isPhoneA(work) || layout.previewLayoutRevision >= 3) return layout;
+  if (layout.previewLayoutRevision < 2) {
   const move: Record<string,string> = {phone:"settings", settings:"files", files:"phone"};
   const old = structuredClone(layout.apps);
   layout.apps = layout.apps.map(app => {
@@ -83,7 +84,13 @@ function phoneALayout(layout: DeviceLayout, work: Work) {
   for (const [from,to] of Object.entries(move)) if (positions[from]) layout.positions[to] = positions[from];
   delete layout.positions.messages;
   layout.order = layout.order.filter(id=>id!=="messages");
-  layout.previewLayoutRevision = 2;
+  }
+  const dock = ["phone", "settings", "safari"];
+  layout.apps = layout.apps.map(app => ({...app, dock: dock.includes(app.id), ...(dock.includes(app.id) ? {folder:""} : {})}));
+  layout.apps.sort((a,b) => (dock.includes(a.id) ? dock.indexOf(a.id) + 100 : 0) - (dock.includes(b.id) ? dock.indexOf(b.id) + 100 : 0));
+  for (const id of dock) delete layout.positions[id];
+  layout.order = layout.order.filter(id => !dock.includes(id));
+  layout.previewLayoutRevision = 3;
   return layout;
 }
 export function defaultLayout(input: Work): DeviceLayout {

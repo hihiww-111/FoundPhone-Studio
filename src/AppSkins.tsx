@@ -1,3 +1,4 @@
+import { momentsPosts } from "./storyPresentation";
 import { FreeReply, ScriptedReply } from "./Interlude";
 import { wechatContacts } from "./wechatContacts";
 import "./ios/wechat-contacts.css";
@@ -40,6 +41,7 @@ export type SkinProps = {
   onStorySend?: (id: string) => void;
   onFreeSend?: (text: string, thread: string) => void;
   allFreeChat?: boolean;
+  hiddenAlbumUnlocked?: boolean;
   onStoryDraft?: (id: string) => void;
   interlude?: boolean;
   ui?: Record<string, UiValue>;
@@ -221,9 +223,7 @@ export function WeChatSkin(p: SkinProps) {
   const contact = contacts.find(c => c.name === selectedContact);
   const contactSections = [...new Set(shownContacts.map(c => c.initial))];
   const selfName = "JI", selfAvatar = "/wechat/avatar.jpg";
-  const posts = p.items.filter(
-    (i) => i.folder === "朋友圈" || i.kind === "post",
-  );
+  const posts = momentsPosts(p.items);
   return (
     <div
       className="wechat-ui independent-skin"
@@ -350,20 +350,16 @@ export function WeChatSkin(p: SkinProps) {
             <div className="wx-moment-identity"><strong>{selfName}</strong><img src={selfAvatar} alt={`${selfName}的微信头像`} /></div>
           </div>
           {posts.map((i) => (
-            <button
-              key={i.id}
-              className="wx-moment-post"
-              onClick={() => p.onItem(i)}
-            >
+            <article key={i.id} className="wx-moment-post">
               <Avatar name={i.sender} src={i.avatar} />
               <div>
                 <strong>{i.sender}</strong>
                 <p>{i.body}</p>
                 {i.media && <ItemMedia item={i} />}
                 <small>{i.time}</small>
-                {(i.meta.likes || i.comments.length > 0) && <div className="wx-moment-feedback">{i.meta.likes && <p>♡ {i.meta.likes}</p>}{i.comments.map((comment,index) => <p key={index}>{comment}</p>)}</div>}
+                {(i.meta.likes || i.comments.length > 0) && <div className="wx-moment-feedback">{i.meta.likes && <p>♡ {i.meta.likes}</p>}{i.comments.map((comment,index) => <p key={index}><strong>{comment.split("：")[0]}：</strong>{comment.split("：").slice(1).join("：")}</p>)}</div>}
               </div>
-            </button>
+            </article>
           ))}
           {!posts.length && <p className="skin-empty">暂无朋友圈动态</p>}
           {p.creator && (

@@ -10,7 +10,7 @@ export function RedbookSkin(p: Props) {
   const [page, setPage] = useState<"发现" | "我">("发现");
   const [detail, setDetail] = useState<Item | null>(null);
   const items = p.items.filter((i) => !i.hidden);
-  const list = page === "我" ? items.filter((i) => i.favorite || i.folder === "收藏") : items.filter((i) => i.folder !== "收藏");
+  const list = page === "我" ? items.filter((i) => i.favorite || i.folder === "收藏") : items;
   const open = (item: Item) => {
     if (p.creator) { p.onItem(item); return; }
     p.onRead(item.id);

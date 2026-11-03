@@ -3,7 +3,7 @@
   "id": "phone-a-story",
   "title": "张极的手机",
   "description": "人A的互动手机故事，第一阶段：锁屏与桌面配置。",
-  "revision": 48,
+  "revision": 49,
   "phone": {
     "owner": "张极",
     "date": "2026-10-25",
@@ -1317,6 +1317,28 @@
           "thumbnail": "/photos/memories/memory-07-thumb.jpg",
           "albumOnly": "true"
         }
+      },
+      {
+        "id": "hidden-photo-01",
+        "title": "已隐藏 01",
+        "body": "",
+        "kind": "image",
+        "media": "/photos/hidden/photo-01.jpg",
+        "folder": "已隐藏",
+        "meta": {
+          "albumOnly": "true"
+        }
+      },
+      {
+        "id": "hidden-photo-02",
+        "title": "已隐藏 02",
+        "body": "",
+        "kind": "image",
+        "media": "/photos/hidden/photo-02.jpg",
+        "folder": "已隐藏",
+        "meta": {
+          "albumOnly": "true"
+        }
       }
     ],
     "safari": [
@@ -1818,6 +1840,45 @@
       }
     ],
     "redbook": [
+      {
+        "id": "redbook-home-05",
+        "title": "我猪到了呀！",
+        "body": "分享超好用的小猪表情包",
+        "kind": "image",
+        "media": "/redbook/posts/post-05/photo-01.jpg",
+        "folder": "发现",
+        "meta": {
+          "images": "/redbook/posts/post-05/photo-01.jpg|/redbook/posts/post-05/photo-02.jpg|/redbook/posts/post-05/photo-03.jpg",
+          "thumbnail": "/redbook/posts/post-05/photo-01.jpg"
+        },
+        "sender": ""
+      },
+      {
+        "id": "redbook-home-06",
+        "title": "个人攀冰装备分享",
+        "body": "🪖【技术装备】\n这个大部分新手是没有的，专业俱乐部一般都会提供，部分俱乐部会收租金\n1️⃣安全带、2️⃣牛尾、3️⃣抓结、4️⃣行走镐、5️⃣上升器、6️⃣下降器、7️⃣头盔、8️⃣冰爪、9️⃣高山靴（以上都只需要准备数量1）\n🈶头灯（干电池款，备用）、🈶登山杖（某些冰壁车开不到）、雪套\n.\n【个人服装】\n👉头部：保暖冒、偏光镜、面罩\n👉身体：保暖排汗衣裤（2套以上）、抓绒、排骨羽绒服、厚羽绒服（防拨水、蓬松度800FP、充绒量300g以上）、攀冰厚手套（1-2套）、冲锋衣裤、徒步鞋、羊毛袜\n👉辅助：随身背包、充电宝、保温壶、防晒唇膏、防晒霜",
+        "kind": "image",
+        "media": "/redbook/posts/post-06/photo-01.jpg",
+        "folder": "发现",
+        "meta": {
+          "images": "/redbook/posts/post-06/photo-01.jpg",
+          "thumbnail": "/redbook/posts/post-06/photo-01.jpg"
+        },
+        "sender": ""
+      },
+      {
+        "id": "redbook-home-07",
+        "title": "一些大大方方表白的小tips",
+        "body": "1. 表白前先确认对方不反感你，别盲目上头。\n2. 选轻松的时机说，别在对方忙、累、心情不好时开口。\n3. 当面说最真诚，实在不行语音，少发长文小作文。\n4. 先说感受，不说要求：我喜欢你，不是你必须答应我。\n5. 别一上来就“我好爱你”，先从“我对你很有好感”开始。\n6. 夸具体点，比如性格、笑容、做事态度，别空泛。\n7. 语速放慢，眼神真诚，比华丽台词更打动人。\n8. 不用跪舔式表白，平等喜欢，才值得被珍惜。\n9. 别翻旧账、别卖惨，喜欢是开心事，不是绑架。\n10. 只说自己的心意，不逼对方立刻给答案。\n11. 可以说：我喜欢你，你慢慢来，不用有压力。\n12. 表白不是审判，是分享心动，轻松一点。\n13. 别群发、别开玩笑式表白，认真才被尊重。\n14. 提前想好开场白，别紧张到语无伦次。\n15. 被接受就好好回应，被拒绝就体面退场。\n16. 拒绝也别骂、别纠缠，保留自己最后一份骄傲。\n17. 表白是加分项，不是救命稻草，先过好自己生活。\n18. 真诚永远是必杀技，比套路好用一百倍。\n19. 敢表白就已经很勇敢了，结果只是额外奖励。\n20. 大大方方爱，坦坦荡荡等，不勉强，不遗憾。",
+        "kind": "image",
+        "media": "/redbook/posts/post-07/photo-01.jpg",
+        "folder": "发现",
+        "meta": {
+          "images": "/redbook/posts/post-07/photo-01.jpg",
+          "thumbnail": "/redbook/posts/post-07/photo-01.jpg"
+        },
+        "sender": ""
+      },
       {
         "id": "redbook-saved-photo-tips",
         "title": "X网热议 | 帮人拍照 +iPhone原相机出片技巧",
@@ -2447,6 +2508,170 @@
         "meta": {
           "interlude": "true",
           "pinned": "true"
+        }
+      },
+      {
+        "id": "wechat-moment-01",
+        "title": "朋友圈 1",
+        "sender": "朱志鑫",
+        "avatar": "/wechat/contacts/zhu-zhixin.jpg",
+        "body": "爽！",
+        "folder": "朋友圈",
+        "kind": "post",
+        "time": "",
+        "hidden": false,
+        "comments": [
+          "张峻豪：香得很"
+        ],
+        "media": "/wechat/moments/photo-05.jpg",
+        "meta": {
+          "momentOrder": "1",
+          "likes": "张峻豪、张极、张泽禹"
+        }
+      },
+      {
+        "id": "wechat-moment-02",
+        "title": "朋友圈 2",
+        "sender": "张泽禹",
+        "avatar": "/wechat/contacts/zhang-zeyu.jpg",
+        "body": "勇攀",
+        "folder": "朋友圈",
+        "kind": "post",
+        "time": "",
+        "hidden": false,
+        "comments": [
+          "A左左：厉害噻",
+          "苏新皓：看得我都有点想学攀岩。"
+        ],
+        "media": "/wechat/moments/photo-01.jpg",
+        "meta": {
+          "momentOrder": "2",
+          "likes": "张峻豪、张极、A左左、苏新皓"
+        }
+      },
+      {
+        "id": "wechat-moment-03",
+        "title": "朋友圈 3",
+        "sender": "朱志鑫",
+        "avatar": "/wechat/contacts/zhu-zhixin.jpg",
+        "body": "我几乎每天都在打无畏契约  ，但是我的段位一点没动，不知道是不是有人在背后做局阴我，可能是我动了谁的蛋糕",
+        "folder": "朋友圈",
+        "kind": "post",
+        "time": "",
+        "hidden": false,
+        "comments": [
+          "张泽禹：抱歉，怕你偷学我的技术，所以跟你打的时候我故意打得很菜，我真实实力是神话三300分，只不过为了避免你自卑我一直在乱打而已",
+          "A左左：不瓦"
+        ],
+        "media": "",
+        "meta": {
+          "momentOrder": "3",
+          "likes": ""
+        }
+      },
+      {
+        "id": "wechat-moment-04",
+        "title": "朋友圈 4",
+        "sender": "苏新皓",
+        "avatar": "/wechat/contacts/su-xinhao.jpg",
+        "body": "让小苏看看你在干嘛",
+        "folder": "朋友圈",
+        "kind": "post",
+        "time": "",
+        "hidden": false,
+        "comments": [
+          "张极：👋"
+        ],
+        "media": "/wechat/moments/photo-02.jpg",
+        "meta": {
+          "momentOrder": "4",
+          "likes": "张极、A左左、朱志鑫"
+        }
+      },
+      {
+        "id": "wechat-moment-05",
+        "title": "朋友圈 5",
+        "sender": "A左左",
+        "avatar": "/wechat/contacts/zuo-hang.jpg",
+        "body": "盘条靓顺",
+        "folder": "朋友圈",
+        "kind": "post",
+        "time": "",
+        "hidden": false,
+        "comments": [
+          "张极：猫好人好",
+          "张泽禹：养得这个带劲"
+        ],
+        "media": "/wechat/moments/photo-03.jpg",
+        "meta": {
+          "momentOrder": "5",
+          "likes": "苏新皓、张泽禹、朱志鑫、张极、张峻豪"
+        }
+      },
+      {
+        "id": "wechat-moment-06",
+        "title": "朋友圈 6",
+        "sender": "张峻豪",
+        "avatar": "/wechat/contacts/zhang-junhao.jpg",
+        "body": "仅分享",
+        "folder": "朋友圈",
+        "kind": "post",
+        "time": "",
+        "hidden": false,
+        "comments": [
+          "朱志鑫：帅惨",
+          "张极：👍"
+        ],
+        "media": "/wechat/moments/photo-04.jpg",
+        "meta": {
+          "momentOrder": "6",
+          "likes": "朱志鑫、张极、A左左"
+        }
+      },
+      {
+        "id": "wechat-moment-07",
+        "title": "朋友圈 7",
+        "sender": "张极",
+        "avatar": "/wechat/avatar.jpg",
+        "body": "💖With L",
+        "folder": "朋友圈",
+        "kind": "post",
+        "time": "",
+        "hidden": true,
+        "comments": [
+          "A左左：With Jer",
+          "朱志鑫：以后还有多少掩护要打？",
+          "苏新皓：祝福",
+          "张泽禹：这波舒服了",
+          "张峻豪：转头兄弟已幸福"
+        ],
+        "media": "/wechat/moments/photo-06.jpg",
+        "meta": {
+          "momentOrder": "7",
+          "likes": "朱志鑫、苏新皓、张泽禹、A左左、张峻豪"
+        }
+      },
+      {
+        "id": "wechat-moment-08",
+        "title": "朋友圈 8",
+        "sender": "A左左",
+        "avatar": "/wechat/contacts/zuo-hang.jpg",
+        "body": "你好",
+        "folder": "朋友圈",
+        "kind": "post",
+        "time": "",
+        "hidden": true,
+        "comments": [
+          "张极：你好，男朋友🫡",
+          "朱志鑫：以后上分要带挂件了？",
+          "苏新皓：Left要幸福哦！",
+          "张泽禹：有事找我评理你包不能吃亏的",
+          "张峻豪：Happy ending🎊"
+        ],
+        "media": "/wechat/moments/photo-07.jpg",
+        "meta": {
+          "momentOrder": "8",
+          "likes": "张极、朱志鑫、苏新皓、张泽禹、张峻豪"
         }
       }
     ]
@@ -3840,6 +4065,16 @@
           "type": "unlock",
           "key": "interlude-love-open",
           "value": true
+        },
+        {
+          "type": "unlock",
+          "key": "wechat-moment-07",
+          "value": true
+        },
+        {
+          "type": "unlock",
+          "key": "wechat-moment-08",
+          "value": true
         }
       ]
     },
@@ -4217,7 +4452,9 @@
         "interlude-call-zuo-2",
         "interlude-happy-note",
         "interlude-call-zuo-3",
-        "interlude-love-final"
+        "interlude-love-final",
+        "wechat-moment-07",
+        "wechat-moment-08"
       ]
     },
     {

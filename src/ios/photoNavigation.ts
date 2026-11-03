@@ -1,7 +1,7 @@
 import type { Item } from "../schema";
 
 export function libraryPhotos(items: Item[]): Item[] {
-  return items.filter((item) => !item.hidden && item.meta.albumOnly !== "true");
+  return items.filter((item) => !item.hidden && item.folder !== "已隐藏" && item.meta.albumOnly !== "true");
 }
 
 export function photoSequence(available: Item[], ids: string[]): Item[] {

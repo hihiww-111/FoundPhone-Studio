@@ -1,3 +1,4 @@
+import { loveRevealed, storyWallpaper } from "./storyPresentation";
 import { allChatsFree, sendFreeReply } from "./freeReply";
 import { PhoneCallContext, StoryPhoneApp, usePhoneCalls } from "./StoryPhone";
 import { phoneIsUnlocked, resumePhoneStory } from "./phoneCalls";
@@ -385,7 +386,7 @@ function PhoneRuntime({
       <ScriptKeyboardContext.Provider value={setScriptDraft}>
         <div
           className={`phone-screen wallpaper-${work.phone.wallpaper} ${locked ? "is-locked" : ""} ${app ? "in-app" : ""} ${keyboard ? "keyboard-open" : ""}`}
-          style={{ background: `center / cover no-repeat url("${locked ? "/wallpapers/lock.jpg" : "/wallpapers/home.jpg"}")` }}
+          style={{ background: `center / cover no-repeat url("${work.id === "phone-a-story" ? storyWallpaper(s, locked) : locked ? "/wallpapers/lock.jpg" : "/wallpapers/home.jpg"}")` }}
           data-app={app}
           onDragStart={(e) => e.preventDefault()}
           onPointerDown={(e) => {
@@ -978,6 +979,7 @@ function AppContent({
   const [likes, setLikes] = useState<string[]>([]);
   const shown = items
     .filter((i) => creator || visible(i, state))
+    .filter((i) => creator || app.id !== "photos" || i.folder !== "已隐藏" || loveRevealed(state))
     .filter((i) =>
       (i.title + i.body + i.sender).toLowerCase().includes(q.toLowerCase()),
     );
@@ -1102,6 +1104,7 @@ function AppContent({
               onStorySend={onStorySend}
               onFreeSend={onFreeSend}
               allFreeChat={allChatsFree(state)}
+              hiddenAlbumUnlocked={creator || work.id !== "phone-a-story" || loveRevealed(state)}
               appId={app.id}
               owner={work.phone.owner}
               virtualTime={state.time}

@@ -17,7 +17,7 @@ describe("device layout", () => {
     const fresh = defaultLayout(w);
     expect(fresh.apps.find(a=>a.id==="messages")?.visible).toBe(false);
     expect(fresh.apps.find(a=>a.id==="settings")?.dock).toBe(true);
-    expect(fresh.apps.find(a=>a.id==="phone")?.dock).toBe(false);
+    expect(fresh.apps.find(a=>a.id==="phone")?.dock).toBe(true);
     expect(validateLayout(JSON.parse(JSON.stringify(fresh)),w).apps).toEqual(fresh.apps);
     const old = structuredClone(fresh);
     old.previewLayoutRevision = 0;
@@ -27,9 +27,10 @@ describe("device layout", () => {
     old.positions.settings = {page:0,x:1,y:2};
     old.positions.files = {page:0,x:2,y:2};
     const migrated = validateLayout(old,w);
-    expect(migrated.positions.settings).toEqual({page:0,x:0,y:2});
+    expect(migrated.positions.settings).toBeUndefined();
     expect(migrated.positions.files).toEqual({page:0,x:1,y:2});
-    expect(migrated.positions.phone).toEqual({page:0,x:2,y:2});
+    expect(migrated.positions.phone).toBeUndefined();
+    expect(migrated.apps.filter(a=>a.dock).map(a=>a.id)).toEqual(["phone","settings","safari"]);
     expect(validateLayout(migrated,w).positions).toEqual(migrated.positions);
   });
   it("keeps all 47 apps and only defaults installed", () => {

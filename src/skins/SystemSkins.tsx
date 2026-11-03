@@ -196,7 +196,7 @@ export function PhotosSkin(p: Props) {
     items.find((i) => i.folder === name);
   const albums = ["最近项目", "啵啵", "⊆(꒪¯ ꒳ ¯꒪）⊇ ੭ﾞ"];
   const list =
-    album === "已隐藏" ? items.filter((i) => i.hidden) : album ? items.filter((i) => i.folder === album && !i.hidden) : libraryPhotos(items);
+    album === "已隐藏" ? items.filter((i) => i.hidden || i.folder === "已隐藏") : album ? items.filter((i) => i.folder === album && !i.hidden) : libraryPhotos(items);
   return (
     <div className="catalog-skin native-photos">
       <header className="app-nav photos-nav"><strong>相册</strong></header>
@@ -238,7 +238,7 @@ export function PhotosSkin(p: Props) {
             <p className="media-count">{list.length} 个项目</p>
           </>
         )}
-        {tab === "精选集" && !album && <section className="photo-more"><h2>更多项目</h2>{["已隐藏"].map((name) => <button key={name} onClick={() => setAlbum(name)}><Folder size={18} />{name}<ChevronRight size={18} /></button>)}</section>}
+        {tab === "精选集" && !album && <section className="photo-more"><h2>更多项目</h2>{["已隐藏"].map((name) => <button key={name} disabled={p.hiddenAlbumUnlocked === false} onClick={() => {if (p.hiddenAlbumUnlocked !== false) setAlbum(name);}}><Folder size={18} />{name}<ChevronRight size={18} /></button>)}</section>}
         {!(tab === "精选集" && !album) && <Empty items={list} />}
       </div>
       <Tabs
