@@ -1,3 +1,4 @@
+import { stampMessageArrivals, messageArrivalTime } from "./messageArrival";
 import { lockedNotePreview } from "./notePreview";
 import { readWechatThread } from "./wechatRead";
 import { hiddenAlbumUnlocked, storyWallpaper } from "./storyPresentation";
@@ -211,6 +212,7 @@ function PhoneRuntime({
   runtimeRef.current = s;
   const clockAt = useRef(performance.now());
   const update = (next: Runtime) => {
+    next = stampMessageArrivals(work, next);
     runtimeRef.current = next;
     setOwn(next);
     onRuntime?.(next);
@@ -325,6 +327,12 @@ function PhoneRuntime({
     onOpen?.(id);
     event("openApp", id);
   };
+  useEffect(() => {
+    if (creator || !ready) return;
+    const current = currentRuntime();
+    const stamped = stampMessageArrivals(work, current);
+    if (stamped !== current) update(stamped);
+  }, [creator, ready, s.unlocked]);
   const storyUnread = [...(work.data.wechat ?? []), ...(s.messages.wechat ?? [])].filter(i => i.meta.interlude === "true" && !i.outgoing && !i.read && visible(i,s) && !s.read.includes(i.id)).sort((a,b) => s.unlocked.indexOf(a.id) - s.unlocked.indexOf(b.id));
   const unreadThreadKey = storyUnread.map(item => item.id).join("|");
   useEffect(() => {
@@ -1004,6 +1012,7 @@ function AppContent({
   const [pwError, setPwError] = useState("");
   const [likes, setLikes] = useState<string[]>([]);
   const shown = items
+    .map(i => !creator && app.id === "wechat" ? messageArrivalTime(i, state) : i)
     .filter((i) => creator || visible(i, state) || (app.id === "notes" && !!lockedNotePreview(i, state, work.id)))
     .map(i => !creator && app.id === "notes" ? lockedNotePreview(i, state, work.id) ?? i : i)
     .filter((i) => creator || app.id !== "photos" || i.folder !== "已隐藏" || hiddenAlbumUnlocked(state))
