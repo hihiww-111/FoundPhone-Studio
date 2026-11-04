@@ -1,3 +1,4 @@
+import { readVisitSave, writeVisitSave } from "./visitSave";
 import { stampMessageArrivals, messageArrivalTime } from "./messageArrival";
 import { lockedNotePreview } from "./notePreview";
 import { readWechatThread } from "./wechatRead";
@@ -228,9 +229,11 @@ function PhoneRuntime({
   useEffect(() => {
     let active = true;
     if (creator || external) return;
-    void db.saves
-      .get(work.id)
-      .then((saved) => {
+    void Promise.resolve().then(() => {
+      if (work.id !== "phone-a-story") return db.saves.get(work.id);
+      const navigation = (performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined)?.type ?? "navigate";
+      return readVisitSave(work.id, navigation, sessionStorage);
+    }).then((saved) => {
         if (!active) return;
         if (saved && resumePhoneStory(work, saved.state))
           setOwn(resumePhoneStory(work, saved.state)!);
@@ -251,9 +254,10 @@ function PhoneRuntime({
   }, [work.id, work.updatedAt, creator, external]);
   useEffect(() => {
     if (!creator && !external && ready)
-      void db.saves
-        .put({ id: work.id, state: own })
-        .catch(() => setLoadError("存档失败，请检查浏览器存储权限。"));
+      void Promise.resolve().then(() => {
+        if (work.id === "phone-a-story") writeVisitSave(work.id, own, sessionStorage);
+        else return db.saves.put({ id: work.id, state: own });
+      }).catch(() => setLoadError("存档失败，请检查浏览器存储权限。"));
   }, [own, creator, work.id, external, ready]);
   useEffect(() => {
     if (creator || !ready) return;
