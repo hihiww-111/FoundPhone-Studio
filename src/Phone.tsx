@@ -1,3 +1,4 @@
+import { ForegroundClock, foregroundTimeout } from "./foregroundTime";
 import { usesNativeKeyboard } from "./nativeKeyboard";
 import { readVisitSave, writeVisitSave } from "./visitSave";
 import { stampMessageArrivals, messageArrivalTime } from "./messageArrival";
@@ -235,7 +236,7 @@ function PhoneRuntime({
   const s = external ?? own;
   const runtimeRef = useRef(s);
   runtimeRef.current = s;
-  const clockAt = useRef(performance.now());
+  const storyClock = useRef(new ForegroundClock(performance.now(), !document.hidden));
   const update = (next: Runtime) => {
     next = stampMessageArrivals(work, next);
     runtimeRef.current = next;
@@ -244,8 +245,7 @@ function PhoneRuntime({
   };
   const currentRuntime = () => {
     const now = performance.now();
-    const next = advance(work,runtimeRef.current,Math.max(0,now-clockAt.current));
-    clockAt.current = now;
+    const next = advance(work, runtimeRef.current, storyClock.current.consume(now));
     runtimeRef.current = next;
     return next;
   };
@@ -285,15 +285,30 @@ function PhoneRuntime({
   }, [own, creator, work.id, external, ready]);
   useEffect(() => {
     if (creator || !ready) return;
-    clockAt.current = performance.now();
+    storyClock.current = new ForegroundClock(performance.now(), !document.hidden);
+    const visibility = () => {
+      const elapsed = storyClock.current.visibility(!document.hidden, performance.now());
+      const next = advance(work, runtimeRef.current, elapsed);
+      update(next);
+      if (work.id === "phone-a-story" && !external) {
+        try { writeVisitSave(work.id, runtimeRef.current, sessionStorage); } catch { /* Normal save reports storage errors. */ }
+      }
+    };
+    const pagehide = () => {
+      const next = advance(work, runtimeRef.current, storyClock.current.visibility(false, performance.now()));
+      update(next);
+      if (work.id === "phone-a-story" && !external) {
+        try { writeVisitSave(work.id, runtimeRef.current, sessionStorage); } catch { /* Best-effort lifecycle flush. */ }
+      }
+    };
+    document.addEventListener("visibilitychange", visibility);
+    window.addEventListener("pagehide", pagehide);
+    window.addEventListener("pageshow", visibility);
     const interval = setInterval(() => {
-      // Catch up elapsed story time on return without rendering hidden tabs.
+      // Hidden time never contributes to pending story delays.
       if (document.hidden) return;
       const previous = runtimeRef.current;
-      const now = performance.now();
-      const next = advance(work, previous,Math.max(0,now-clockAt.current));
-      clockAt.current = now;
-      runtimeRef.current = next;
+      const next = currentRuntime();
       const changed =
         next.time !== previous.time ||
         next.trace.join() !== previous.trace.join() ||
@@ -303,7 +318,12 @@ function PhoneRuntime({
           Math.floor((previous.elapsedMs ?? 0) / 5000);
       if (changed) update(next);
     }, 250);
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener("visibilitychange", visibility);
+      window.removeEventListener("pagehide", pagehide);
+      window.removeEventListener("pageshow", visibility);
+    };
   }, [creator, ready, work.id, work.updatedAt]);
   const event = (event: string, target: string) => {
     if (!creator) update(dispatch(work, currentRuntime(), event, target));
@@ -422,9 +442,9 @@ function PhoneRuntime({
     const count = s.notifications.length;
     if (!locked && work.phone.notifications && count > noticesSeen.current) {
       setBanner(s.notifications.at(-1) || "");
-      const timer = setTimeout(() => setBanner(""), 4500);
+      const cancelTimer = foregroundTimeout(() => setBanner(""), 4500);
       noticesSeen.current = count;
-      return () => clearTimeout(timer);
+      return cancelTimer;
     }
     noticesSeen.current = count;
   }, [s.notifications.length, locked, work.phone.notifications]);

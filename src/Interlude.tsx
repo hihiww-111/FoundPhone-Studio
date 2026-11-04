@@ -1,3 +1,4 @@
+import { foregroundTimeout } from "./foregroundTime";
 import { usesNativeKeyboard } from "./nativeKeyboard";
 import { queueMessageNotifications } from "./messageNotifications";
 import { useContext, useEffect, useRef, useState } from "react";
@@ -30,19 +31,19 @@ export function ScriptedReply({
     openKeyboard(true);
     const frames = draftSequence(text, eraseFirst);
     let index = 0;
-    let timer: number;
+    let cancelTimer = () => {};
     keyboardDraft("");
     const next = () => {
       const frame = frames[index++];
       setDraft(frame.text);
       keyboardDraft(frame.text);
-      if (index < frames.length) timer = window.setTimeout(next, frame.delay);
+      if (index < frames.length) cancelTimer = foregroundTimeout(next, frame.delay);
       else if (draftOnly && completion.current.id)
         completion.current.complete?.(completion.current.id);
     };
-    timer = window.setTimeout(next, 1000);
+    cancelTimer = foregroundTimeout(next, 1000);
     return () => {
-      window.clearTimeout(timer);
+      cancelTimer();
       keyboardDraft(null);
       openKeyboard(false);
     };
@@ -108,8 +109,7 @@ export function MessageBanner({ messages, activeThread, open }: {
   const message = queue[0];
   useEffect(() => {
     if (!message) return;
-    const timer = window.setTimeout(() => setQueue(previous => previous.slice(1)), 6500);
-    return () => window.clearTimeout(timer);
+    return foregroundTimeout(() => setQueue(previous => previous.slice(1)), 6500);
   }, [message?.id]);
   if (!message) return null;
   return (

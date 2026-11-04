@@ -1,3 +1,4 @@
+import { foregroundTimeout } from "./foregroundTime";
 import {
   createContext,
   useContext,
@@ -97,8 +98,7 @@ export function usePhoneCalls(
   }, [active]);
   useEffect(() => {
     if (!notice) return;
-    const timer = window.setTimeout(() => setNotice(""), 4000);
-    return () => window.clearTimeout(timer);
+    return foregroundTimeout(() => setNotice(""), 4000);
   }, [notice]);
   const dial = (name: string) => {
     const current = currentRuntime();
