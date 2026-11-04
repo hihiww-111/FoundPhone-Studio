@@ -3,12 +3,13 @@ import { compileStory } from "./story-engine/compiler";
 import { initialRuntime } from "./schema";
 import { lockedNotePreview } from "./notePreview";
 import source from "../stories/template/story.json";
-it("shows only a locked title until consent unlocks the note", () => {
+it("hides the title until consent unlocks the note", () => {
   const { work } = compileStory(source);
   const state = initialRuntime(work);
   const item = work.data.notes.find(i => i.id === "interlude-note")!;
   const preview = lockedNotePreview(item, state, work.id)!;
-  expect(preview.title).toBe("我亲了左航");
+  expect(preview.title).toBe("待解锁");
+  expect(item.title).toBe("我亲了左航");
   expect(preview.body).toBe("");
   expect(preview.time).toBe("");
   expect(preview.meta.lockedPreview).toBe("true");

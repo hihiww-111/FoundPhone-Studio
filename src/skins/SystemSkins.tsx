@@ -408,7 +408,7 @@ export function NotesSkin(p: Props) {
             <h2>{label}</h2>
             <div className="notes-list">
               {notes.map((i) => <button key={i.id} disabled={i.meta.lockedPreview === "true"} style={i.meta.lockedPreview === "true" ? { color: "#8e8e93", cursor: "default" } : undefined} onClick={() => p.onItem(i)}>
-                <strong style={i.meta.lockedPreview === "true" ? { color: "#8e8e93" } : undefined}>{i.password && <LockKeyhole size={12} />}{i.title}{i.meta.lockedPreview === "true" && " · 待解锁"}</strong>
+                <strong style={i.meta.lockedPreview === "true" ? { color: "#8e8e93" } : undefined}>{i.password && <LockKeyhole size={12} />}{i.title}</strong>
                 {i.meta.lockedPreview !== "true" && <p><time>{i.time.slice(0, 10).replaceAll("-", "/")}</time>{" "}{i.password ? "已锁定的备忘录" : i.body.split("\n").find(Boolean)}</p>}
               </button>)}
             </div>
