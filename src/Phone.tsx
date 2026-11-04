@@ -507,7 +507,7 @@ function PhoneRuntime({
             const dy = y - g.y;
             if (g.zone === "top" && dy > 65)
               setPanel(g.x > 230 ? "control" : "notification");
-            else if ((g.zone === "bottom" || g.zone === "lock") && dy < -55) {
+            else if ((g.zone === "bottom" || g.zone === "lock") && dy < -55 && (!restricted || locked)) {
               gestureConsumed.current = true;
               if (!locked) captureApp();
               setKeyboard(false);
@@ -936,7 +936,7 @@ function PhoneRuntime({
               {loadError}
             </button>
           )}
-          <button
+          {restricted ? <div className="home-indicator" aria-hidden="true" style={{ pointerEvents: "none" }} /> : <button
             className="home-indicator"
             aria-label="返回桌面"
             onClick={() => {
@@ -947,7 +947,7 @@ function PhoneRuntime({
               }
               returnHome();
             }}
-          />
+          />}
           <div className="screen-dimmer" />
           <div className="hardware-reflection" />
         </div>
