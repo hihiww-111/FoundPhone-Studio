@@ -203,7 +203,9 @@ export function WeChatSkin(p: SkinProps) {
     "readThreads",
     [],
   );
-  const unread = (i: Item) => !i.outgoing && !i.read && !p.readIds?.includes(i.id);
+  const unread = (i: Item) => (!p.interlude || i.meta.interlude === "true")
+    && !["朋友圈", "我"].includes(i.folder)
+    && !i.outgoing && !i.read && !p.readIds?.includes(i.id);
   const threadItems = p.items.filter(i => i.title === p.thread).sort((a,b) => Number(a.meta.interlude === "true") - Number(b.meta.interlude === "true") || (a.meta.interlude === "true" ? (p.arrivalIds?.indexOf(a.id) ?? -1) - (p.arrivalIds?.indexOf(b.id) ?? -1) : 0));
   const reply = threadItems.find(i => !i.outgoing && i.meta.replyId && !threadItems.some(next => next.meta.cancelDraft === i.meta.replyId) && p.readIds?.includes(i.id) && !p.items.some(out => out.id === i.meta.replyId));
   const freeReply = threadItems.some(i => i.meta.freeReply === "true" && p.readIds?.includes(i.id));
