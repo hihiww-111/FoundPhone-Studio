@@ -17,5 +17,6 @@ export function draftSequence(
     text: letters.slice(0, letters.length - i - 1).join(""),
     delay: 100,
   }));
+  erase[erase.length - 1].delay = 2000;
   return [...first, ...erase, ...type(finalText)];
 }

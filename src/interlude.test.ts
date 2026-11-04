@@ -8,7 +8,7 @@ const originals = work.data.notes.filter(i => !i.hidden);
 function ready() {
   let s = initialRuntime(work);
   for (const n of originals) s = dispatch(work,s,"read",n.id);
-  return advance(work,s,2000);
+  return advance(work,s,10000);
 }
 function begin() {
   let s = dispatch(work,ready(),"storyConsent","interlude-note");
@@ -24,7 +24,7 @@ describe("memo and WeChat interlude", () => {
     expect(s.unlocked).not.toContain("interlude-note");
     s = dispatch(work,s,"read",originals[0].id);
     expect(s.variables.noteReady).toBe(false);
-    s = advance(work,s,1999); expect(s.variables.noteReady).toBe(false);
+    s = advance(work,s,9999); expect(s.variables.noteReady).toBe(false);
     s = advance(work,s,1); expect(s.variables.noteReady).toBe(true);
     expect(visible(work.data.notes.find(i=>i.id==="interlude-note")!,s)).toBe(false);
   });

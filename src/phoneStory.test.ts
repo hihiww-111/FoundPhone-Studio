@@ -96,12 +96,12 @@ describe("Phone continuation", () => {
     s = dispatch(work, s, "send", "call-unsent-draft");
     expect(s.unlocked).not.toContain("call-unsent-draft");
     s = dispatch(work, s, "draftComplete", "call-unsent-draft");
-    s = advance(work, s, 1999);
+    s = advance(work, s, 3999);
     expect(s.variables.meetReady).toBe(false);
     s = advance(work, s, 1);
     expect(s.unlocked).toContain("interlude-call-zuo-2");
     expect(s.variables.meetReady).toBe(false);
-    s = advance(work, s, 1999);
+    s = advance(work, s, 4999);
     expect(s.variables.meetReady).toBe(false);
     s = advance(work, s, 1);
     expect(s.variables.meetReady).toBe(true);
@@ -109,7 +109,7 @@ describe("Phone continuation", () => {
     expect(s.unlocked).not.toContain("interlude-happy-note");
     s = dispatch(work, s, "meetConsent", "left");
     expect(s.variables.meetBlackout).toBe(true);
-    s = advance(work, s, 1999);
+    s = advance(work, s, 2999);
     expect(s.variables.meetBlackout).toBe(true);
     s = advance(work, s, 1);
     expect(s.variables.meetBlackout).toBe(false);
@@ -153,6 +153,7 @@ describe("Phone continuation", () => {
       "我",
       "",
     ]);
+    expect(draftSequence(second, first)[11].delay).toBe(2000);
     expect(frames[12]).toBe("左");
     expect(frames.at(-1)).toBe(second);
   });

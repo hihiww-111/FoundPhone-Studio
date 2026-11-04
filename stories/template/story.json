@@ -2359,7 +2359,7 @@
         "title": "A左左",
         "sender": "A左左",
         "avatar": "/wechat/contacts/zuo-hang.jpg",
-        "body": "这么久都在输入中？开门聊一聊。",
+        "body": "开门聊一聊？",
         "hidden": true,
         "read": false,
         "time": "",
@@ -3227,7 +3227,7 @@
       "label": "phone-meet-message-delay",
       "once": true,
       "type": "delay",
-      "delayMs": 2000,
+      "delayMs": 4000,
       "actions": [
         {
           "type": "unlock",
@@ -3278,7 +3278,7 @@
       "label": "phone-meet-blackout",
       "once": true,
       "type": "delay",
-      "delayMs": 2000,
+      "delayMs": 3000,
       "conditions": [
         {
           "key": "meetAccepted",
@@ -3309,9 +3309,9 @@
     },
     {
       "id": "interlude-ready-delay",
-      "label": "读完备忘录后等待两秒",
+      "label": "读完备忘录后等待十秒",
       "type": "delay",
-      "delayMs": 2000,
+      "delayMs": 10000,
       "once": true,
       "actions": [
         {
@@ -3943,10 +3943,10 @@
     },
     {
       "id": "phone-meet-popup-delay",
-      "label": "左航消息后两秒显示见面弹窗",
+      "label": "左航消息后五秒显示见面弹窗",
       "once": true,
       "type": "delay",
-      "delayMs": 2000,
+      "delayMs": 5000,
       "actions": [
         {
           "type": "variable",
@@ -4083,22 +4083,10 @@
           "type": "unlock",
           "key": "interlude-love-open",
           "value": true
-        },
-        {
-          "type": "unlock",
-          "key": "wechat-moment-07",
-          "value": true
-        },
-        {
-          "type": "unlock",
-          "key": "wechat-moment-08",
-          "value": true
-        },
-        {
-          "type": "notification",
-          "value": "微信：朋友圈已发送",
-          "key": ""
         }
+      ],
+      "next": [
+        "phone-moments-delay"
       ]
     },
     {
@@ -4169,7 +4157,43 @@
           "type": "variable",
           "key": "hiddenAlbumUnlocked",
           "value": true
+        }
+      ],
+      "next": [
+        "hidden-album-notice-delay"
+      ]
+    },
+    {
+      "id": "phone-moments-delay",
+      "label": "确认关系五秒后发布朋友圈",
+      "type": "delay",
+      "delayMs": 5000,
+      "once": true,
+      "actions": [
+        {
+          "type": "unlock",
+          "key": "wechat-moment-07",
+          "value": true
         },
+        {
+          "type": "unlock",
+          "key": "wechat-moment-08",
+          "value": true
+        },
+        {
+          "type": "notification",
+          "value": "微信：朋友圈已发送",
+          "key": ""
+        }
+      ]
+    },
+    {
+      "id": "hidden-album-notice-delay",
+      "label": "隐藏相册解锁五秒后通知",
+      "type": "delay",
+      "delayMs": 5000,
+      "once": true,
+      "actions": [
         {
           "type": "notification",
           "value": "相册：隐藏相册已解锁",
@@ -4227,7 +4251,7 @@
           "target": "notes-pinned-2024-08-29"
         },
         {
-          "advanceMs": 2000
+          "advanceMs": 10000
         },
         {
           "event": "storyConsent",
@@ -4359,7 +4383,7 @@
           "target": "notes-pinned-2024-08-29"
         },
         {
-          "advanceMs": 2000
+          "advanceMs": 10000
         },
         {
           "event": "storyConsent",
@@ -4454,17 +4478,17 @@
           "target": "call-unsent-draft"
         },
         {
-          "advanceMs": 2000
+          "advanceMs": 4000
         },
         {
-          "advanceMs": 2000
+          "advanceMs": 5000
         },
         {
           "event": "meetConsent",
           "target": "left"
         },
         {
-          "advanceMs": 2000
+          "advanceMs": 3000
         },
         {
           "event": "read",
@@ -4501,6 +4525,9 @@
         {
           "event": "read",
           "target": "interlude-love-open"
+        },
+        {
+          "advanceMs": 5000
         },
         {
           "event": "read",
@@ -4576,7 +4603,7 @@
           "target": "notes-pinned-2024-08-29"
         },
         {
-          "advanceMs": 2000
+          "advanceMs": 10000
         },
         {
           "event": "storyConsent",

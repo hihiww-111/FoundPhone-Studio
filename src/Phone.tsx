@@ -1176,7 +1176,7 @@ function AppContent({
             />
           ) : nativeDetailApps.has(app.id) &&
             (!detail.password || unlocks.includes(detail.id)) ? (
-            <NativeDetail exitReady={detail.id !== "interlude-happy-note" || !!state.variables.finalNoteExitReady} key={app.id === "photos" ? detail.id : app.id} app={app.id} item={detail} back={back} photos={app.id === "photos" ? photoSequence(shown, photoIds) : undefined} onPhoto={app.id === "photos" ? read : undefined} />
+            <NativeDetail key={app.id === "photos" ? detail.id : app.id} app={app.id} item={detail} back={back} photos={app.id === "photos" ? photoSequence(shown, photoIds) : undefined} onPhoto={app.id === "photos" ? read : undefined} />
           ) : (
             <>
               <div className="app-nav">
