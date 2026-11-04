@@ -4056,7 +4056,7 @@
     },
     {
       "id": "phone-free-love-send",
-      "label": "自由发送喜欢或爱后回复",
+      "label": "自由发送任意非空文字后回复",
       "once": true,
       "event": "freeLove",
       "target": "A左左",

@@ -40,18 +40,16 @@ describe("Left's confession continuation", () => {
     }
     expect(sendFreeReply(work,s,"你好","未知联系人")).toBe(s);
   });
-  it.each(["喜欢你", "我爱你"])("sends %s and replies only once after two seconds", text => {
+  it.each(["你好", "😭", "喜欢你", "我爱你"])("sends %s and replies only once after two seconds", text => {
     let s = initialRuntime(work);
     expect(sendFreeReply(work,s,text)).toBe(s);
     s.unlocked.push("interlude-love-open");
     expect(sendFreeReply(work,s,text)).toBe(s);
     s.read.push("interlude-love-open");
     expect(sendFreeReply(work,s,"  ")).toBe(s);
-    s = sendFreeReply(work,s,"谢谢你");
-    expect(s.messages.wechat.at(-1)?.body).toBe("谢谢你");
-    expect(s.scheduled).toHaveLength(0);
     s = sendFreeReply(work,s,text);
     expect(s.messages.wechat.at(-1)?.outgoing).toBe(true);
+    s = JSON.parse(JSON.stringify(s));
     s = advance(work,s,1999);
     expect(s.unlocked).not.toContain("interlude-love-final");
     s = advance(work,s,1);
