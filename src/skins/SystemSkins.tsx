@@ -188,7 +188,7 @@ export function ContactsSkin(p: Props) {
   );
 }
 export function PhotosSkin(p: Props) {
-  const { tab, setTab, q, setQ, items } = useContent(p, "图库");
+  const { tab, setTab, q, setQ, items } = useContent(p, "精选集");
   const [album, setAlbum] = useState("");
   const preview = (item: Item) => ({ ...item, media: safeMedia(meta(item, "thumbnail")) || item.media });
   const albumCover = (name: string) =>
