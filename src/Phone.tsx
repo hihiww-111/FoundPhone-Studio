@@ -9,7 +9,7 @@ import { phoneIsUnlocked, resumePhoneStory } from "./phoneCalls";
 import { MessageBanner, useStoryRoute, type StoryRoute } from "./Interlude";
 import { photoSequence } from "./ios/photoNavigation";
 import { AppHomeButton } from "./ios/AppHomeButton";
-import { MusicPlaybackProvider } from "./MusicPlayback";
+import { MusicPlaybackProvider, useMusicPlayback } from "./MusicPlayback";
 import { StatusGlyph } from "./ios/StatusGlyph";
 import { SocialDetail, socialDetailApps } from "./skins/SocialDetails";
 import { NativeCalculator } from "./ios/Calculator";
@@ -149,6 +149,11 @@ function PhoneRuntime({
   runtime?: Runtime;
   onRuntime?: (s: Runtime) => void;
 }) {
+  const musicPlayback = useMusicPlayback();
+  const quietMusicForVideo = (event: { target: EventTarget }) => {
+    const media = event.target as HTMLMediaElement;
+    if (media.tagName === "VIDEO" && !media.muted && !media.paused) musicPlayback.pause();
+  };
   const [app, setApp] = useState("");
   const [homeRequest, setHomeRequest] = useState(0);
   const [locked, setLocked] = useState(!creator);
@@ -425,6 +430,8 @@ function PhoneRuntime({
           className={`phone-screen wallpaper-${work.phone.wallpaper} ${locked ? "is-locked" : ""} ${app ? "in-app" : ""} ${keyboard ? "keyboard-open" : ""}`}
           style={{ background: `center / cover no-repeat url("${work.id === "phone-a-story" ? storyWallpaper(s, locked) : locked ? "/wallpapers/lock.jpg" : "/wallpapers/home.jpg"}")` }}
           data-app={app}
+          onPlayCapture={quietMusicForVideo}
+          onVolumeChangeCapture={quietMusicForVideo}
           onDragStart={(e) => e.preventDefault()}
           onPointerDown={(e) => {
             gestureConsumed.current = false;
@@ -611,8 +618,8 @@ function PhoneRuntime({
                     name={small ? undefined : a.name}
                     small={small}
                     custom={a.icon}
-                    date={s.date || work.phone.date}
-                    time={s.time}
+                    date={displayDate}
+                    time={displayTime}
                   />{a.id === "wechat" && storyUnread.length > 0 && <b className="story-app-badge">{storyUnread.length}</b>}</span>
                 )}
                 clearApp={(id) =>
@@ -1220,7 +1227,7 @@ function AppContent({
       ) : app.id === "settings" && !detail ? (
         <NativeSettings
           work={work}
-          items={items}
+          items={shown}
           creator={creator}
           onItem={read}
           onSettings={onSettings}

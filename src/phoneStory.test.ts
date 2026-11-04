@@ -182,6 +182,25 @@ describe("Phone continuation", () => {
     expect(restored.revision).toBe(work.updatedAt);
     expect(restored.scheduled).toEqual([{nodeId:"interlude-zhu-delay",due:25000}]);
   });
+  it("shortens pending Su replies in revision 51 saves without resetting progress", () => {
+    const saved = callable();
+    saved.revision = 51;
+    saved.elapsedMs = 10000;
+    saved.scheduled = [{nodeId:"interlude-su-1-reply-delay", due:14000}, {nodeId:"interlude-su-2-reply-delay", due:11000}];
+    const restored = resumePhoneStory(work, saved)!;
+    expect(phoneIsUnlocked(restored)).toBe(true);
+    expect(restored.scheduled).toEqual([{nodeId:"interlude-su-1-reply-delay", due:12000}, {nodeId:"interlude-su-2-reply-delay", due:10000}]);
+  });
+  it("does not publish delayed Moments early while migrating revision 51", () => {
+    const saved = callable();
+    saved.revision = 51;
+    saved.unlocked.push("interlude-love-open");
+    saved.scheduled = [{nodeId:"phone-moments-delay",due:8000}];
+    const restored = resumePhoneStory(work,saved)!;
+    expect(restored.unlocked).not.toContain("wechat-moment-07");
+    expect(restored.variables.hiddenAlbumUnlocked).not.toBe(true);
+    expect(restored.scheduled).toEqual(saved.scheduled);
+  });
   it("resumes compatible progress but refuses a forged phone flag", () => {
     const saved = callable();
     expect(resumePhoneStory(work, saved)).toBe(saved);

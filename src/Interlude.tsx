@@ -42,6 +42,7 @@ export function ScriptedReply({
     return () => {
       window.clearTimeout(timer);
       keyboardDraft(null);
+      openKeyboard(false);
     };
   }, [started, text, eraseFirst, draftOnly, openKeyboard, keyboardDraft]);
   return (

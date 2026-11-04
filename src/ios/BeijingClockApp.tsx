@@ -82,7 +82,7 @@ export function BeijingClockApp() {
         {adding && <div className="pa-alarm-modal"><div className="pa-alarm-dialog"><h3>添加闹钟</h3><label>时间<input type="time" value={alarmTime} onChange={e => setAlarmTime(e.target.value)} /></label><label>标签<input value={alarmLabel} onChange={e => setAlarmLabel(e.target.value)} /></label><div><button onClick={() => setAdding(false)}>取消</button><button onClick={saveAlarm}>存储</button></div></div></div>}
       </>}
       {tab === "stopwatch" && <>
-        <div className="pa-stopwatch-time">{pad(Math.floor(swMs / 3600000))}:{pad(Math.floor(swMs / 60000) % 60)}.{pad(Math.floor(swMs / 1000) % 60)}<span>.{pad(Math.floor(swMs / 10) % 100)}</span></div>
+        <div className="pa-stopwatch-time">{pad(Math.floor(swMs / 60000))}:{pad(Math.floor(swMs / 1000) % 60)}<span>.{pad(Math.floor(swMs / 10) % 100)}</span></div>
         <div className="pa-clock-controls"><button className="pa-control-muted" onClick={() => { if (swRunning) setLaps(prev => [swMs, ...prev]); else { setSwMs(0); setLaps([]); } }}>{swRunning ? "计次" : "归零"}</button><button className={swRunning ? "pa-control-red" : "pa-control-green"} onClick={() => setSwRunning(v => !v)}>{swRunning ? "停止" : "启动"}</button></div>
         <div className="pa-laps">{laps.map((lap, i) => <div key={i}>计次 {laps.length - i}<span>{(lap / 1000).toFixed(2)} 秒</span></div>)}</div>
       </>}
@@ -93,10 +93,10 @@ export function BeijingClockApp() {
           return <label key={unit}><input type="number" min="0" max={unit === "hours" ? 23 : 59} value={val} disabled={timerRunning} onChange={e => { setter(Math.max(0, Math.min(unit === "hours" ? 23 : 59, Number(e.target.value) || 0))); setTimerRemaining(null); }} /><span>{unit === "hours" ? "小时" : unit === "minutes" ? "分钟" : "秒"}</span></label>;
         })}</div>
         {timerRemaining !== null && <div className="pa-timer-remaining">{displayDuration(timerRemaining)}</div>}
-        <div className="pa-clock-controls"><button className="pa-control-muted" onClick={() => { setTimerRunning(false); setTimerRemaining(null); }}>取消</button><button className={timerRunning ? "pa-control-red" : "pa-control-green"} onClick={() => timerRunning ? setTimerRunning(false) : startTimer()}>{timerRunning ? <Pause size={22}/> : <Play size={22}/>}</button></div>
+        <div className="pa-clock-controls"><button className="pa-control-muted" onClick={() => { setTimerRunning(false); setTimerRemaining(null); }}>取消</button><button aria-label={timerRunning ? "暂停计时器" : "启动计时器"} className={timerRunning ? "pa-control-red" : "pa-control-green"} onClick={() => timerRunning ? setTimerRunning(false) : startTimer()}>{timerRunning ? <Pause size={22}/> : <Play size={22}/>}</button></div>
         <div className="pa-timer-settings"><div>标签 <span>计时器</span></div><div>铃声 <span>射线 ›</span></div></div>
         <h3 className="pa-alarm-section">最近使用</h3>
-        <div className="pa-recent-timer"><span>15:00 <small>15 分钟</small></span><button onClick={() => { setTimerHours(0); setTimerMinutes(15); setTimerSeconds(0); setTimerRemaining(900); setTimerRunning(true); }}><Play size={22}/></button></div>
+        <div className="pa-recent-timer"><span>15:00 <small>15 分钟</small></span><button aria-label="启动15分钟计时器" onClick={() => { setTimerHours(0); setTimerMinutes(15); setTimerSeconds(0); setTimerRemaining(900); setTimerRunning(true); }}><Play size={22}/></button></div>
       </>}
     </main>
     <nav className="pa-clock-nav" aria-label="时钟栏目">

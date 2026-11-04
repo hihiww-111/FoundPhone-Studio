@@ -3,7 +3,7 @@
   "id": "phone-a-story",
   "title": "张极的手机",
   "description": "人A的互动手机故事，第一阶段：锁屏与桌面配置。",
-  "revision": 51,
+  "revision": 52,
   "phone": {
     "owner": "张极",
     "date": "2026-10-25",
@@ -1578,26 +1578,8 @@
         "hidden": true
       }
     ],
-    "calendar": [
-      {
-        "id": "test-item-calendar",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
-    "clock": [
-      {
-        "id": "test-item-clock",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
+    "calendar": [],
+    "clock": [],
     "files": [
       {
         "id": "lover-not-yet-video",
@@ -1830,25 +1812,8 @@
         }
       }
     ],
-    "weather": [
-      {
-        "id": "test-item-weather",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      }
-    ],
+    "weather": [],
     "settings": [
-      {
-        "id": "test-item-settings",
-        "title": "测试内容",
-        "body": "这是一条测试内容。",
-        "sender": "测试用户",
-        "kind": "text",
-        "meta": {}
-      },
       {
         "id": "lock-left-birthday",
         "title": "Left的生日🎂",
@@ -2931,7 +2896,7 @@
       "label": "interlude-su-1-reply-delay",
       "once": true,
       "type": "delay",
-      "delayMs": 4000,
+      "delayMs": 2000,
       "actions": [
         {
           "type": "unlock",
@@ -2979,7 +2944,7 @@
       "label": "interlude-su-2-reply-delay",
       "once": true,
       "type": "delay",
-      "delayMs": 4000,
+      "delayMs": 2000,
       "actions": [
         {
           "type": "unlock",
@@ -4319,7 +4284,7 @@
           "target": "interlude-su-1-reply"
         },
         {
-          "advanceMs": 4000
+          "advanceMs": 2000
         },
         {
           "event": "read",
@@ -4330,7 +4295,7 @@
           "target": "interlude-su-2-reply"
         },
         {
-          "advanceMs": 4000
+          "advanceMs": 2000
         },
         {
           "event": "read",
@@ -4451,7 +4416,7 @@
           "target": "interlude-su-1-reply"
         },
         {
-          "advanceMs": 4000
+          "advanceMs": 2000
         },
         {
           "event": "read",
@@ -4462,7 +4427,7 @@
           "target": "interlude-su-2-reply"
         },
         {
-          "advanceMs": 4000
+          "advanceMs": 2000
         },
         {
           "event": "read",
@@ -4671,7 +4636,7 @@
           "target": "interlude-su-1-reply"
         },
         {
-          "advanceMs": 4000
+          "advanceMs": 2000
         },
         {
           "event": "read",
@@ -4682,7 +4647,7 @@
           "target": "interlude-su-2-reply"
         },
         {
-          "advanceMs": 4000
+          "advanceMs": 2000
         },
         {
           "event": "read",

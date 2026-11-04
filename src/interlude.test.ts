@@ -50,7 +50,7 @@ describe("memo and WeChat interlude", () => {
       if(i<3) {
         expect(s.scheduled?.filter(t=>t.nodeId===`interlude-su-${i}-reply-delay`)).toHaveLength(1);
         s=JSON.parse(JSON.stringify(s));
-        s=advance(work,s,3999); expect(s.unlocked).not.toContain(`interlude-su-${i+1}`);
+        s=advance(work,s,1999); expect(s.unlocked).not.toContain(`interlude-su-${i+1}`);
         s=advance(work,s,1); expect(s.unlocked).toContain(`interlude-su-${i+1}`);
       }
     }

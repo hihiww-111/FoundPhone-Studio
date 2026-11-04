@@ -6,6 +6,7 @@ type Playback = {
   playing: boolean;
   play: (song: Item, queue: Item[]) => void;
   toggle: () => void;
+  pause: () => void;
   next: () => void;
 };
 const MusicPlaybackContext = createContext<Playback | null>(null);
@@ -51,6 +52,10 @@ export function MusicPlaybackProvider({ children }: { children: ReactNode }) {
     const index = songs.findIndex((item) => item.id === current.current?.id);
     play(songs[(index + 1) % songs.length], songs);
   };
+  const pause = () => {
+    ++request.current;
+    audio.current?.pause();
+  };
   const toggle = () => {
     if (!audio.current) return;
     if (audio.current.paused) start();
@@ -60,7 +65,7 @@ export function MusicPlaybackProvider({ children }: { children: ReactNode }) {
     }
   };
   return (
-    <MusicPlaybackContext.Provider value={{ song, playing, play, toggle, next }}>
+    <MusicPlaybackContext.Provider value={{ song, playing, play, toggle, pause, next }}>
       {children}
       <audio
         ref={audio}

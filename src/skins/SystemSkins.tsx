@@ -421,9 +421,10 @@ export function NotesSkin(p: Props) {
   );
 }
 export function CalendarSkin(p: Props) {
-  const [month, setMonth] = useState(8),
-    [year, setYear] = useState(2026),
-    [day, setDay] = useState(1);
+  const [today] = useState(() => new Date());
+  const [month, setMonth] = useState(today.getMonth()),
+    [year, setYear] = useState(today.getFullYear()),
+    [day, setDay] = useState(today.getDate());
   const prefix = `${year}-${String(month + 1).padStart(2, "0")}`;
   const list = p.items.filter((i) =>
     i.time.startsWith(`${prefix}-${String(day).padStart(2, "0")}`),
@@ -703,11 +704,11 @@ export function FilesSkin(p: Props) {
                   {i.media ? <Media item={i} /> : <FileText size={49} />}
                   <strong>{i.title}</strong>
                   <small>
-                    {meta(i, "extension", "文件")} ·{" "}
+                    {meta(i, "extension", i.kind === "video" ? "视频" : "文件")} ·{" "}
                     {meta(i, "size", i.time.slice(0, 10))}
                   </small>
                 </button>
-                <button
+                {!meta(i, "externalUrl") && <button
                   aria-label={`下载${i.title}文本`}
                   onClick={() =>
                     download(
@@ -717,7 +718,7 @@ export function FilesSkin(p: Props) {
                   }
                 >
                   <Download size={13} />
-                </button>
+                </button>}
               </div>
             ))}
           </div>
