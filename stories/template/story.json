@@ -4183,7 +4183,7 @@
     },
     {
       "id": "left-third-free-message",
-      "label": "第三条自由消息触发左航回复",
+      "label": "跳过首条后累计三条任意自由消息触发左航回复",
       "once": true,
       "event": "freeLeft",
       "target": "A左左",
@@ -4200,7 +4200,7 @@
     },
     {
       "id": "left-busy-reply-delay",
-      "label": "第三条非告白自由消息四秒后回复",
+      "label": "首条之后第三条任意自由消息四秒后回复",
       "once": true,
       "type": "delay",
       "delayMs": 4000,

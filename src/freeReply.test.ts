@@ -62,17 +62,20 @@ describe("Left's confession continuation", () => {
   });
 });
 
-it("excludes confession and replies once four seconds after the third ordinary message", () => {
+it("skips the first free message and counts any next three replies exactly once", () => {
  let s = initialRuntime(work);
  s.unlocked.push("interlude-love-open");s.read.push("interlude-love-open");
- s = sendFreeReply(work, s, "我爱你");
- s = advance(work, s, 2000);
+ s = sendFreeReply(work, s, "首条不计数");
  expect(s.variables.leftFreeMessageCount).toBe(0);
- s = sendFreeReply(work, s, "第一条");
+ s = sendFreeReply(work, s, "我爱你");
+ expect(s.variables.leftFreeMessageCount).toBe(1);
+ s = advance(work, s, 2000);
  expect(sendFreeReply(work, s, " ")).toBe(s);
- s = sendFreeReply(work, s, "第二条");
+ s = sendFreeReply(work, s, "喜欢你");
+ expect(s.variables.leftFreeMessageCount).toBe(2);
  expect(s.scheduled).toHaveLength(0);
  s = sendFreeReply(work, s, "第三条");
+ expect(s.variables.leftFreeMessageCount).toBe(3);
  expect(s.scheduled?.filter(t => t.nodeId === "left-busy-reply-delay")).toHaveLength(1);
  s = JSON.parse(JSON.stringify(s));
  s = advance(work, s, 1000);
