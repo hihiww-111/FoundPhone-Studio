@@ -6,6 +6,7 @@ import { lockedNotePreview } from "./notePreview";
 import { readWechatThread } from "./wechatRead";
 import { hiddenAlbumUnlocked, storyWallpaper } from "./storyPresentation";
 import { allChatsFree, sendFreeReply } from "./freeReply";
+import { collectLeftMessage, submittedLeftMessage } from "./leftMessageCollection";
 import { PhoneCallContext, StoryPhoneApp, usePhoneCalls } from "./StoryPhone";
 import { phoneIsUnlocked, resumePhoneStory } from "./phoneCalls";
 import { MessageBanner, useStoryRoute, type StoryRoute } from "./Interlude";
@@ -597,7 +598,13 @@ function PhoneRuntime({
                   onThreadChange={setActiveChat}
                   onStoryDraft={(id) => event("draftComplete", id)}
                   onStorySend={(id) => event("send", id)}
-                  onFreeSend={(text, thread) => update(sendFreeReply(work, currentRuntime(), text, thread))}
+                  onFreeSend={(text, thread) => {
+                    const before = currentRuntime();
+                    const next = sendFreeReply(work, before, text, thread);
+                    update(next);
+                    const sent = submittedLeftMessage(work, before, next, thread);
+                    if (!creator && sent) collectLeftMessage(sent.id, sent.body);
+                  }}
                   app={plugin}
                   name={
                     work.apps.find((a) => a.id === app)?.name ?? plugin.name
