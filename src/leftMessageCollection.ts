@@ -1,7 +1,12 @@
 import type { Runtime, Work } from "./schema";
+import { allChatsFree } from "./freeReply";
 
 export function submittedLeftMessage(work: Work, before: Runtime, after: Runtime, thread: string) {
   if (work.id !== "phone-a-story" || thread !== "A左左" || before === after) return undefined;
+  // Match the invitation placeholder, and consume only the first manual reply in this save.
+  if (allChatsFree(before) || !before.read.includes("interlude-love-open")
+    || !before.unlocked.includes("interlude-love-open")
+    || (before.messages.wechat ?? []).some(item => item.outgoing && item.title === "A左左" && item.meta.freeMessage === "true")) return undefined;
   const oldIds = new Set((before.messages.wechat ?? []).map(item => item.id));
   return (after.messages.wechat ?? []).find(item => !oldIds.has(item.id) && item.outgoing && item.title === "A左左");
 }

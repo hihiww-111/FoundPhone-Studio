@@ -20,6 +20,20 @@ describe("private Left message collection", () => {
     expect(submittedLeftMessage(work, after, after, "A左左")).toBeUndefined();
     expect(submittedLeftMessage(work, before, after, "妈咪")).toBeUndefined();
   });
+  it("never collects a second reply, including after restoring the save", () => {
+    const before = initialRuntime(work);
+    before.unlocked.push("interlude-love-open"); before.read.push("interlude-love-open");
+    const first = sendFreeReply(work, before, "你好");
+    expect(submittedLeftMessage(work, before, first, "A左左")?.body).toBe("你好");
+    const restored = structuredClone(first);
+    expect(submittedLeftMessage(work, restored, sendFreeReply(work, restored, "我喜欢你"), "A左左")).toBeUndefined();
+  });
+  it("does not collect when the invitation placeholder is no longer displayed", () => {
+    const before = initialRuntime(work);
+    before.unlocked.push("interlude-love-open");
+    before.read.push("interlude-love-open", "interlude-love-final", "interlude-zhu-2", "interlude-zhang-2");
+    expect(submittedLeftMessage(work, before, sendFreeReply(work, before, "结局后留言"), "A左左")).toBeUndefined();
+  });
   it("has no public read API and rejects cross-origin writes", async () => {
     expect((await onRequest({ request: new Request("https://zj-phone.pages.dev/api/left-messages"), env: {} })).status).toBe(405);
     expect((await onRequest({ request: request(payload, "https://other.example"), env: {} })).status).toBe(403);
