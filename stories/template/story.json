@@ -2656,21 +2656,6 @@
           "momentOrder": "8",
           "likes": "张极、朱志鑫、苏新皓、张泽禹、张峻豪"
         }
-      },
-      {
-        "id": "interlude-left-busy",
-        "title": "A左左",
-        "sender": "A左左",
-        "avatar": "/wechat/contacts/zuo-hang.jpg",
-        "body": "刚刚在忙，不是故意不回你",
-        "hidden": true,
-        "read": false,
-        "outgoing": false,
-        "time": "",
-        "meta": {
-          "interlude": "true",
-          "pinned": "true"
-        }
       }
     ]
   },
@@ -4178,37 +4163,6 @@
           "type": "notification",
           "value": "相册：隐藏相册已解锁",
           "key": ""
-        }
-      ]
-    },
-    {
-      "id": "left-third-free-message",
-      "label": "跳过首条后累计三条任意自由消息触发左航回复",
-      "once": true,
-      "event": "freeLeft",
-      "target": "A左左",
-      "conditions": [
-        {
-          "key": "leftFreeMessageCount",
-          "op": "gt",
-          "value": 2
-        }
-      ],
-      "next": [
-        "left-busy-reply-delay"
-      ]
-    },
-    {
-      "id": "left-busy-reply-delay",
-      "label": "首条之后第三条任意自由消息四秒后回复",
-      "once": true,
-      "type": "delay",
-      "delayMs": 4000,
-      "actions": [
-        {
-          "type": "unlock",
-          "key": "interlude-left-busy",
-          "value": true
         }
       ]
     }

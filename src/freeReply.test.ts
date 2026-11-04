@@ -62,29 +62,13 @@ describe("Left's confession continuation", () => {
   });
 });
 
-it("skips the first free message and counts any next three replies exactly once", () => {
+it("does not add an automatic busy reply after repeated free messages", () => {
  let s = initialRuntime(work);
- s.unlocked.push("interlude-love-open");s.read.push("interlude-love-open");
- s = sendFreeReply(work, s, "首条不计数");
- expect(s.variables.leftFreeMessageCount).toBe(0);
- s = sendFreeReply(work, s, "我爱你");
- expect(s.variables.leftFreeMessageCount).toBe(1);
- s = advance(work, s, 2000);
- expect(sendFreeReply(work, s, " ")).toBe(s);
- s = sendFreeReply(work, s, "喜欢你");
- expect(s.variables.leftFreeMessageCount).toBe(2);
- expect(s.scheduled).toHaveLength(0);
- s = sendFreeReply(work, s, "第三条");
- expect(s.variables.leftFreeMessageCount).toBe(3);
- expect(s.scheduled?.filter(t => t.nodeId === "left-busy-reply-delay")).toHaveLength(1);
- s = JSON.parse(JSON.stringify(s));
- s = advance(work, s, 1000);
- s = sendFreeReply(work, s, "第四条");
- s = advance(work, s, 2999);
+ s.unlocked.push("interlude-love-open"); s.read.push("interlude-love-open");
+ for (let i = 0; i < 6; i++) s = sendFreeReply(work, s, `消息${i}`);
+ s = advance(work, s, 10000);
+ expect(s.messages.wechat.filter(i => i.outgoing)).toHaveLength(6);
  expect(s.unlocked).not.toContain("interlude-left-busy");
- s = advance(work, s, 1);
- expect(s.unlocked.filter(id => id === "interlude-left-busy")).toHaveLength(1);
- expect(work.data.wechat.find(i => i.id === "interlude-left-busy")?.body).toBe("刚刚在忙，不是故意不回你");
- s = sendFreeReply(work, s, "第五条");
- expect(s.scheduled?.filter(t => t.nodeId === "left-busy-reply-delay")).toHaveLength(0);
+ expect(s.scheduled).toHaveLength(0);
+ expect(work.data.wechat.some(i => i.id === "interlude-left-busy")).toBe(false);
 });

@@ -1,7 +1,7 @@
 import { visible } from "./engine";
 import type { Item, Runtime, Work } from "./schema";
 
-const timedMessage = (id: string) => /^interlude-(phone-|call-zuo-|left-busy$)/.test(id);
+const timedMessage = (id: string) => /^interlude-(phone-|call-zuo-)/.test(id);
 export function stampMessageArrivals(work: Work, state: Runtime, now = new Date()): Runtime {
   if (work.id !== "phone-a-story") return state;
   const pending = (work.data.wechat ?? []).filter(item => timedMessage(item.id)
