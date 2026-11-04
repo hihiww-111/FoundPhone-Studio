@@ -1,3 +1,14 @@
 name = "zj-phone"
 compatibility_date = "2026-10-30"
 pages_build_output_dir = "./dist"
+
+[vars]
+COLLECTION_ENABLED = "true"
+
+[[d1_databases]]
+binding = "LEFT_MESSAGES"
+database_name = "zj-phone-left-messages"
+database_id = "17480772-0c2d-41e4-8979-df55da384734"
+
+[env.preview.vars]
+COLLECTION_ENABLED = "false"

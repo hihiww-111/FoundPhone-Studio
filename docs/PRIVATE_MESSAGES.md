@@ -36,8 +36,10 @@ COLLECTION_ENABLED = "false"
 5. 发布当前分支的 Pages；确认生产环境有绑定，预览环境不绑定生产数据库。
 6. 用虚构文字实测一次发送，控制台确认收到一行，再确认 GET 接口无法读取。调试时不导出或提交真实访客留言。
 
-没有 D1 绑定或没有 COLLECTION_ENABLED=true 时接口返回 503，不收集。当前仓库不包含生产数据库 ID 或启用开关；需要完成账户登录和绑定后才可启用。
+没有 D1 绑定或没有 COLLECTION_ENABLED=true 时接口返回 503，不收集。2026-11-04 已在本人 Cloudflare 账户创建 `zj-phone-left-messages`，生产绑定和启用开关见 `wrangler.toml`，预览环境禁用。数据库 ID 是资源标识，不是凭据；OAuth 凭据仅保存在 Git 仓库外。
 
 接口同时检查生产域名 `zj-phone.pages.dev`，预览域名无法写入；更换正式域名时需同步修改白名单。
 
 配置依据：[Cloudflare Pages D1 bindings](https://developers.cloudflare.com/pages/functions/bindings/#d1-databases)。
+
+生产验证：写入虚构测试留言返回204，同一ID重发仍只有一行；GET返回405，异源POST返回403。验证后仅删除指定测试ID，未导出真实访客数据。134项单元测试、构建及Functions编译通过。查看者仍需登录具有该数据库权限的Cloudflare账户。
