@@ -1,3 +1,4 @@
+import { usesNativeKeyboard } from "./nativeKeyboard";
 import { queueMessageNotifications } from "./messageNotifications";
 import { useContext, useEffect, useRef, useState } from "react";
 import { draftSequence } from "./draftSequence";
@@ -79,14 +80,15 @@ export function ScriptedReply({
 export function FreeReply({ send, blank = false }: { send?: (text: string) => void; blank?: boolean }) {
   const [text, setText] = useState("");
   const bind = useContext(FreeKeyboardContext), open = useContext(KeyboardContext);
+  const nativeInput = typeof navigator !== "undefined" && usesNativeKeyboard(navigator);
   const submit = (value: string) => { if (!value.trim()) return; send?.(value); setText(""); };
   const submitRef = useRef(submit); submitRef.current = submit;
-  useEffect(() => { bind({ text, change: setText, send: value => submitRef.current(value) }); }, [text, bind]);
+  useEffect(() => { bind(nativeInput ? null : { text, change: setText, send: value => submitRef.current(value) }); }, [text, bind, nativeInput]);
   useEffect(() => () => { bind(null); open(false); }, [bind, open]);
-  return <form className="skin-compose scripted-compose free-compose" onSubmit={e => { e.preventDefault(); submit(text); }}>
-    <input className="native-compose-field" inputMode="none" aria-label={blank ? "输入消息" : "你想对左航说"} placeholder={blank ? "" : "你想对左航说："}
-      value={text} onFocus={() => open(true)} onClick={() => open(true)} onChange={e => setText(e.target.value)} />
-    <button className="story-send" type="submit" disabled={!text.trim()}>发送</button>
+  return <form data-native-keyboard={nativeInput} className="skin-compose scripted-compose free-compose" onSubmit={e => { e.preventDefault(); submit(text); }}>
+    <input className="native-compose-field" inputMode={nativeInput ? "text" : "none"} enterKeyHint="send" aria-label={blank ? "输入消息" : "你想对左航说"} placeholder={blank ? "" : "你想对左航说："}
+      value={text} onFocus={() => open(!nativeInput)} onClick={() => open(!nativeInput)} onChange={e => setText(e.target.value)} />
+    <button className="story-send" type="submit" onPointerDown={e => e.preventDefault()} disabled={!text.trim()}>发送</button>
   </form>;
 }
 

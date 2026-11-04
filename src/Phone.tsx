@@ -1,3 +1,4 @@
+import { usesNativeKeyboard } from "./nativeKeyboard";
 import { readVisitSave, writeVisitSave } from "./visitSave";
 import { stampMessageArrivals, messageArrivalTime } from "./messageArrival";
 import { lockedNotePreview } from "./notePreview";
@@ -196,13 +197,21 @@ function PhoneRuntime({
     const el = shell.current;
     if (!el) return;
     const fit = () => {
+      const viewport = window.visualViewport;
+      const mobile = !creator && !external && usesNativeKeyboard(navigator);
+      const stage = mobile ? el.closest<HTMLElement>(".story-runtime") : null;
+      if (stage && viewport) {
+        stage.style.height = `${viewport.height}px`;
+        stage.style.top = `${viewport.offsetTop}px`;
+      }
+      const height = mobile && viewport ? viewport.height : window.innerHeight;
       setDeviceScale(
         Math.max(
-          0.4,
+          mobile ? 0.2 : 0.4,
           Math.min(
             1,
             (el.parentElement!.clientWidth - 24) / 407,
-            (window.innerHeight - (creator ? 170 : external ? 150 : 40)) / 866,
+            (height - (creator ? 170 : external ? 150 : 40)) / 866,
           ),
         ),
       );
@@ -210,10 +219,17 @@ function PhoneRuntime({
     const observer = new ResizeObserver(fit);
     observer.observe(el.parentElement!);
     window.addEventListener("resize", fit);
+    window.visualViewport?.addEventListener("resize", fit);
+    window.visualViewport?.addEventListener("scroll", fit);
     fit();
     return () => {
       observer.disconnect();
       window.removeEventListener("resize", fit);
+      window.visualViewport?.removeEventListener("resize", fit);
+      window.visualViewport?.removeEventListener("scroll", fit);
+      const stage = el.closest<HTMLElement>(".story-runtime");
+      stage?.style.removeProperty("height");
+      stage?.style.removeProperty("top");
     };
   }, [creator, ready]);
   const s = external ?? own;

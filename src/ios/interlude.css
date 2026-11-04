@@ -60,3 +60,10 @@
 .ios18 .wx-moment-post .wx-moment-feedback strong { color:#61769a; font-size:13px; font-weight:600; }
 .ios18 .wx-moment-post > div > img { max-height:330px; width:auto; max-width:100%; object-fit:contain; }
 .ios18 .native-photos .photo-more button:disabled { opacity:.35; cursor:default; }
+
+@media (pointer: coarse) {
+  /* Keep rendered input text at least 16px despite the phone's CSS scaling. */
+  .ios18 .free-compose[data-native-keyboard="true"] .native-compose-field {
+    font-size: max(16px, calc(16px / var(--phone-scale, 1)));
+  }
+}
