@@ -62,9 +62,12 @@ describe("Left's confession continuation", () => {
   });
 });
 
-it("replies once two seconds after the third free message to Left", () => {
+it("excludes confession and replies once four seconds after the third ordinary message", () => {
  let s = initialRuntime(work);
  s.unlocked.push("interlude-love-open");s.read.push("interlude-love-open");
+ s = sendFreeReply(work, s, "我爱你");
+ s = advance(work, s, 2000);
+ expect(s.variables.leftFreeMessageCount).toBe(0);
  s = sendFreeReply(work, s, "第一条");
  expect(sendFreeReply(work, s, " ")).toBe(s);
  s = sendFreeReply(work, s, "第二条");
@@ -74,7 +77,7 @@ it("replies once two seconds after the third free message to Left", () => {
  s = JSON.parse(JSON.stringify(s));
  s = advance(work, s, 1000);
  s = sendFreeReply(work, s, "第四条");
- s = advance(work, s, 999);
+ s = advance(work, s, 2999);
  expect(s.unlocked).not.toContain("interlude-left-busy");
  s = advance(work, s, 1);
  expect(s.unlocked.filter(id => id === "interlude-left-busy")).toHaveLength(1);

@@ -1,6 +1,7 @@
+import { queueMessageNotifications } from "./messageNotifications";
 import { useContext, useEffect, useRef, useState } from "react";
 import { draftSequence } from "./draftSequence";
-import { KeyboardContext, ScriptKeyboardContext } from "./DeviceSystem";
+import { FreeKeyboardContext, KeyboardContext, ScriptKeyboardContext } from "./DeviceSystem";
 import type { Item } from "./schema";
 import "./ios/interlude.css";
 
@@ -77,33 +78,38 @@ export function ScriptedReply({
 
 export function FreeReply({ send, blank = false }: { send?: (text: string) => void; blank?: boolean }) {
   const [text, setText] = useState("");
-  return <form className="skin-compose scripted-compose free-compose" onSubmit={e => {
-    e.preventDefault();
-    if (!text.trim()) return;
-    send?.(text);
-    setText("");
-  }}>
-    <input className="native-compose-field" aria-label={blank ? "输入消息" : "你想对左航说"} placeholder={blank ? "" : "你想对左航说："}
-      value={text} onChange={e => setText(e.target.value)} />
+  const bind = useContext(FreeKeyboardContext), open = useContext(KeyboardContext);
+  const submit = (value: string) => { if (!value.trim()) return; send?.(value); setText(""); };
+  const submitRef = useRef(submit); submitRef.current = submit;
+  useEffect(() => { bind({ text, change: setText, send: value => submitRef.current(value) }); }, [text, bind]);
+  useEffect(() => () => { bind(null); open(false); }, [bind, open]);
+  return <form className="skin-compose scripted-compose free-compose" onSubmit={e => { e.preventDefault(); submit(text); }}>
+    <input className="native-compose-field" inputMode="none" aria-label={blank ? "输入消息" : "你想对左航说"} placeholder={blank ? "" : "你想对左航说："}
+      value={text} onFocus={() => open(true)} onClick={() => open(true)} onChange={e => setText(e.target.value)} />
     <button className="story-send" type="submit" disabled={!text.trim()}>发送</button>
   </form>;
 }
 
-export function MessageBanner({
-  message,
-  open,
-}: {
-  message?: Item;
+export function MessageBanner({ messages, activeThread, open }: {
+  messages: Item[];
+  activeThread: string;
   open: (item: Item) => void;
 }) {
-  const [expired, setExpired] = useState<string[]>([]);
-  const id = message?.id;
+  const seen = useRef(new Set<string>());
+  const [queue, setQueue] = useState<Item[]>([]);
+  const key = messages.map(item => item.id).join("|");
   useEffect(() => {
-    if (!id) return;
-    const timer = window.setTimeout(() => setExpired((v) => [...v, id]), 6500);
+    const previousSeen = new Set(seen.current);
+    messages.forEach(item => seen.current.add(item.id));
+    setQueue(previous => queueMessageNotifications(previous, messages, previousSeen, activeThread));
+  }, [key, activeThread]);
+  const message = queue[0];
+  useEffect(() => {
+    if (!message) return;
+    const timer = window.setTimeout(() => setQueue(previous => previous.slice(1)), 6500);
     return () => window.clearTimeout(timer);
-  }, [id]);
-  if (!message || expired.includes(message.id)) return null;
+  }, [message?.id]);
+  if (!message) return null;
   return (
     <div className="story-banner" role="status">
       <button className="story-banner-open" onClick={() => open(message)}>

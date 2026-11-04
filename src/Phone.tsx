@@ -35,6 +35,8 @@ import {
   DeviceKeyboard,
   KeyboardContext,
   ScriptKeyboardContext,
+  FreeKeyboardContext,
+  type FreeKeyboardBinding,
   NativeSettings,
 } from "./DeviceSystem";
 import { AppArtwork, hasNativeArtwork } from "./AppArtwork";
@@ -160,6 +162,7 @@ function PhoneRuntime({
   const [pinOpen, setPinOpen] = useState(false);
   const [quickCamera, setQuickCamera] = useState(false);
   const [keyboard, setKeyboard] = useState(false);
+  const [freeKeyboard, setFreeKeyboard] = useState<FreeKeyboardBinding | null>(null);
   const [scriptDraft, setScriptDraft] = useState<string | null>(null);
   const [storyRoute, setStoryRoute] = useState<StoryRoute>();
   const [activeChat, setActiveChat] = useState("");
@@ -342,7 +345,7 @@ function PhoneRuntime({
     const stamped = stampMessageArrivals(work, current);
     if (stamped !== current) update(stamped);
   }, [creator, ready, s.unlocked]);
-  const storyUnread = [...(work.data.wechat ?? []), ...(s.messages.wechat ?? [])].filter(i => i.meta.interlude === "true" && !i.outgoing && !i.read && visible(i,s) && !s.read.includes(i.id)).sort((a,b) => s.unlocked.indexOf(a.id) - s.unlocked.indexOf(b.id));
+  const storyUnread = [...(work.data.wechat ?? []), ...(s.messages.wechat ?? [])].filter(i => (i.meta.interlude === "true" || (s.messages.wechat ?? []).some(message => message.id === i.id)) && !["朋友圈", "我"].includes(i.folder) && i.kind !== "post" && !i.outgoing && !i.read && visible(i,s) && !s.read.includes(i.id)).sort((a,b) => s.unlocked.indexOf(a.id) - s.unlocked.indexOf(b.id));
   const unreadThreadKey = storyUnread.map(item => item.id).join("|");
   useEffect(() => {
     if (creator || app !== "wechat" || !activeChat) return;
@@ -426,6 +429,7 @@ function PhoneRuntime({
       <PhoneCallContext.Provider value={phoneCalls.context}>
       <KeyboardContext.Provider value={setKeyboard}>
       <ScriptKeyboardContext.Provider value={setScriptDraft}>
+      <FreeKeyboardContext.Provider value={setFreeKeyboard}>
         <div
           className={`phone-screen wallpaper-${work.phone.wallpaper} ${locked ? "is-locked" : ""} ${app ? "in-app" : ""} ${keyboard ? "keyboard-open" : ""}`}
           style={{ background: `center / cover no-repeat url("${work.id === "phone-a-story" ? storyWallpaper(s, locked) : locked ? "/wallpapers/lock.jpg" : "/wallpapers/home.jpg"}")` }}
@@ -886,8 +890,8 @@ function PhoneRuntime({
             </div>
           )}
           {phoneCalls.overlay}
-          {keyboard && <DeviceKeyboard scriptedText={scriptDraft ?? undefined} close={() => setKeyboard(false)} />}
-          {!creator && <MessageBanner message={storyUnread.filter(i => app !== "wechat" || activeChat !== i.title).at(-1)} open={(item) => { open("wechat"); setStoryRoute({serial:Date.now(),app:"wechat",thread:item.title}); }} />}
+          {keyboard && <DeviceKeyboard binding={freeKeyboard} scriptedText={scriptDraft ?? undefined} close={() => setKeyboard(false)} />}
+          {!creator && <MessageBanner messages={storyUnread} activeThread={app === "wechat" ? activeChat : ""} open={(item) => { open("wechat"); setStoryRoute({serial:Date.now(),app:"wechat",thread:item.title}); }} />}
           {!creator && !locked && s.variables.noteReady && !s.unlocked.includes("interlude-note") && <div className="story-modal-shade"><div className="story-modal" role="dialog" aria-modal="true" aria-label="新的备忘录"><p>您已解锁一条新的备忘录，是否查看？</p><button onClick={() => { event("storyConsent", "interlude-note"); open("notes"); setStoryRoute({serial:Date.now(),app:"notes",note:"interlude-note"}); }}>是</button></div></div>}
           {!creator && s.variables.meetReady && !s.variables.meetAccepted && <div className="story-modal-shade"><div className="story-modal" role="dialog" aria-modal="true" aria-label="与左航聊一聊"><p>与左航聊一聊？</p><button onClick={() => {setKeyboard(false);setScriptDraft(null);event("meetConsent","left");}}>是</button></div></div>}
           {!creator && s.variables.meetBlackout && <div className="story-blackout" role="status" aria-label="正在与左航聊一聊" />}
@@ -911,6 +915,7 @@ function PhoneRuntime({
           <div className="screen-dimmer" />
           <div className="hardware-reflection" />
         </div>
+      </FreeKeyboardContext.Provider>
       </ScriptKeyboardContext.Provider>
       </KeyboardContext.Provider>
       </PhoneCallContext.Provider>

@@ -4200,10 +4200,10 @@
     },
     {
       "id": "left-busy-reply-delay",
-      "label": "第三条自由消息两秒后回复",
+      "label": "第三条非告白自由消息四秒后回复",
       "once": true,
       "type": "delay",
-      "delayMs": 2000,
+      "delayMs": 4000,
       "actions": [
         {
           "type": "unlock",

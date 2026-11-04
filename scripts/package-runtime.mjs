@@ -4,3 +4,5 @@ for (const name of ["LICENSE", "THIRD_PARTY_LICENSES.txt", "BRAND_NOTICE.txt"])
 console.log("Runtime license notices included.");
 
 await copyFile("src/vendor/mymy/NOTICE.txt", "dist/MYMY_NOTICE.txt");
+
+await copyFile("src/vendor/pinyin/LICENSE.txt", "dist/PINYIN_LICENSE.txt");

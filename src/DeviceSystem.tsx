@@ -1,10 +1,11 @@
+import { pinyinCandidates } from "./pinyinInput";
 import { SystemNotifications } from "./SystemNotifications";
 import {
   ConnectivityModule,
   SliderModule,
 } from "./vendor/ios-web/ControlModules";
 import { UnlockHandle } from "./vendor/ios-web/UnlockHandle";
-import { useState, useEffect, createContext, useContext } from "react";
+import { useState, useEffect, useRef, createContext, useContext } from "react";
 import {
   LockKeyhole,
   Flashlight,
@@ -40,6 +41,8 @@ import {
 import { motion } from "motion/react";
 import type { Work } from "./schema";
 export const KeyboardContext = createContext<(open: boolean) => void>(() => {});
+export type FreeKeyboardBinding = { text: string; change: (text: string) => void; send: (text: string) => void };
+export const FreeKeyboardContext = createContext<(binding: FreeKeyboardBinding | null) => void>(() => {});
 export const ScriptKeyboardContext = createContext<(draft: string | null) => void>(() => {});
 export function NativeComposer({
   creator,
@@ -410,14 +413,55 @@ export function ControlCenter({
     </motion.div>
   );
 }
-export function DeviceKeyboard({ close, scriptedText }: { close: () => void; scriptedText?: string }) {
-  const [value, setValue] = useState(""),
-    [shift, setShift] = useState(false),
-    [numbers, setNumbers] = useState(false);
+export function DeviceKeyboard({ close, scriptedText, binding }: { close: () => void; scriptedText?: string; binding?: FreeKeyboardBinding | null }) {
+  const [localValue, setLocalValue] = useState("");
+  const [shift, setShift] = useState(false), [numbers, setNumbers] = useState(false);
+  const [chinese, setChinese] = useState(true), [composition, setComposition] = useState("");
+  const [dictionary, setDictionary] = useState<Record<string, string[]>>({});
+  const [candidatePage, setCandidatePage] = useState(0);
+  const input = useRef<HTMLInputElement>(null);
+  const value = binding?.text ?? localValue;
+  const setValue = binding?.change ?? setLocalValue;
+  useEffect(() => {
+    if (binding) void import("./vendor/pinyin/dictionary.json").then(data => setDictionary(data.default)).catch(() => setDictionary({}));
+  }, [!!binding]);
+  const candidates = pinyinCandidates(dictionary, composition);
+  const insert = (text: string) => {
+    const start = input.current?.selectionStart ?? value.length;
+    const end = input.current?.selectionEnd ?? start;
+    setValue(value.slice(0, start) + text + value.slice(end));
+    requestAnimationFrame(() => { input.current?.focus(); input.current?.setSelectionRange(start + text.length, start + text.length); });
+  };
+  const choose = (word: string, consumed: number) => { insert(word); setComposition(composition.slice(consumed)); setCandidatePage(0); };
+  const type = (letter: string) => {
+    if (scriptedText !== undefined) return;
+    if (binding && chinese && !numbers && !shift && /^[a-z]$/.test(letter)) { setComposition(composition + letter); setCandidatePage(0); }
+    else insert(shift ? letter.toUpperCase() : letter);
+  };
+  const erase = () => {
+    if (scriptedText !== undefined) return;
+    if (composition) { setComposition(composition.slice(0, -1)); setCandidatePage(0); return; }
+    const start = input.current?.selectionStart ?? value.length, end = input.current?.selectionEnd ?? start;
+    if (start !== end) { insert(""); return; }
+    const prefix = Array.from(value.slice(0, start)); prefix.pop();
+    const position = prefix.join("").length;
+    setValue(prefix.join("") + value.slice(end));
+    requestAnimationFrame(() => { input.current?.focus(); input.current?.setSelectionRange(position, position); });
+  };
+  const finish = () => {
+    if (!binding) { close(); return; }
+    const composed = composition ? candidates[0] ? candidates[0].word + composition.slice(candidates[0].consumed) : composition : "";
+    const start = input.current?.selectionStart ?? value.length, end = input.current?.selectionEnd ?? start;
+    const text = value.slice(0, start) + composed + value.slice(end);
+    if (!text.trim()) return;
+    binding.send(text); setComposition("");
+  };
   return (
-    <div className="device-keyboard" data-scripted={scriptedText !== undefined} role="dialog" aria-label="屏幕键盘">
+    <div onPointerDown={e => { if ((e.target as HTMLElement).closest("button")) e.preventDefault(); }} className="device-keyboard" data-scripted={scriptedText !== undefined} role="dialog" aria-label="屏幕键盘">
       <div className="keyboard-draft">
         <input
+          ref={input}
+          inputMode={binding ? "none" : undefined}
           autoFocus={scriptedText === undefined}
           readOnly={scriptedText !== undefined}
           aria-label="消息草稿"
@@ -429,14 +473,9 @@ export function DeviceKeyboard({ close, scriptedText }: { close: () => void; scr
           <ChevronDown />
         </button>
       </div>
-      <div className="keyboard-candidates">
-        {(value ? [value, "好的", "知道了"] : ["我", "你", "好的"]).map(
-          (v, i) => (
-            <button key={i} onClick={() => setValue(value + v)}>
-              {v}
-            </button>
-          ),
-        )}
+      <div className="keyboard-candidates" style={{ overflowX: "auto" }}>
+        {binding ? <><span>{composition}</span>{candidates.slice(candidatePage * 6, candidatePage * 6 + 6).map((candidate, i) => <button key={i} onClick={() => choose(candidate.word, candidate.consumed)}>{candidate.word}</button>)}{candidates.length > 6 && <button aria-label="更多候选字" onClick={() => setCandidatePage((candidatePage + 1) % Math.ceil(candidates.length / 6))}>›</button>}</> :
+          ["我", "你", "好的"].map(v => <button key={v} disabled={scriptedText !== undefined} onClick={() => insert(v)}>{v}</button>)}
       </div>
       {(numbers
         ? ["1234567890", "-/:;()¥&@", ".,?!'"]
@@ -455,7 +494,7 @@ export function DeviceKeyboard({ close, scriptedText }: { close: () => void; scr
           {[...row].map((k) => (
             <button
               key={k}
-              onClick={() => setValue(value + (shift ? k.toUpperCase() : k))}
+              onClick={() => type(k)}
             >
               {shift ? k.toUpperCase() : k}
             </button>
@@ -464,7 +503,7 @@ export function DeviceKeyboard({ close, scriptedText }: { close: () => void; scr
             <button
               className="key-special"
               aria-label="退格"
-              onClick={() => setValue(value.slice(0, -1))}
+              onClick={erase}
             >
               <Delete size={20} />
             </button>
@@ -475,14 +514,14 @@ export function DeviceKeyboard({ close, scriptedText }: { close: () => void; scr
         <button onClick={() => setNumbers(!numbers)}>
           {numbers ? "ABC" : "123"}
         </button>
-        <button className="key-space" onClick={() => setValue(value + " ")}>
+        <button className="key-space" onClick={() => { if (composition && candidates[0]) choose(candidates[0].word, candidates[0].consumed); else { insert(composition || " "); setComposition(""); } }}>
           空格
         </button>
-        <button onClick={close}>完成</button>
+        <button onClick={finish}>{binding ? "发送" : "完成"}</button>
       </div>
       <div className="keyboard-accessories">
-        <Globe size={24} />
-        <small>草稿</small>
+        <button aria-label="切换中文英文" onClick={() => { if (composition) insert(composition); setComposition(""); setChinese(!chinese); }}><Globe size={24} /></button>
+        <small>{binding ? chinese ? "中文拼音" : "English" : "草稿"}</small>
         <Mic size={23} />
       </div>
     </div>
