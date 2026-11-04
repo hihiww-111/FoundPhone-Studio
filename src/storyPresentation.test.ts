@@ -51,3 +51,20 @@ describe("Moments and love reveal",()=>{
   expect(libraryPhotos(work.data.photos).some(i=>hidden.some(h=>h.id===i.id))).toBe(false);
  });
 });
+
+it("announces Moments first and unlocks the album only after both posts are read", () => {
+ let s = initialRuntime(work);
+ s.unlocked.push("interlude-secret");
+ s = dispatch(work, s, "read", "interlude-secret");
+ s = dispatch(work, s, "send", "interlude-lovers-reply");
+ s = advance(work, s, 3000);
+ expect(s.notifications).toContain("微信：朋友圈已发送");
+ expect(s.variables.hiddenAlbumUnlocked).not.toBe(true);
+ s = dispatch(work, s, "read", "wechat-moment-08");
+ expect(s.variables.hiddenAlbumUnlocked).not.toBe(true);
+ s = dispatch(work, s, "read", "wechat-moment-07");
+ expect(s.variables.hiddenAlbumUnlocked).toBe(true);
+ expect(s.notifications).toContain("相册：隐藏相册已解锁");
+ s = dispatch(work, s, "read", "wechat-moment-07");
+ expect(s.notifications.filter(n => n === "相册：隐藏相册已解锁")).toHaveLength(1);
+});

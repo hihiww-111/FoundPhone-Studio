@@ -4093,6 +4093,11 @@
           "type": "unlock",
           "key": "wechat-moment-08",
           "value": true
+        },
+        {
+          "type": "notification",
+          "value": "微信：朋友圈已发送",
+          "key": ""
         }
       ]
     },
@@ -4129,6 +4134,46 @@
           "type": "unlock",
           "key": "interlude-love-final",
           "value": true
+        }
+      ]
+    },
+    {
+      "id": "hidden-album-after-moments",
+      "label": "读完两条后续朋友圈后解锁隐藏相册",
+      "once": true,
+      "event": "read",
+      "conditions": [
+        {
+          "key": "unlocked:wechat-moment-07",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "read:wechat-moment-07",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "unlocked:wechat-moment-08",
+          "op": "eq",
+          "value": true
+        },
+        {
+          "key": "read:wechat-moment-08",
+          "op": "eq",
+          "value": true
+        }
+      ],
+      "actions": [
+        {
+          "type": "variable",
+          "key": "hiddenAlbumUnlocked",
+          "value": true
+        },
+        {
+          "type": "notification",
+          "value": "相册：隐藏相册已解锁",
+          "key": ""
         }
       ]
     }
@@ -4456,6 +4501,14 @@
         {
           "event": "read",
           "target": "interlude-love-open"
+        },
+        {
+          "event": "read",
+          "target": "wechat-moment-08"
+        },
+        {
+          "event": "read",
+          "target": "wechat-moment-07"
         },
         {
           "event": "freeLove",

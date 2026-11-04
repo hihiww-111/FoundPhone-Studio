@@ -1,3 +1,4 @@
+import { useReadMoments } from "./useReadMoments";
 import { momentsPosts } from "./storyPresentation";
 import { FreeReply, ScriptedReply } from "./Interlude";
 import { wechatContacts } from "./wechatContacts";
@@ -224,6 +225,7 @@ export function WeChatSkin(p: SkinProps) {
   const contactSections = [...new Set(shownContacts.map(c => c.initial))];
   const selfName = "JI", selfAvatar = "/wechat/avatar.jpg";
   const posts = momentsPosts(p.items);
+  const momentsContainer = useReadMoments(moments && !p.creator, p.readIds ?? [], p.onRead, posts.map(i => i.id));
   return (
     <div
       className="wechat-ui independent-skin"
@@ -345,12 +347,12 @@ export function WeChatSkin(p: SkinProps) {
           {p.interlude && !p.creator ? (p.allFreeChat || freeReply) ? <FreeReply blank={p.allFreeChat} send={text => p.onFreeSend?.(text, p.thread)} /> : <ScriptedReply key={reply?.id || "waiting"} item={reply} send={p.onStorySend} complete={p.onStoryDraft} /> : <Compose creator={p.creator} onAdd={p.onAdd} />}
         </>
       ) : moments ? (
-        <div className="wx-moments">
+        <div className="wx-moments" ref={momentsContainer}>
           <div className="wx-moment-cover">
             <div className="wx-moment-identity"><strong>{selfName}</strong><img decoding="async" src={selfAvatar} alt={`${selfName}的微信头像`} /></div>
           </div>
           {posts.map((i) => (
-            <article key={i.id} className="wx-moment-post">
+            <article key={i.id} className="wx-moment-post" data-story-moment={["wechat-moment-07", "wechat-moment-08"].includes(i.id) ? i.id : undefined}>
               <Avatar name={i.sender} src={i.avatar} />
               <div>
                 <strong>{i.sender}</strong>

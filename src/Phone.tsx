@@ -1,6 +1,6 @@
 import { lockedNotePreview } from "./notePreview";
 import { readWechatThread } from "./wechatRead";
-import { loveRevealed, storyWallpaper } from "./storyPresentation";
+import { hiddenAlbumUnlocked, storyWallpaper } from "./storyPresentation";
 import { allChatsFree, sendFreeReply } from "./freeReply";
 import { PhoneCallContext, StoryPhoneApp, usePhoneCalls } from "./StoryPhone";
 import { phoneIsUnlocked, resumePhoneStory } from "./phoneCalls";
@@ -1006,7 +1006,7 @@ function AppContent({
   const shown = items
     .filter((i) => creator || visible(i, state) || (app.id === "notes" && !!lockedNotePreview(i, state, work.id)))
     .map(i => !creator && app.id === "notes" ? lockedNotePreview(i, state, work.id) ?? i : i)
-    .filter((i) => creator || app.id !== "photos" || i.folder !== "已隐藏" || loveRevealed(state))
+    .filter((i) => creator || app.id !== "photos" || i.folder !== "已隐藏" || hiddenAlbumUnlocked(state))
     .filter((i) =>
       (i.title + i.body + i.sender).toLowerCase().includes(q.toLowerCase()),
     );
@@ -1132,7 +1132,7 @@ function AppContent({
               onStorySend={onStorySend}
               onFreeSend={onFreeSend}
               allFreeChat={allChatsFree(state)}
-              hiddenAlbumUnlocked={creator || work.id !== "phone-a-story" || loveRevealed(state)}
+              hiddenAlbumUnlocked={creator || work.id !== "phone-a-story" || hiddenAlbumUnlocked(state)}
               appId={app.id}
               owner={work.phone.owner}
               virtualTime={state.time}
