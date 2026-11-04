@@ -17,5 +17,8 @@ export function sendFreeReply(work: Work, state: Runtime, text: string, thread =
     meta:{interlude:"true", ...(thread === "A左左" ? {pinned:"true"} : {})}});
   next.messages.wechat = [...(next.messages.wechat ?? []), item];
   next.unlocked.push(item.id);
-  return thread === "A左左" && /喜欢|爱/.test(text) ? dispatch(work, next, "freeLove", "A左左") : next;
+  if (thread !== "A左左") return next;
+  next.variables.leftFreeMessageCount = next.messages.wechat.filter(i => i.title === "A左左" && i.outgoing).length;
+  const afterLove = /喜欢|爱/.test(text) ? dispatch(work, next, "freeLove", "A左左") : next;
+  return dispatch(work, afterLove, "freeLeft", "A左左");
 }

@@ -58,6 +58,27 @@ describe("Left's confession continuation", () => {
     expect(s.unlocked).toContain("interlude-love-final");
     expect(s.read).not.toContain("interlude-love-final");
     s = sendFreeReply(work,s,"喜欢你爱你");
-    expect(s.scheduled).toHaveLength(0);
+    expect(s.scheduled?.filter(t => t.nodeId === "phone-free-love-delay")).toHaveLength(0);
   });
+});
+
+it("replies once two seconds after the third free message to Left", () => {
+ let s = initialRuntime(work);
+ s.unlocked.push("interlude-love-open");s.read.push("interlude-love-open");
+ s = sendFreeReply(work, s, "第一条");
+ expect(sendFreeReply(work, s, " ")).toBe(s);
+ s = sendFreeReply(work, s, "第二条");
+ expect(s.scheduled).toHaveLength(0);
+ s = sendFreeReply(work, s, "第三条");
+ expect(s.scheduled?.filter(t => t.nodeId === "left-busy-reply-delay")).toHaveLength(1);
+ s = JSON.parse(JSON.stringify(s));
+ s = advance(work, s, 1000);
+ s = sendFreeReply(work, s, "第四条");
+ s = advance(work, s, 999);
+ expect(s.unlocked).not.toContain("interlude-left-busy");
+ s = advance(work, s, 1);
+ expect(s.unlocked.filter(id => id === "interlude-left-busy")).toHaveLength(1);
+ expect(work.data.wechat.find(i => i.id === "interlude-left-busy")?.body).toBe("刚刚在忙，不是故意不回你");
+ s = sendFreeReply(work, s, "第五条");
+ expect(s.scheduled?.filter(t => t.nodeId === "left-busy-reply-delay")).toHaveLength(0);
 });
